@@ -20,9 +20,11 @@ import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
+@AndroidEntryPoint
 class AddScheduleFragment : Fragment() {
 lateinit var binding:   FragmentAddScheduleBinding
     private val viewModelAuth : AuthViewModel by viewModels()

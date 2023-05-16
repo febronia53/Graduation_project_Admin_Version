@@ -15,8 +15,10 @@ import com.uni.uniadmin.databinding.ActivityLogInBinding
 import com.uni.uniadmin.databinding.ActivitySignUpBinding
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class LogIn : AppCompatActivity() {
     private lateinit var binding: ActivityLogInBinding
     private val viewModel : AuthViewModel by viewModels()

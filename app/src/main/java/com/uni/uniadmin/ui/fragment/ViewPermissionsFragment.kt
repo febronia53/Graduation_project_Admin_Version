@@ -17,8 +17,13 @@ import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+
+
+
+@AndroidEntryPoint
 class ViewPermissionsFragment : Fragment() {
     private val viewModelAuth : AuthViewModel by viewModels()
     private lateinit var currentUser: UserAdmin

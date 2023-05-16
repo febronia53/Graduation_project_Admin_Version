@@ -20,8 +20,10 @@ import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class SignUp : AppCompatActivity() {
     private val viewModel : AuthViewModel by viewModels()
     private val fireStorageViewModel : FireStorageViewModel by viewModels()

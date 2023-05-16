@@ -17,7 +17,9 @@ import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeScreen : AppCompatActivity() {
     private val viewModel : AuthViewModel by viewModels()
     // private val fireViewModel : FirebaseViewModel by viewModels()

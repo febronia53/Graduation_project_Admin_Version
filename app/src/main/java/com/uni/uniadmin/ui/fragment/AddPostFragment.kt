@@ -29,10 +29,12 @@ import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.adapters.PostsAdapter
 import com.uni.uniteaching.classes.user.UserAdmin
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import java.util.*
 
 
+@AndroidEntryPoint
 class AddPostFragment : Fragment() {
 
     private val viewModelAuth : AuthViewModel by viewModels()

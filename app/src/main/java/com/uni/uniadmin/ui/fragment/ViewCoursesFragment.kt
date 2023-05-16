@@ -22,10 +22,12 @@ import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.adapters.ScheduleAdapter
 import com.uni.uniteaching.classes.user.UserAdmin
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
 
+@AndroidEntryPoint
 class ViewCoursesFragment : Fragment() {
  lateinit var binding:FragmentViewCoursesBinding
     private val viewModel: FirebaseViewModel by viewModels()
