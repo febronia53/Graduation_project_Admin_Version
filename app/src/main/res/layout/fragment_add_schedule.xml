@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.AddScheduleFragment">
+
+        <RadioGroup
+            android:gravity="center"
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:onClick="onRadioButtonClicked"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioLecture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="lecture" />
+
+            <RadioButton
+                android:id="@+id/radioSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="section" />
+
+
+        </RadioGroup>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:id="@+id/add_schedule"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courses_spinner_schedule" />
+
+        <Spinner
+            android:id="@+id/departement_spinner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            app:layout_constraintVertical_bias="0.021" />
+
+        <TextView
+            android:id="@+id/department_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="choose departement"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
+            app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
+            app:layout_constraintHorizontal_bias="0.196"
+            app:layout_constraintStart_toStartOf="@+id/departement_spinner_schedule"
+            app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule"
+            app:layout_constraintVertical_bias="0.476" />
+
+        <Spinner
+            android:id="@+id/section_spinner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/departement_spinner_schedule"
+            app:layout_constraintVertical_bias="0.069" />
+        <TextView
+            android:id="@+id/section_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="choose section"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
+            app:layout_constraintEnd_toEndOf="@+id/section_spinner_schedule"
+            app:layout_constraintHorizontal_bias="0.196"
+            app:layout_constraintStart_toStartOf="@+id/section_spinner_schedule"
+            app:layout_constraintTop_toTopOf="@+id/section_spinner_schedule"
+            app:layout_constraintVertical_bias="0.476" />
+
+        <Spinner
+            android:id="@+id/day_spinner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/section_spinner_schedule"
+            app:layout_constraintVertical_bias="0.069" />
+        <TextView
+            android:id="@+id/day_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="choose day"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/day_spinner_schedule"
+            app:layout_constraintEnd_toEndOf="@+id/day_spinner_schedule"
+            app:layout_constraintHorizontal_bias="0.196"
+            app:layout_constraintStart_toStartOf="@+id/day_spinner_schedule"
+            app:layout_constraintTop_toTopOf="@+id/day_spinner_schedule"
+            app:layout_constraintVertical_bias="0.476" />
+
+        <Spinner
+            android:id="@+id/courses_spinner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/teaching_spinner_schedule"
+            app:layout_constraintVertical_bias="0.069" />
+        <TextView
+            android:id="@+id/course_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="choose course"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/courses_spinner_schedule"
+            app:layout_constraintEnd_toEndOf="@+id/courses_spinner_schedule"
+            app:layout_constraintHorizontal_bias="0.196"
+            app:layout_constraintStart_toStartOf="@+id/courses_spinner_schedule"
+            app:layout_constraintTop_toTopOf="@+id/courses_spinner_schedule"
+            app:layout_constraintVertical_bias="0.476" />
+
+        <EditText
+            android:id="@+id/from_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="From .."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.284"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/day_spinner_schedule"
+            app:layout_constraintVertical_bias="0.099" />
+
+        <EditText
+            android:id="@+id/place_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="place ..............."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.284"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/from_schedule"
+            app:layout_constraintVertical_bias="0.099" />
+
+
+        <EditText
+            android:id="@+id/to_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="to ... .."
+            app:layout_constraintBottom_toBottomOf="@+id/from_schedule"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.367"
+            app:layout_constraintStart_toEndOf="@+id/from_schedule"
+            app:layout_constraintTop_toTopOf="@+id/from_schedule" />
+
+        <Spinner
+            android:id="@+id/teaching_spinner_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/place_schedule"
+            app:layout_constraintVertical_bias="0.069" />
+        <TextView
+            android:id="@+id/teaching_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="choose ... how will teach"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/teaching_spinner_schedule"
+            app:layout_constraintEnd_toEndOf="@+id/teaching_spinner_schedule"
+            app:layout_constraintHorizontal_bias="0.196"
+            app:layout_constraintStart_toStartOf="@+id/teaching_spinner_schedule"
+            app:layout_constraintTop_toTopOf="@+id/teaching_spinner_schedule"
+            app:layout_constraintVertical_bias="0.476" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

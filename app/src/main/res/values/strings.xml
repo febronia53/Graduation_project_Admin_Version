@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">UNI Admin</string>
+
+    <string-array name="grades">
+        <item>grade one</item>
+        <item>grade two</item>
+        <item>grade three</item>
+        <item>grade four</item>
+    </string-array>
+    <string-array name="departement">
+        <item>CS</item>
+        <item>IS</item>
+        <item>IT</item>
+        <item>BIO</item>
+        <item>SOFT</item>
+        <item>GROUP1</item>
+        <item>GROUP2</item>
+        <item>GROUP3</item>
+        <item>GROUP4</item>
+        <item>GROUP5</item>
+    </string-array>
+    <string-array name="Section">
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+        <item>S4</item>
+        <item>S5</item>
+        <item>S6</item>
+        <item>S7</item>
+        <item>S8</item>
+    </string-array>
+
+    <string-array name="Day">
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+    </string-array>
+
+    <string name="title_activity_log_in">LogIn</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
