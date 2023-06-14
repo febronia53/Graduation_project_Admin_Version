@@ -78,7 +78,7 @@ add.setOnClickListener {
    if (lecturer>0 && assistantIndex>0&& grade.isNotEmpty()&&cID.isNotEmpty()){
        // TODO: we need a button to navigate to the courses list screen
        //TODO() the grade is here as the admin is assigned to some grade but we generated the grade by spinner
-       viewModel.addCourse(Courses(cID,grade,prof,assistant),profListData[lecturer],assistantListData[assistantIndex])
+       viewModel.addCourse(Courses(cID,grade,profListData[lecturer].code,assistantListData[assistantIndex].code),profListData[lecturer],assistantListData[assistantIndex])
        observeAddedCourse()
    }else{
 Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()

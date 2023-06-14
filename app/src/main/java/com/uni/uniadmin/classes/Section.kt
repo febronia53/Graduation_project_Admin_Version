@@ -8,6 +8,7 @@ data class Section (
     val courseName:String="",
     val lapID:String="",
     val assistantName:String="",
+    val assistantID:String="",
     val section : String="",
     val day:String="",
     val time:String="",

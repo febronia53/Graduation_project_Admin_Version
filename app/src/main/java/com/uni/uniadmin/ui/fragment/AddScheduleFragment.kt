@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.uni.uniadmin.R
 import com.uni.uniadmin.adapters.StudentAdapter
+import com.uni.uniadmin.classes.Assistant
 import com.uni.uniadmin.classes.Lecture
 import com.uni.uniadmin.classes.Section
 import com.uni.uniadmin.classes.user.UserStudent
@@ -35,6 +36,7 @@ lateinit var binding:   FragmentAddScheduleBinding
     private lateinit var department: String
     private lateinit var section: String
     private lateinit var course: String
+    private lateinit var assistantList: MutableList<Assistant>
     private lateinit var coursesList: MutableList<String>
     private lateinit var teachingList: MutableList<String>
 
@@ -53,6 +55,10 @@ lateinit var binding:   FragmentAddScheduleBinding
             }
 
         }
+        coursesList= arrayListOf()
+        assistantList= arrayListOf()
+        teachingList= arrayListOf()
+        var index =0
         binding = FragmentAddScheduleBinding.inflate(layoutInflater)
         coursesList= arrayListOf()
         teachingList= arrayListOf()
@@ -93,7 +99,7 @@ binding.addSchedule.setOnClickListener {
     }
     }else{
         if (department.isNotEmpty()&&section.isNotEmpty()&& from.isNotEmpty()&&to.isNotEmpty()&&course.isNotEmpty()&&teaching.isNotEmpty()){
-viewModel.addSection(Section("",course,course,place,teaching,section,day,from,to,false),department)
+viewModel.addSection(Section("",course,course,place,assistantList[index].name,assistantList[index].code,section,day,from,to,false),department)
             observeAddedSection()
         }
     }
@@ -158,6 +164,7 @@ viewModel.addSection(Section("",course,course,place,teaching,section,day,from,to
         autoComTeaching.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
                 teaching =teachingList[p2]
+                index=p2
                 binding.teachingText.text=teaching
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -236,8 +243,10 @@ viewModel.addSection(Section("",course,course,place,teaching,section,day,from,to
                     }
                     is Resource.Success -> {
                         teachingList.clear()
+                        assistantList.clear()
                         it.result.forEach {
                             teachingList.add(it.name)
+                            assistantList.add(it)
                         }
                         adapterTeaching.notifyDataSetChanged()
                     }

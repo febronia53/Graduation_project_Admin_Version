@@ -168,7 +168,6 @@ class HomeFragment : Fragment() {
                 val commentFragment=CommentFragment()
                 commentFragment.arguments=bundle
                 (activity as HomeScreen).replaceFragment(commentFragment)
-                //Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_commentFragment)
 
 
 

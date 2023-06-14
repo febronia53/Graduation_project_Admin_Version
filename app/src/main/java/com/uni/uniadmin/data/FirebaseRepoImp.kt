@@ -3,6 +3,7 @@ package com.uni.uniadmin.data
 
 
 import android.util.Log
+import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.toObject
@@ -228,7 +229,8 @@ class FirebaseRepoImp@Inject constructor(
                         it.localizedMessage
                     )
                 )
-            }       }
+            }
+    }
     override suspend fun addSectionPosts(posts: Posts, section: String, dep: String, result: (Resource<String>) -> Unit) {
         val document=database.collection(PostType.section_posts).document(dep).collection(section)
         posts.postID=document.id
@@ -466,23 +468,49 @@ class FirebaseRepoImp@Inject constructor(
 // -------------------------------------------------------- schedule -------------------------------------------------------//
     override suspend fun updateSection(section: Section,dep:String, result: (Resource<String>) -> Unit) {
         val document=database.collection(FireStoreTable.courses).document(section.courseCode)
-            .collection(FireStoreTable.sections)
-            .document(dep)
-            .collection(section.section)
-        section.sectionId=document.id
-        document.add(section)
-            .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success("sections added successfully")
-                )
+        .collection(FireStoreTable.sections)
+        .document(dep)
+        .collection(section.section)
+    section.sectionId=document.id
+    document.add(section)
+        .addOnSuccessListener {
+            val query = database.collection(FireStoreTable.courses).document(section.courseCode)
+                .collection(FireStoreTable.sections)
+                .document(dep)
+                .collection(section.section)
+            val countQuery = query.count()
+            countQuery.get(AggregateSource.SERVER).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val snapshot = task.result
+                    if(snapshot.count <2){
+                        val document2=database.collection(FireStoreTable.assistant_sections).document(section.assistantID)
+                            .collection(FireStoreTable.sections)
+                        document2.add(SectionData(section.courseCode,dep,section.section))
+                            .addOnSuccessListener {
+                                result.invoke(
+                                    Resource.Success("sections added successfully")
+                                )
+                            }
+                            .addOnFailureListener{
+                                result.invoke(
+                                    Resource.Failure(
+                                        it.localizedMessage
+                                    )
+                                ) }
+                    }
+                }
             }
-            .addOnFailureListener{
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
-                    )
+        }
+        .addOnFailureListener{
+            result.invoke(
+                Resource.Failure(
+                    it.localizedMessage
                 )
-            }
+            )
+        }
+
+
+
 /*
     val document2=database.collection("sectionsForAdmin_${grade}")
     document.add("${section.courseCode}_${dep}_${section.section}")*/
@@ -1122,7 +1150,6 @@ class FirebaseRepoImp@Inject constructor(
     override  fun getLectures(courses: List<Courses>, dep:String, result: (Resource<List<Lecture>>) -> Unit) {
         val listOfPosts = arrayListOf<Lecture>()
         for (course in courses) {
-            Log.e("i am here",course.courseCode)
             val docRef = database.
             collection(FireStoreTable.courses).
             document(course.courseCode)
@@ -1136,17 +1163,12 @@ class FirebaseRepoImp@Inject constructor(
                 }
                 for (rec in snapshot!!) {
                     val post = rec.toObject(Lecture::class.java)
-                    Log.e("i am here",post.professorName)
                     listOfPosts.add(post)
                 }
 
             }
-
-
         }
         result.invoke(Resource.Success(listOfPosts))
-
-
     }
     override fun getLectures2(courses: List<Courses>, dep:String, result: (List<Lecture>?) -> Unit) {
         val listOfPosts = arrayListOf<Lecture>()

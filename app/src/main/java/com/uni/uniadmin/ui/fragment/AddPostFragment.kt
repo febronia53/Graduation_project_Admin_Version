@@ -22,6 +22,7 @@ import com.uni.uniadmin.classes.PermissionItem
 import com.uni.uniadmin.classes.Posts
 import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.data.Resource
+import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.databinding.ActivitySignUpBinding
 import com.uni.uniadmin.ui.SignUp
 import com.uni.uniadmin.viewModel.AuthViewModel
@@ -146,7 +147,7 @@ observeStudents()
                             ,"",
                             ""
                             , Date()
-                            ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                            ,PostType.general
                             ,PostsAdapter.WITHOUT_IMAGE))
                     observePost(false, Uri.EMPTY)
                 }else{
@@ -157,7 +158,7 @@ observeStudents()
                             ,"",
                             ""
                             , Date()
-                            ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                               ,     PostType.general
                             ,PostsAdapter.WITH_IMAGE))
                     observePost(true, userImageUri)
                 }
@@ -176,7 +177,7 @@ observeStudents()
                             ,"",
                             course
                             , Date()
-                            ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                            ,PostType.course
                             ,PostsAdapter.WITHOUT_IMAGE),course)
                     observePost(false, Uri.EMPTY)
                 }else{
@@ -187,7 +188,7 @@ observeStudents()
                             ,"",
                             course
                             , Date()
-                            ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                            ,PostType.course
                             ,PostsAdapter.WITH_IMAGE),course)
                     observePost(true, userImageUri)
                 }
@@ -209,9 +210,9 @@ observeStudents()
                             description
                             ,currentUser.name
                             ,"",
-                            ""
+                            "${section}/${department}"
                             , Date()
-                            ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                            ,PostType.section_posts
                             ,PostsAdapter.WITHOUT_IMAGE),section,department)
                     observePost(false, Uri.EMPTY)
                 }else{
@@ -222,7 +223,7 @@ observeStudents()
                             ,"",
                             ""
                             , Date()
-                            ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                            ,PostType.section_posts
                             ,PostsAdapter.WITH_IMAGE),section,department)
                     observePost(true, userImageUri)
                 }

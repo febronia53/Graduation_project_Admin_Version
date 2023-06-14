@@ -8,7 +8,7 @@ object FireStoreTable {
     val sections ="sections"
     val professor="professor"
     val assistant="assistan"
-    val attendance="attendance"
+    val assistant_sections="assistant_sections"
     val user="Admin_user"
     val permissiont="permissiont"
     val userTeaching="_teaching_users"
