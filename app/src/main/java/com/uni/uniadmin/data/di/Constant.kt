@@ -53,7 +53,10 @@ object departement{
 
 }
 
-
+object SignUpKey{
+    val MAIN_DATA="main_data"
+    val SUB_DATA="sub_data"
+}
 
 object Section{
     val S1= "S1"

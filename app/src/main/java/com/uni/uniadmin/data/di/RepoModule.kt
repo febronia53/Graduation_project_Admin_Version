@@ -8,7 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import com.uni.uniadmin.data.*
-import com.uni.uniteaching.data.*
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.uni.uniadmin.ui.fragment
+package com.uni.uniadmin.ui.fragment.addData
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,15 +9,11 @@ import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.uni.uniadmin.R
-import com.uni.uniadmin.adapters.StudentAdapter
 import com.uni.uniadmin.classes.Assistant
 import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.Professor
-import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.data.Resource
-import com.uni.uniadmin.data.di.PostType.course
 import com.uni.uniadmin.viewModel.AuthViewModel
-import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint

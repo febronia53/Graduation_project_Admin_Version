@@ -105,7 +105,7 @@ class ScheduleListFragment : Fragment() {
                                       "",
                                       "",
                                       "",
-                                      false)
+                                      "",false)
                               ,department)
                               observeDeletedSection()
                           }else{

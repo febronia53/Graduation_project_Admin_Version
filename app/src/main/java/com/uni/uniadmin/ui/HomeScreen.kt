@@ -14,10 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.user.UserStudent
+import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
+import com.uni.uniadmin.ui.fragment.*
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
+import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+
 
 @AndroidEntryPoint
 class HomeScreen : AppCompatActivity() {
@@ -27,22 +32,22 @@ class HomeScreen : AppCompatActivity() {
     private val storageViewModel : FireStorageViewModel by viewModels()
 
     // TODO save the image in a shared prefrance
-    lateinit var currentUser: UserStudent
+    lateinit var currentUser: UserAdmin
 
     private lateinit var binding: ActivityHomeScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-/*
+
         binding.bottomNavigationView.setOnItemSelectedListener {
 
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
-                R.id.attendance -> replaceFragment(AttendanceFragment())
+                R.id.notification-> replaceFragment(PermissionFragment())
                 R.id.profile -> replaceFragment(ProfileFragment())
-                R.id.lectures -> {
-                    replaceFragment(ScheduleFragment())
+                R.id.schedule_and_attendees -> {
+                    replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
                 }
                 else -> {
@@ -50,7 +55,7 @@ class HomeScreen : AppCompatActivity() {
 
             }
             true
-        }*/
+        }
 
     }
 
@@ -65,9 +70,9 @@ class HomeScreen : AppCompatActivity() {
         fragmentTransaction.commit()
 
     }
-/*
-    private fun updateUser(user: UserStudent){
-        viewModel.getUserStudent(user.userId,user.section,user.department,user.grade)
+
+    private fun updateUser(user: UserAdmin){
+        viewModel.getUserStudent(user.userId)
     }
     private fun observeImage(){
 
@@ -78,6 +83,7 @@ class HomeScreen : AppCompatActivity() {
                     is Resource.Loading -> {
                     }
                     is Resource.Success -> {
+                        binding.progressBarImage.visibility = View.GONE
                         Glide.with(this@HomeScreen)
                             .load(uri.result)
                             //.diskCacheStrategy(DiskCacheStrategy.RESOURCE)  //TODO https://stackoverflow.com/questions/53140975/load-already-fetched-image-when-offline-in-glide-for-android
@@ -85,7 +91,7 @@ class HomeScreen : AppCompatActivity() {
                             .into(binding.userImage)
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(this@HomeScreen,uri.exception.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@HomeScreen,uri.exception.toString(),Toast.LENGTH_LONG).show()
                     }
                     else ->{
                     }
@@ -96,6 +102,7 @@ class HomeScreen : AppCompatActivity() {
         }
     }
 
+
     private fun observeUser() {
         lifecycleScope.launchWhenCreated {
             viewModel.userStudent.collectLatest {state ->
@@ -105,17 +112,16 @@ class HomeScreen : AppCompatActivity() {
                     is Resource.Success -> {
                         val user =state.result
                         if (user!=null){
+
                             viewModel.setSession(state.result)
-
-
                             binding.userGrade.text=user.grade
-                            binding.userDepartement.text=user.department
+                            binding.userDepartment.text=user.jobTitle
                             binding.userName.text=user.name
 
                         }
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(this@HomeScreen,state.exception.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@HomeScreen,state.exception.toString(),Toast.LENGTH_LONG).show()
                     }
                     else ->{
                     }
@@ -127,6 +133,7 @@ class HomeScreen : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+       // settingsOnStartApp()
         viewModel.getSessionStudent {user->
             if (user !=null){
                 updateUser(user)
@@ -138,15 +145,8 @@ class HomeScreen : AppCompatActivity() {
                 observeUser()
                 observeImage()
 
-                if (user.hasPermission){
-                    replaceFragment(HomeFragment())
-                    binding.bottomNavigationView.visibility= View.VISIBLE
-
-                }else{
                     replaceFragment(PermissionFragment())
                     binding.bottomNavigationView.visibility= View.INVISIBLE
-
-                }
 
             }else{
                 Toast.makeText(this,"no user found. have to register", Toast.LENGTH_SHORT).show()
@@ -166,6 +166,25 @@ class HomeScreen : AppCompatActivity() {
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             else -> false
         }
-    }
-*/
-}
+    }}
+    /*
+    private fun settingsOnStartApp(){
+        binding.bottomNavigationView.itemIconTintList = null
+        binding.bottomNavigationView.selectedItemId = R.id.home
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.notification -> replaceFragment(NotificationsFragment())
+                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.schedule_and_attendees -> {
+                    replaceFragment(ScheduleFragment())
+                    updateUser(currentUser)
+                }
+                else -> {
+                }
+
+            }
+            true
+        }
+    }}*/

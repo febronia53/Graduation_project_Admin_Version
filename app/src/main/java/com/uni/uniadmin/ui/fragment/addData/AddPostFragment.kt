@@ -1,4 +1,4 @@
-package com.uni.uniadmin.ui.fragment
+package com.uni.uniadmin.ui.fragment.addData
 
 import android.content.Intent
 import android.net.Uri
@@ -8,22 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.uni.uniadmin.R
 import com.uni.uniadmin.adapters.StudentAdapter
-import com.uni.uniadmin.classes.Courses
-import com.uni.uniadmin.classes.PermissionItem
 import com.uni.uniadmin.classes.Posts
 import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
-import com.uni.uniadmin.databinding.ActivitySignUpBinding
 import com.uni.uniadmin.ui.SignUp
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel

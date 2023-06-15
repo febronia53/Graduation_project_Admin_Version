@@ -31,6 +31,7 @@
     </string-array>
 
     <string-array name="Day">
+        <!--todo make the days-->
         <item>Fri</item>
         <item>Sat</item>
         <item>Sun</item>
@@ -51,4 +52,70 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="SignUp">SignUp</string>
+    <string name="Sign_Up">Sign up</string>
+
+    <string name="Name">Name</string>
+    <string name="Email">Academic Email</string>
+    <string name="National_ID">National ID</string>
+    <string name="Collage_ID">Collage ID</string>
+    <string name="Password">Password</string>
+    <string name="Confirm_Password">Confirm Password</string>
+    <string name="have_acc">Already have an account?</string>
+    <string name="SignIn">Sign In</string>
+    <string name="SignInUnderLine"><u>Sign in</u></string>
+    <string name="SignUpUnderLine"><u>Sign Up</u></string>
+
+
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="close">Close</string>
+    <string name="doNotHaveAccount">Don\'t have any account?</string>
+    <string name="haveAccount">Already have any account?</string>
+    <string name="choose_grade">Choose grade</string>
+    <string name="choose_department">Choose department</string>
+    <string name="choose_section">Choose section</string>
+    <string name="next_slider">Next</string>
+    <string name="back">Back</string>
+    <string name="student">Student</string>
+    <string name="uni">UNI</string>
+    <string name="profile">Profile</string>
+
+
+    <string-array name="who_array">
+        <item>Student</item>
+        <item>Professor</item>
+        <item>Assistant</item>
+    </string-array>
+
+    <!--schedule and attendees fragment-->
+    <string name="scan">Scan</string>
+    <string name="scan_subTitle">The QR code to take attendance</string>
+    <string name="hall_and_lab">Hall</string>
+    <string name="wait">wait ..</string>
+    <string name="attendance_succeeded">Attendance succeeded</string>
+    <string name="ok">OK</string>
+    <string name="attendance_failed">There was a problem, try again</string>
+    <string name="comments">Comments</string>
+    <string name="id_test">\@fci125</string>
+    <string name="point">.</string>
+    <string name="department">Department</string>
+    <string name="Faculty">Faculty</string>
+    <string name="password_encoding">*******</string>
+    <string name="phone">Phone</string>
+    <string name="city">City</string>
+    <string name="register">Register</string>
+    <string name="Attend">Attend</string>
+    <string name="not_running">Not running</string>
+    <string name="running">Running</string>
+    <string name="lab">Lab</string>
+    <string name="to">To</string>
+    <string name="comment">Comment</string>
+    <string name="zero_comments">0</string>
+    <string name="grade">Grade</string>
+    <string name="dot">></string>
+    <string name="home">Home</string>
+    <string name="notification">Notification</string>
+    <string name="Schedule">Schedule</string>
+
 </resources>
