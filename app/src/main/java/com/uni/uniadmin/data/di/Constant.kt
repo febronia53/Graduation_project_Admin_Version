@@ -24,7 +24,7 @@ object SharedPreferencesTable{
 
 }
 object PermissionsRequired{
-    val sing_in_permission="sign_in_permission"
+    val sing_in_permission="permissions"
 
 }
 object grades{
@@ -53,10 +53,6 @@ object departement{
 
 }
 
-object SignUpKey{
-    val MAIN_DATA="main_data"
-    val SUB_DATA="sub_data"
-}
 
 object Section{
     val S1= "S1"
@@ -68,7 +64,8 @@ object Section{
     val S7= "S7"
     val S8= "S8"
 }
-object RealTime{
-    val hall="hall"
-    val lab="lab"
+object SignUpKey{
+    const val MAIN_DATA="main_data"
+    const val BACK_DATA="back_data"
+    const val FROM_HOME_SCREEN="message_from_home"
 }

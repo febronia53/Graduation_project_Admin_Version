@@ -7,14 +7,16 @@ import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import com.uni.uniadmin.classes.*
 import com.uni.uniadmin.classes.user.UserStudent
+import com.uni.uniadmin.classes.Professor
 import com.uni.uniadmin.data.di.FireStoreTable
 import com.uni.uniadmin.data.di.PermissionsRequired
 import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.data.di.UserTypes
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 import javax.inject.Inject
 
 class FirebaseRepoImp@Inject constructor(
@@ -122,13 +124,21 @@ class FirebaseRepoImp@Inject constructor(
 
 // ------------------------------------------------------- permission --------------------------------------------------------//
     override suspend fun addPermission(grade:String,permission: PermissionItem, result: (Resource<String>) -> Unit) {
-        val document=database.collection(FireStoreTable.permissiont+"_"+grade).document()
+    val document=database.collection(PermissionsRequired.sing_in_permission).document()
         permission.permissionId=document.id
         document.set(permission)
             .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success("asking for permission")
-                )
+                val state =updateUserPermission(permission.userId,permission.studentGrade,false)
+                if (state ==1){
+                    result.invoke(
+                        Resource.Success("asking for permission")
+                    )
+                }else{
+                    result.invoke(
+                        Resource.Success("added but user data did not updated")
+                    )
+                }
+
             }
             .addOnFailureListener{
                 result.invoke(
@@ -139,13 +149,98 @@ class FirebaseRepoImp@Inject constructor(
             }
 
     }
-    override suspend fun deletePermission(grade:String,permissionID: String, result: (Resource<String>) -> Unit) {
-        val document=database.collection(FireStoreTable.permissiont+"_"+grade).document(permissionID)
+   private fun updateUserPermission(userId:String ,grade: String, value:Boolean):Int{
+       var state=0
+       val docRef = database.collection(grade).document(userId)
+       docRef.update("hasPermission", value).addOnSuccessListener {
+        state=1
+           Log.e("update","I am here ")
+            }
+            .addOnFailureListener {
+            state=-1
+            }
+return state
+    }
+    override suspend fun deletePermission(permission: PermissionItem, result: (Resource<String>) -> Unit) {
+
+
+
+        val docRef = database.collection(permission.studentGrade).document(permission.userId)
+        val documentDelete=database.collection(PermissionsRequired.sing_in_permission).document(permission.permissionId)
+        val documentCount=database.collection(PermissionsRequired.sing_in_permission)
+            .whereEqualTo("userId", permission.userId).count()
+
+        documentCount.get(AggregateSource.SERVER)
+            .addOnSuccessListener {
+               val count= it.count
+                Log.e("count",count.toString())
+                if (count <2){
+                    documentDelete.delete()
+                        .addOnSuccessListener {
+                            docRef.update("hasPermission", true)
+                                .addOnSuccessListener {
+                                    Log.e("delete updat",count.toString())
+                                    result.invoke(
+                                        Resource.Success("all done object deleted")
+                                    )
+                            }
+                                .addOnFailureListener {
+                                    result.invoke(
+                                        Resource.Success("there is a problim with updating")
+                                    )
+                                }
+                        }
+                        .addOnFailureListener {
+                            result.invoke(
+                                Resource.Success(it.localizedMessage)
+                            )
+                        }
+                }else{
+                    documentDelete.delete()
+                        .addOnSuccessListener {
+                            Log.e("delete nooooo update",count.toString())
+                            result.invoke(
+                            Resource.Success("deleted successfully")
+                        )}
+                        .addOnFailureListener {
+                            result.invoke(
+                            Resource.Success(it.localizedMessage)
+                        )}
+
+                }
+
+            }
+            .addOnFailureListener{
+                result.invoke(
+                    Resource.Success(it.localizedMessage)
+                )
+            }
+
+        /* val count=getPermissionCount(permission.userId)
+        val document=database.collection(PermissionsRequired.sing_in_permission).document(permission.permissionId)
         document.delete()
             .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success("done")
-                )
+               if(count<2){
+                   Log.e("count",count.toString())
+                   val state =updateUserPermission(permission.userId,permission.studentGrade,true)
+                   Log.e("repo","I am here ")
+                   Log.e("state",state.toString())
+                   if (state ==1){
+                       result.invoke(
+                           Resource.Success("done")
+                       )
+                   }else{
+                       result.invoke(
+                           Resource.Success("deleted but user data did not updated")
+                       )
+                   }
+               }else{
+                   result.invoke(
+                       Resource.Success("done")
+
+                   )
+               }
+
             }
             .addOnFailureListener{
                 result.invoke(
@@ -153,29 +248,61 @@ class FirebaseRepoImp@Inject constructor(
                         it.localizedMessage
                     )
                 )
-            }
+            }*/
+
     }
+
     override suspend fun getPermission(grade:String, result: (Resource<List<PermissionItem>>) -> Unit) {
-        val document=database.collection(FireStoreTable.permissiont+"_"+grade)
-        document.get()
+        val document=database.collection(PermissionsRequired.sing_in_permission)
+            .whereEqualTo("studentGrade", grade)
+        document.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                result.invoke(Resource.Failure(e.toString()))
+                return@addSnapshotListener
+            }
+
+            val permissions= arrayListOf<PermissionItem>()
+            for (rec in snapshot!!){
+                val post = rec.toObject(PermissionItem::class.java)
+                permissions.add(post)
+            }
+            result.invoke(Resource.Success(permissions))
+        }
+    }
+    override suspend fun getPermissionByUserId(userId:String, result: (Resource<List<PermissionItem>>) -> Unit) {
+        val document=database.collection(PermissionsRequired.sing_in_permission)
+            .whereEqualTo("userId", userId)
+
+        document.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                result.invoke(Resource.Failure(e.toString()))
+                return@addSnapshotListener
+            }
+
+            val permissions= arrayListOf<PermissionItem>()
+            for (rec in snapshot!!){
+                val post = rec.toObject(PermissionItem::class.java)
+                permissions.add(post)
+            }
+            result.invoke(Resource.Success(permissions))
+        }
+
+    }
+   /* fun getPermissionCount(userId:String):Long {
+        var count:Long=-1
+        val document=database.collection(PermissionsRequired.sing_in_permission)
+            .whereEqualTo("userId", userId).count()
+        document.get(AggregateSource.SERVER)
             .addOnSuccessListener {
-                val permissions= arrayListOf<PermissionItem>()
-                for(rec in it ){
-                    val per=rec.toObject(PermissionItem::class.java)
-                    permissions.add(per)
-                }
-                result.invoke(
-                    Resource.Success(permissions)
-                )
+               count= it.count
+                Log.e("count",it.count.toString())
+                Log.e("count2222222",count.toString())
             }
             .addOnFailureListener{
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
-                    )
-                )
+                count= -2
             }
-    }
+   return count
+    }*/
 // -------------------------------------------------------- permission -------------------------------------------------------//
 
 
@@ -331,7 +458,7 @@ class FirebaseRepoImp@Inject constructor(
 
 
 // -------------------------------------------------------- courses -------------------------------------------------------//
-    override suspend fun updateCourse(courses: Courses,professor: Professor,assistant: Assistant, result: (Resource<String>) -> Unit) {
+    override suspend fun updateCourse(courses: Courses, professor: Professor, assistant: Assistant, result: (Resource<String>) -> Unit) {
     var str=""
     val document=database.collection(FireStoreTable.courses).document(courses.courseCode)
     document.set(courses)
@@ -1057,6 +1184,7 @@ class FirebaseRepoImp@Inject constructor(
 
     }
 */
+    //TODO() make the function normal not snapshot
     override suspend fun getAssistant(
         courses: List<Courses>,
         result: (Resource<List<Assistant>>) -> Unit
@@ -1072,6 +1200,7 @@ class FirebaseRepoImp@Inject constructor(
                 }
                 for (rec in snapshot!!) {
                     val post = rec.toObject(Assistant::class.java)
+                    Log.e("repo assistant",post.name)
                     listOfPosts.add(post)
                 }
 

@@ -117,7 +117,11 @@
                     android:text="..."
                     android:textSize="15sp" />
             </LinearLayout>
-
+            <Button
+                android:id="@+id/remove_permission_all"
+                android:text="remove all "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </LinearLayout>

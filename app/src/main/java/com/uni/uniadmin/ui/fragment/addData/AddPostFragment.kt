@@ -51,6 +51,7 @@ class AddPostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        studentsList= arrayListOf()
         currentUser= UserAdmin()
         viewModelAuth.getSessionStudent {user->
             if (user != null){
@@ -83,7 +84,9 @@ class AddPostFragment : Fragment() {
         section=""
         course=""
         recyAdapter= StudentAdapter(requireContext(),studentsList,
-
+ removePerm = {pos, item->},
+            itemClick = {pos, item->}
+            ,
             addPerm = {pos, item->
                 val description=postText.text.toString()
                 val id=stuID.text.toString()
@@ -198,6 +201,7 @@ observeStudents()
 
         addSectionPostBt.setOnClickListener {
             val description=postText.text.toString()
+            //TODO any here is making an error
             if (department.isNotEmpty()&&section.isNotEmpty()&&description.isNotEmpty()){
                 if (userImageUri == Uri.EMPTY){
                     viewModel.addPostSection(

@@ -8,6 +8,7 @@
         <item>grade four</item>
     </string-array>
     <string-array name="departement">
+        <item>any departement</item>
         <item>CS</item>
         <item>IS</item>
         <item>IT</item>
@@ -20,6 +21,7 @@
         <item>GROUP5</item>
     </string-array>
     <string-array name="Section">
+        <item>any section</item>
         <item>S1</item>
         <item>S2</item>
         <item>S3</item>
@@ -29,6 +31,9 @@
         <item>S7</item>
         <item>S8</item>
     </string-array>
+
+
+
 
     <string-array name="Day">
         <!--todo make the days-->
@@ -41,17 +46,7 @@
         <item>Thu</item>
     </string-array>
 
-    <string name="title_activity_log_in">LogIn</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="SignUp">SignUp</string>
     <string name="Sign_Up">Sign up</string>
 
@@ -68,7 +63,15 @@
 
 
     <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
 
+
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">The password must be an uppercase letter and a number</string>
+    <string name="login_failed">"Login failed"</string>
     <string name="close">Close</string>
     <string name="doNotHaveAccount">Don\'t have any account?</string>
     <string name="haveAccount">Already have any account?</string>
@@ -87,8 +90,9 @@
         <item>Professor</item>
         <item>Assistant</item>
     </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--schedule and attendees fragment-->
+    <string name="Job_title">Job Title</string>
     <string name="scan">Scan</string>
     <string name="scan_subTitle">The QR code to take attendance</string>
     <string name="hall_and_lab">Hall</string>
@@ -110,12 +114,22 @@
     <string name="running">Running</string>
     <string name="lab">Lab</string>
     <string name="to">To</string>
-    <string name="comment">Comment</string>
+    <string name="comment">Comment here..</string>
     <string name="zero_comments">0</string>
     <string name="grade">Grade</string>
     <string name="dot">></string>
     <string name="home">Home</string>
     <string name="notification">Notification</string>
     <string name="Schedule">Schedule</string>
-
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="author">Author</string>
+    <string name="passwordCheck">Make sure to write the 14 number of the national id</string>
+    <string name="passwordNotMatch">Password not match!</string>
+    <string name="invalidEmail">Email format is not valid</string>
+    <string name="alldata">All data are required</string>
+    <string name="notFoundUser">No user found, have to register.</string>
+    <string name="notPickImage">Make sure to choose picture</string>
+    <string name="waitingPermission">Waiting.. \n for permission to log in from the college</string>
+    <string name="checkUpdate">Close app and start again to check for update</string>
 </resources>

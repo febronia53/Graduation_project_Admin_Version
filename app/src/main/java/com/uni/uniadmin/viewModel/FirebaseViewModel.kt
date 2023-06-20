@@ -176,7 +176,11 @@ class FirebaseViewModel @Inject constructor(
         repository.getPermission (grade){
             _getPermission.value=it
         }}
-
+    fun getPermissionById(studentId: String)= viewModelScope.launch{
+        _getPermission.value= Resource.Loading
+        repository.getPermissionByUserId (studentId){
+            _getPermission.value=it
+        }}
     private val _addPermission= MutableStateFlow<Resource<String>?>(null)
     val addPermission=_addPermission.asStateFlow()
 
@@ -186,9 +190,9 @@ class FirebaseViewModel @Inject constructor(
             _addPermission.value=it
         }}
 
-    fun deletePermission(grade:String,permissionID:String)= viewModelScope.launch{
+    fun deletePermission(permissionID:PermissionItem)= viewModelScope.launch{
         _addPermission.value= Resource.Loading
-        repository.deletePermission (grade,  permissionID){
+        repository.deletePermission (  permissionID){
             _addPermission.value=it
         }}
 

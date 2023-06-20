@@ -1,6 +1,7 @@
 package com.uni.uniadmin.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,12 +31,17 @@ class ViewPermissionsFragment : Fragment() {
     lateinit var  adapter : PermissionAdapter
     private lateinit var permissionList:MutableList<PermissionItem>
     private val viewModel : FirebaseViewModel by viewModels()
-
+    private lateinit var studentId:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        studentId=""
+        val args= this.arguments
+        if (args != null) {
+            studentId = args.getString("userID","")
+        }
         currentUser= UserAdmin()
         viewModelAuth.getSessionStudent {user->
             if (user != null){
@@ -48,14 +54,21 @@ class ViewPermissionsFragment : Fragment() {
         val view= inflater.inflate(R.layout.fragment_view_permissions, container, false)
         permissionList= arrayListOf()
         val recyclerView = view.findViewById<RecyclerView>(R.id.perm_recy_view)
-viewModel.getPermission(currentUser.grade)
+
+        if (studentId == "All")
+        {
+            Log.e("viewPermissionAll","I am here")
+            viewModel.getPermission(currentUser.grade)
+        }else{
+            viewModel.getPermissionById(studentId)
+        }
         observePermissionList()
 
         adapter= PermissionAdapter(requireContext(),permissionList,
 
             delete = {pos, item->
 
-                viewModel.deletePermission(currentUser.grade, item.permissionId)
+                viewModel.deletePermission( item)
                 observePermission()
             })
 

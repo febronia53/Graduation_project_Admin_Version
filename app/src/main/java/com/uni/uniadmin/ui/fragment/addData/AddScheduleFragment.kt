@@ -1,6 +1,7 @@
 package com.uni.uniadmin.ui.fragment.addData
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -67,8 +69,8 @@ lateinit var binding:   FragmentAddScheduleBinding
 var key =""
         binding.radioGroup.setOnCheckedChangeListener { group, id ->
             when(id){
-
                 R.id.radioSection ->{
+
                     viewModel.getAllAssistant()
                 observeAssistant()
                     key="section"
@@ -90,10 +92,14 @@ binding.addSchedule.setOnClickListener {
     val place=binding.placeSchedule.text.toString()
     if (key=="lecture"){
     if (department.isNotEmpty()&& from.isNotEmpty()&&to.isNotEmpty()&&course.isNotEmpty()&&teaching.isNotEmpty()&&place.isNotEmpty()){
+        //TODO() here the name of the course is the same as the code ether place the name or remove it
+
         viewModel.addLecture(Lecture("",course,course,place,teaching,day,from,to,false),department)
         observeAddedLecture()
     }
     }else{
+        //TODO() here the name of the course is the same as the code ether place the name or remove it
+
         if (department.isNotEmpty()&&section.isNotEmpty()&& from.isNotEmpty()&&to.isNotEmpty()&&course.isNotEmpty()&&teaching.isNotEmpty()){
 viewModel.addSection(Section("",course,course,place,assistantList[index].name,assistantList[index].code,section,day,from,to,false),department)
             observeAddedSection()
@@ -241,6 +247,7 @@ viewModel.addSection(Section("",course,course,place,assistantList[index].name,as
                         teachingList.clear()
                         assistantList.clear()
                         it.result.forEach {
+                            Log.e("teachine",it.name)
                             teachingList.add(it.name)
                             assistantList.add(it)
                         }
@@ -266,6 +273,10 @@ viewModel.addSection(Section("",course,course,place,assistantList[index].name,as
                         it.result.forEach {
                             coursesList.add(it.courseCode)
                         }
+                      /*  viewModel.getAllAssistant()
+                        viewModel.getAllProfessor()
+                        delay(200)
+                        observeAssistant()*/
                         adapterCourses.notifyDataSetChanged()
                     }
                     is Resource.Failure -> {

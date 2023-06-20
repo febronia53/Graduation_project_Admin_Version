@@ -44,8 +44,8 @@ class HomeScreen : AppCompatActivity() {
 
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification-> replaceFragment(PermissionFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.notification-> replaceFragment(OptionsFragment())
+                R.id.profile -> replaceFragment(OptionsFragment())
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
@@ -133,9 +133,9 @@ class HomeScreen : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-       // settingsOnStartApp()
         viewModel.getSessionStudent {user->
             if (user !=null){
+                settingsOnStartApp()
                 updateUser(user)
                 currentUser=user
                 if (checkForInternet(this)){
@@ -154,7 +154,26 @@ class HomeScreen : AppCompatActivity() {
             }
         }
     }
+    private fun settingsOnStartApp() {
+        binding.bottomNavigationView.itemIconTintList = null
+        binding.bottomNavigationView.selectedItemId = R.id.home
 
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.notification-> replaceFragment(OptionsFragment())
+                R.id.profile -> replaceFragment(PermissionFragment())
+                R.id.schedule_and_attendees -> {
+                    replaceFragment(ScheduleListFragment())
+                    updateUser(currentUser)
+                }
+                else -> {
+                }
+
+            }
+            true
+        }
+    }
     private fun checkForInternet(context: Context): Boolean {
 
         val connectivityManager =
@@ -167,24 +186,3 @@ class HomeScreen : AppCompatActivity() {
             else -> false
         }
     }}
-    /*
-    private fun settingsOnStartApp(){
-        binding.bottomNavigationView.itemIconTintList = null
-        binding.bottomNavigationView.selectedItemId = R.id.home
-
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification -> replaceFragment(NotificationsFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
-                R.id.schedule_and_attendees -> {
-                    replaceFragment(ScheduleFragment())
-                    updateUser(currentUser)
-                }
-                else -> {
-                }
-
-            }
-            true
-        }
-    }}*/

@@ -7,15 +7,15 @@
     tools:context=".ui.fragment.OptionsFragment">
 
     <Button
-        android:id="@+id/ad_lecture"
+        android:id="@+id/add_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add lecture"
+        android:text="add schedule"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_section"
+        app:layout_constraintTop_toBottomOf="@+id/add_permission"
         app:layout_constraintVertical_bias="0.378" />
 
     <Button
@@ -56,10 +56,10 @@
         app:layout_constraintVertical_bias="0.242" />
 
     <Button
-        android:id="@+id/add_section"
+        android:id="@+id/add_permission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add section"
+        android:text="add permission"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"

@@ -1,6 +1,7 @@
 package com.uni.uniadmin.ui.fragment.addData
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +10,17 @@ import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.uni.uniadmin.R
+import com.uni.uniadmin.adapters.SpinnerItemAdapter
 import com.uni.uniadmin.classes.Assistant
 import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.Professor
+import com.uni.uniadmin.classes.SpinnerItem
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -30,18 +34,22 @@ class AddCourseFragment : Fragment() {
     private val viewModel : FirebaseViewModel by viewModels()
     private lateinit var currentUser: UserAdmin
     private lateinit var profList: MutableList<String>
-    private lateinit var assistantList: MutableList<String>
+    private lateinit var assistantList: MutableList<SpinnerItem>
     var assistantIndex:Int = 0
     var lecturer:Int = 0
     private lateinit var profListData: MutableList<Professor>
     private lateinit var assistantListData: MutableList<Assistant>
-
+    private lateinit var  adapter2: SpinnerItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        profList= arrayListOf()
+        assistantList= arrayListOf()
+        profListData= arrayListOf()
         currentUser= UserAdmin()
+        assistantListData= arrayListOf()
         viewModelAuth.getSessionStudent {user->
             if (user != null){
                 currentUser = user
@@ -56,17 +64,18 @@ class AddCourseFragment : Fragment() {
         val profText=view.findViewById<TextView>(R.id.professor_text)
         val courseID=view.findViewById<EditText>(R.id.course_id)
         val gradeText=view.findViewById<TextView>(R.id.grade_spinner_add_course_text)
-
         val assistantText=view.findViewById<TextView>(R.id.assistant_text)
+
+
+
         assistant=""
         prof=""
         grade=""
 
-
-        viewModel.getAllProfessor()
-        observeProfessor()
         viewModel.getAllAssistant()
         observeAssistant()
+        viewModel.getAllProfessor()
+        observeProfessor()
 
 
 add.setOnClickListener {
@@ -82,19 +91,19 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
 }
 
 
-        val adapter2: ArrayAdapter<String> = ArrayAdapter<String>(
+         adapter2 = SpinnerItemAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, assistantList
+            assistantList
         )
 
-        val autoCom2 = view.findViewById<Spinner>(R.id.professor_spinner)
+        val autoCom2 = view.findViewById<Spinner>(R.id.assistant_spinner)
         autoCom2.adapter = adapter2
 
         autoCom2.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
-                assistant =assistantList[p2]
+                assistant =assistantList[p2].textUpperLeft
                 assistantIndex = p2
-                Toast.makeText(requireContext(),p2,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),p2.toString(),Toast.LENGTH_SHORT).show()
                 assistantText.text=assistant
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -109,7 +118,7 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
         autoComGrade.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
 
-                Toast.makeText(requireContext(),p2,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),p2.toString(),Toast.LENGTH_SHORT).show()
                 grade =gradeList[p2]
                 gradeText.text=grade
             }
@@ -126,7 +135,7 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
         autoCom.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
                 lecturer = p2
-                Toast.makeText(requireContext(),p2,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),p2.toString(),Toast.LENGTH_SHORT).show()
                 prof =profList[p2]
                 profText.text=prof
             }
@@ -163,10 +172,13 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
                     is Resource.Success -> {
                         assistantList.clear()
                         assistantListData.clear()
+
                         it.result.forEach {
-                            assistantList.add("${it.name} ${it.code}")
+                            Log.e("assistant",it.name)
+                            assistantList.add(SpinnerItem(it.name,it.code,it.Specialization))
                         assistantListData.add(it)
                         }
+                        adapter2.notifyDataSetChanged()
                     }
                     is Resource.Failure -> {
                         Toast.makeText(context, it.exception, Toast.LENGTH_SHORT).show()
@@ -190,6 +202,8 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
                         profList.add("${it.name} ${it.code}")
                             profListData.add(it)
                         }
+
+
                     }
                     is Resource.Failure -> {
                         Toast.makeText(context,it.exception,Toast.LENGTH_SHORT).show()
@@ -201,20 +215,4 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
 
     }
     }
-/*
-    private fun observeCourses() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.getCoursesByGrade.collectLatest {
-                when(it)
-                {
-                    is Resource.Failure -> Toast.makeText(context,it.exception,Toast.LENGTH_SHORT).show()
-                    Resource.Loading -> {}
-                    is Resource.Success -> {
 
-                    }
-                    else->{}
-                }
-            }
-        }
-    }
-*/

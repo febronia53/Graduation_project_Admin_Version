@@ -4,28 +4,29 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.Toast
+import android.view.animation.AnimationUtils
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import com.google.android.material.snackbar.Snackbar
 import com.uni.uniadmin.R
 import com.uni.uniadmin.data.di.SignUpKey
 import com.uni.uniadmin.databinding.FragmentSignUpSubDataBinding
 import com.uni.uniadmin.ui.SignUp
+
 
 class FragmentSignUpSubData : Fragment() {
     private lateinit var binding: FragmentSignUpSubDataBinding
     private lateinit var mCollectData: CollectDataListener
     private lateinit var code: String
     private lateinit var userImage: ImageView
-    private lateinit var section: String
-    private lateinit var department: String
+    private lateinit var job: String
+
     private lateinit var grade: String
     private lateinit var mainDataBundle: Bundle
     private lateinit var userImageUri: Uri
@@ -34,6 +35,10 @@ class FragmentSignUpSubData : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        code=""
+        job=""
+        grade=""
+
         binding = FragmentSignUpSubDataBinding.inflate(layoutInflater)
 
         mainDataBundle = bundleOf()
@@ -43,8 +48,7 @@ class FragmentSignUpSubData : Fragment() {
 
 //------------------------------------//
         setGradeSpinner()
-        setSectionSpinner()
-        setDepartmentSpinner()
+
 //------------------------------------//
         parentFragmentManager.setFragmentResultListener(
             SignUpKey.MAIN_DATA, this
@@ -55,60 +59,62 @@ class FragmentSignUpSubData : Fragment() {
         }
         binding.signUpBtn.setOnClickListener {
 
-            code = binding.signCode.text.trim().toString()
+            code = binding.signCode
+                .text.trim().toString()
+
+            job = binding.jobTitleText
+                .text.trim().toString()
 
 
             if (userImageUri != Uri.EMPTY) {
-                if (code.isNotEmpty() && section.isNotEmpty() && department.isNotEmpty() && grade.isNotEmpty()) {
 
-
+                if (code.isNotEmpty() && job.isNotEmpty()  && grade.isNotEmpty()) {
                     mainDataBundle.putString("code", code)
-                    mainDataBundle.putString("section", section)
-                    mainDataBundle.putString("department", department)
+                    mainDataBundle.putString("jobTitel", job)
                     mainDataBundle.putString("grade", grade)
                     mainDataBundle.putString("userImageUri", userImageUri.toString())
-
+                    /// ----------- ///
                     mCollectData.signUp(mainDataBundle)
-
+                    /// ------------- ///
 
                 } else {
-                    Toast.makeText(requireContext(), "all data are required", Toast.LENGTH_SHORT)
-                        .show()
+                    showTopSnackBar(binding.root,  R.string.alldata)
+
                 }
             } else {
-                Toast.makeText(requireContext(), "make sure to choose picture", Toast.LENGTH_SHORT)
-                    .show()
+                showTopSnackBar(binding.root, R.string.notPickImage)
+
             }
         }
 
         binding.backBtn.setOnClickListener {
+            parentFragmentManager.setFragmentResult(SignUpKey.BACK_DATA, mainDataBundle)
             (activity as SignUp).previousFragment(FragmentSignUpMainData())
         }
 
         return binding.root
     }
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CollectDataListener) {
             mCollectData = context
         } else {
-            Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "error in collect data listener", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // pick an image from the gallery
+
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, SignUp.IMAGE_REQUEST_CODE)
-
     }
 
     // To send all data to signUp activity
     public interface CollectDataListener {
         fun signUp(bundle: Bundle)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -145,54 +151,24 @@ class FragmentSignUpSubData : Fragment() {
         }
     }
 
-    private fun setSectionSpinner() {
-        val sectionList = resources.getStringArray(R.array.Section)
-        val sectionAdapter: ArrayAdapter<CharSequence> =
-            context?.let {
-                ArrayAdapter.createFromResource(
-                    it,
-                    R.array.Section,
-                    R.layout.spinner_item
-                )
-            } as ArrayAdapter<CharSequence>
-        val sectionSpinner = binding.sectionSpinner
-        sectionSpinner.adapter = sectionAdapter
+    private fun showTopSnackBar(view: View, message: Int) {
+        val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
 
-        sectionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                section = sectionList[p2]
+        val slideInAnimation = AnimationUtils.loadAnimation(view.context, R.anim.slide_in_top)
+        val slideOutAnimation = AnimationUtils.loadAnimation(view.context, R.anim.slide_out_bottom)
 
-
+        snackBar.view.animation = slideInAnimation
+        snackBar.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                snackBar.view.animation = slideOutAnimation
             }
+        })
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
 
-            }
-        }
-    }
-
-    private fun setDepartmentSpinner() {
-        val depList = resources.getStringArray(R.array.departement)
-        val depAdapter: ArrayAdapter<CharSequence> =
-            context?.let {
-                ArrayAdapter.createFromResource(
-                    it,
-                    R.array.departement,
-                    R.layout.spinner_item
-                )
-            } as ArrayAdapter<CharSequence>
-        val depSpinner = binding.departmentSpinner
-        depSpinner.adapter = depAdapter
-
-        depSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-                department = depList[p2]
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-        }
+        val params = snackBar.view.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        //  params.setMargins(10,10,10,10)
+        snackBar.view.layoutParams = params
+        snackBar.show()
     }
 }

@@ -16,6 +16,8 @@ import com.uni.uniadmin.classes.user.UserStudent
 class StudentAdapter(
     val context: Context,
     var studentList:MutableList<UserStudent>,
+    val removePerm:(Int, UserStudent) ->Unit,
+    val itemClick:(Int, UserStudent) ->Unit,
     val addPerm:(Int, UserStudent) ->Unit
 
 )
@@ -60,14 +62,20 @@ class StudentAdapter(
         val departemt = item.findViewById<TextView>(R.id.student_department)
         val section = item.findViewById<TextView>(R.id.student_section)
 
-        val add = item.findViewById<ConstraintLayout>(R.id.add_perm)
-
+        val add = item.findViewById<Button>(R.id.add_perm)
+        val remove = item.findViewById<Button>(R.id.remove_permission_all)
+        val item = item.findViewById<ConstraintLayout>(R.id.student_item)
         init {
+            remove.setOnClickListener {
+                removePerm.invoke(adapterPosition,studentList[adapterPosition])
+            }
             add.setOnClickListener {
                 addPerm.invoke(adapterPosition,studentList[adapterPosition])
             }
 
-
+            item.setOnClickListener {
+                itemClick.invoke(adapterPosition,studentList[adapterPosition])
+            }
         }
 
 

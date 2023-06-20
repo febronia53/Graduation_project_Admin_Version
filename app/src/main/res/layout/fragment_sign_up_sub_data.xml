@@ -63,6 +63,20 @@
             android:paddingEnd="16dp"
             android:textSize="@dimen/text_size_14"/>
 
+        <EditText
+            android:id="@+id/job_title_text"
+            android:layout_width="match_parent"
+
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edit_text"
+            android:hint="@string/Job_title"
+
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="@dimen/text_size_14"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -90,57 +104,7 @@
                 android:src="@drawable/arrow_drop_down" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
 
-            <Spinner
-                android:id="@+id/department_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/edit_text"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/department_spinner"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/arrow_drop_down" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <Spinner
-                android:id="@+id/section_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/edit_text"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/section_spinner"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/arrow_drop_down" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

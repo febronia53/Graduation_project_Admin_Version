@@ -93,7 +93,7 @@ class AuthRepositoryImpl@Inject constructor(
 
                                                result.invoke(
                                                     Resource.Success(
-                                                        "user created successfully but you need to check you permission with admin"
+                                                        "user created successfully"
                                                     )
                                                 )
 

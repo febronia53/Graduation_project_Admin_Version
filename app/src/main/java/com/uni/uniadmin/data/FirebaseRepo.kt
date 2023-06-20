@@ -2,12 +2,13 @@ package com.uni.uniadmin.data
 
 import com.uni.uniadmin.classes.*
 import com.uni.uniadmin.classes.user.UserStudent
+import com.uni.uniadmin.classes.Professor
 
 
 interface FirebaseRepo {
-
+    suspend fun getPermissionByUserId(userId:String, result: (Resource<List<PermissionItem>>) -> Unit)
     suspend fun addPermission(grade:String,permission: PermissionItem, result: (Resource<String>) -> Unit)
-    suspend fun deletePermission(grade:String,permissionID: String, result: (Resource<String>) -> Unit)
+    suspend fun deletePermission(permission: PermissionItem, result: (Resource<String>) -> Unit)
     suspend fun getPermission(grade:String, result: (Resource<List<PermissionItem>>) -> Unit)
 
 
@@ -19,7 +20,7 @@ interface FirebaseRepo {
     suspend fun searchStudentByDepartment( grade:String,department: String,result: (Resource<List<UserStudent>>) -> Unit)
     suspend fun searchStudentAll( grade:String,result: (Resource<List<UserStudent>>) -> Unit)
 
-    suspend fun updateCourse(courses: Courses,professor: Professor,assistant: Assistant, result: (Resource<String>) -> Unit)
+    suspend fun updateCourse(courses: Courses, professor: Professor, assistant: Assistant, result: (Resource<String>) -> Unit)
     suspend fun updateProfessor(professor: Professor,courseId:String, result: (Resource<String>) -> Unit)
     suspend fun updateAssistant(assistant: Assistant,courseId:String, result: (Resource<String>) -> Unit)
     suspend fun getCourseByGrade(grade:String,result: (Resource<List<Courses>>) -> Unit)
