@@ -1,5 +1,6 @@
 package com.uni.uniadmin.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ import kotlinx.coroutines.flow.collectLatest
 class ViewCoursesFragment : Fragment() {
  lateinit var binding:FragmentViewCoursesBinding
     private val viewModel: FirebaseViewModel by viewModels()
-
+var  flage =false
     private val authViewModel: AuthViewModel by viewModels()
     lateinit var currentUser: UserAdmin
 
@@ -41,6 +42,7 @@ lateinit var coursesList:MutableList<Courses>
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         coursesList= arrayListOf()
         currentUser= UserAdmin()
         authViewModel.getSessionStudent {user->
@@ -53,20 +55,26 @@ lateinit var coursesList:MutableList<Courses>
 
         }
         binding = FragmentViewCoursesBinding.inflate(layoutInflater)
-
+        binding.allCourses.setBackgroundColor(Color.GREEN)
+binding.allCourses.setOnClickListener {
+    flage = !flage
+    update()
+}
         adapter= CourseAdapter(requireContext(),coursesList,
 
 
             deleteCourse = { pos, item ->
              viewModel.deleteCourse(item.courseCode)
                 observeDeletedCourse()
+                viewModel.getCoursesByGrade(currentUser.grade)
+
             })
 
 //-------------- setting the recycler data---------------------------//
         binding.recCourses.layoutManager= LinearLayoutManager(requireContext())
         binding.recCourses.adapter=adapter
 //-------------- setting the recycler data---------------------------//
-        viewModel.getCoursesByGrade(currentUser.grade)
+   update()
         observeCourse()
    return binding.root }
 
@@ -93,7 +101,7 @@ lateinit var coursesList:MutableList<Courses>
     private fun observeCourse() {
 
         lifecycleScope.launchWhenCreated {
-            viewModel.getCourses.collectLatest { state ->
+            viewModel.getCoursesByGrade.collectLatest { state ->
                 when (state) {
                     is Resource.Loading -> {
 
@@ -113,5 +121,14 @@ lateinit var coursesList:MutableList<Courses>
             }
         }}
 
-
+fun update(){
+    if (flage)
+    {
+        binding.allCourses.setBackgroundColor(Color.RED)
+        viewModel.getAllCourses()
+    }else {
+        binding.allCourses.setBackgroundColor(Color.GREEN)
+        viewModel.getCoursesByGrade(currentUser.grade)
+    }
+}
 }

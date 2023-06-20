@@ -6,6 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.addData.AddCourseFragment">
 
+    <Button
+        android:id="@+id/view_courses_bt"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="view courses "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/grade_spinner_add_course"
@@ -48,12 +58,12 @@
         android:layout_height="wrap_content"
         android:text="choose professor "
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/professor_spinner"
+        app:layout_constraintBottom_toTopOf="@+id/professor_spinner"
         app:layout_constraintEnd_toEndOf="@+id/professor_spinner"
-        app:layout_constraintHorizontal_bias="0.196"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/professor_spinner"
-        app:layout_constraintTop_toTopOf="@+id/professor_spinner"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintTop_toBottomOf="@+id/grade_spinner_add_course"
+        app:layout_constraintVertical_bias="0.818" />
 
     <Spinner
         android:id="@+id/assistant_spinner"
@@ -72,22 +82,33 @@
         android:layout_height="wrap_content"
         android:text="choose assistant"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/assistant_spinner"
-        app:layout_constraintEnd_toEndOf="@+id/assistant_spinner"
-        app:layout_constraintHorizontal_bias="0.196"
+        app:layout_constraintBottom_toTopOf="@+id/assistant_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/assistant_spinner"
-        app:layout_constraintTop_toTopOf="@+id/assistant_spinner"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintTop_toBottomOf="@+id/professor_spinner"
+        app:layout_constraintVertical_bias="0.818" />
 
     <EditText
         android:id="@+id/course_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="course code"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/assistant_spinner"
         app:layout_constraintVertical_bias="0.155"
         tools:layout_editor_absoluteX="0dp" />
-
+    <EditText
+        android:id="@+id/course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="course name"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/course_id"
+        app:layout_constraintVertical_bias="0.155"
+        tools:layout_editor_absoluteX="0dp" />
     <Button
         android:id="@+id/add_course"
         android:layout_width="wrap_content"
@@ -97,7 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_id"
+        app:layout_constraintTop_toBottomOf="@+id/course_name"
         app:layout_constraintVertical_bias="0.256" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ class CourseAdapter(
     : RecyclerView.Adapter<CourseAdapter.myViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
-        val view : View = LayoutInflater.from(context).inflate(R.layout.student_item,parent,false)
+        val view : View = LayoutInflater.from(context).inflate(R.layout.course_item,parent,false)
         return myViewHolder(view)
     }
 
@@ -62,7 +62,7 @@ class CourseAdapter(
         val course_code = item.findViewById<TextView>(R.id.course_code)
         val course_professor = item.findViewById<TextView>(R.id.course_professor)
 
-        val delete = item.findViewById<ConstraintLayout>(R.id.delete_bt)
+        val delete = item.findViewById<Button>(R.id.delete_bt)
 
         init {
             delete.setOnClickListener {

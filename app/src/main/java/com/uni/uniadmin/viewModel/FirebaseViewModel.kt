@@ -291,12 +291,11 @@ class FirebaseViewModel @Inject constructor(
             _getCoursesByGrade.value=it
         }}
 
-    private val _getAllCourses= MutableStateFlow<Resource<List<Courses>>?>(Resource.Loading)
-    val getAllCourses=_getAllCourses.asStateFlow()
+
     fun getAllCourses()= viewModelScope.launch{
-        _getAllCourses.value= Resource.Loading
+        _getCoursesByGrade.value= Resource.Loading
         repository.getAllCourses() {
-            _getAllCourses.value=it
+            _getCoursesByGrade.value=it
         }}
 
     private val _deleteCourse= MutableStateFlow<Resource<String>?>(Resource.Loading)
@@ -356,17 +355,6 @@ class FirebaseViewModel @Inject constructor(
 
 
 // -------------------------------------------------------- student data -------------------------------------------------------//
-
-
-
-
-
-
-
-
-
-
-
 
 
 

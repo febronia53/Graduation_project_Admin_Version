@@ -16,6 +16,8 @@ import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.Professor
 import com.uni.uniadmin.classes.SpinnerItem
 import com.uni.uniadmin.data.Resource
+import com.uni.uniadmin.ui.HomeScreen
+import com.uni.uniadmin.ui.fragment.ViewCoursesFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
@@ -33,14 +35,14 @@ class AddCourseFragment : Fragment() {
     private val viewModelAuth : AuthViewModel by viewModels()
     private val viewModel : FirebaseViewModel by viewModels()
     private lateinit var currentUser: UserAdmin
-    private lateinit var profList: MutableList<String>
+    private lateinit var profList: MutableList<SpinnerItem>
     private lateinit var assistantList: MutableList<SpinnerItem>
     var assistantIndex:Int = 0
     var lecturer:Int = 0
     private lateinit var profListData: MutableList<Professor>
     private lateinit var assistantListData: MutableList<Assistant>
     private lateinit var  adapter2: SpinnerItemAdapter
-
+    private lateinit var  adapterLecturer: SpinnerItemAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,12 +63,12 @@ class AddCourseFragment : Fragment() {
         }
         val view = inflater.inflate(R.layout.fragment_add_course, container, false)
         val add = view.findViewById<Button>(R.id.add_course)
-        val profText=view.findViewById<TextView>(R.id.professor_text)
         val courseID=view.findViewById<EditText>(R.id.course_id)
+        val courseName=view.findViewById<EditText>(R.id.course_name)
+
+        val viewCourse=view.findViewById<Button>(R.id.view_courses_bt)
+
         val gradeText=view.findViewById<TextView>(R.id.grade_spinner_add_course_text)
-        val assistantText=view.findViewById<TextView>(R.id.assistant_text)
-
-
 
         assistant=""
         prof=""
@@ -77,13 +79,27 @@ class AddCourseFragment : Fragment() {
         viewModel.getAllProfessor()
         observeProfessor()
 
-
+        viewCourse.setOnClickListener {
+            val viewCourse=ViewCoursesFragment()
+            (activity as HomeScreen).replaceFragment(viewCourse)
+        }
 add.setOnClickListener {
     val cID= courseID.text.toString()
-   if (lecturer>0 && assistantIndex>0&& grade.isNotEmpty()&&cID.isNotEmpty()){
-       // TODO: we need a button to navigate to the courses list screen
-       //TODO() the grade is here as the admin is assigned to some grade but we generated the grade by spinner
-       viewModel.addCourse(Courses(cID,grade,profListData[lecturer].code,assistantListData[assistantIndex].code),profListData[lecturer],assistantListData[assistantIndex])
+    val _courseName=courseName.text.toString()
+   if (lecturer>0 && assistantIndex>0&& grade.isNotEmpty()&&cID.isNotEmpty()&&_courseName.isNotEmpty()){
+
+       viewModel.addCourse(
+           Courses(
+               _courseName,
+                cID,
+                grade,
+                profListData[lecturer].name,
+                assistantListData[assistantIndex].name
+                ,profListData[lecturer].code,
+               assistantListData[assistantIndex].code
+           ),
+                profListData[lecturer],
+                assistantListData[assistantIndex])
        observeAddedCourse()
    }else{
 Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
@@ -103,8 +119,6 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
                 assistant =assistantList[p2].textUpperLeft
                 assistantIndex = p2
-                Toast.makeText(requireContext(),p2.toString(),Toast.LENGTH_SHORT).show()
-                assistantText.text=assistant
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
@@ -118,26 +132,23 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
         autoComGrade.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
 
-                Toast.makeText(requireContext(),p2.toString(),Toast.LENGTH_SHORT).show()
                 grade =gradeList[p2]
                 gradeText.text=grade
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+        adapterLecturer = SpinnerItemAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, profList
+            profList
         )
 
         val autoCom = view.findViewById<Spinner>(R.id.professor_spinner)
-        autoCom.adapter = adapter
+        autoCom.adapter = adapterLecturer
 
         autoCom.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
                 lecturer = p2
-                Toast.makeText(requireContext(),p2.toString(),Toast.LENGTH_SHORT).show()
-                prof =profList[p2]
-                profText.text=prof
+                prof =profList[p2].textUpperLeft
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
@@ -152,7 +163,8 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
                     }
                     is Resource.Success -> {
                         Toast.makeText(context, "course added successfully", Toast.LENGTH_SHORT).show()
-
+                        val viewCourse=ViewCoursesFragment()
+                        (activity as HomeScreen).replaceFragment(viewCourse)
                     }
                     is Resource.Failure -> {
                         Toast.makeText(context, it.exception, Toast.LENGTH_SHORT).show()
@@ -174,7 +186,6 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
                         assistantListData.clear()
 
                         it.result.forEach {
-                            Log.e("assistant",it.name)
                             assistantList.add(SpinnerItem(it.name,it.code,it.Specialization))
                         assistantListData.add(it)
                         }
@@ -199,11 +210,10 @@ Toast.makeText(context,"make sure to fill all data",Toast.LENGTH_SHORT).show()
                         profList.clear()
                         profListData.clear()
                         it.result.forEach {
-                        profList.add("${it.name} ${it.code}")
+                        profList.add(SpinnerItem(it.name,it.code,it.Specialization))
                             profListData.add(it)
                         }
-
-
+                        adapterLecturer.notifyDataSetChanged()
                     }
                     is Resource.Failure -> {
                         Toast.makeText(context,it.exception,Toast.LENGTH_SHORT).show()
