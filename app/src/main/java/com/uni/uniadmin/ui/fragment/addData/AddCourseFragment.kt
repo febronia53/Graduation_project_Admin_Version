@@ -137,7 +137,7 @@ class AddCourseFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 grade = gradeList[p2]
-                gradeText.text = grade
+
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
