@@ -140,4 +140,6 @@
     <string name="chooseAssistant">Choose assistant</string>
     <string name="addCourse">Add course</string>
     <string name="add">Add</string>
+    <string name="prof">prof.</string>
+    <string name="eng">eng.</string>
 </resources>

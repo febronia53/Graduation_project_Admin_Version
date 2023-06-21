@@ -34,8 +34,9 @@ class CourseAdapter(
 
 
         holder.course_assitant.text = currentItem.learningAssistant
-        holder.course_name.text = currentItem.courseCode
-        holder.course_code.text = currentItem.grade
+        holder.course_name.text = currentItem.courseName
+        holder.course_code.text = currentItem.courseCode
+        holder.course_grade.text = currentItem.grade
         holder.course_professor.text = currentItem.professor
 
 
@@ -60,6 +61,7 @@ class CourseAdapter(
         val course_assitant = item.findViewById<TextView>(R.id.course_assitant)
         val course_name = item.findViewById<TextView>(R.id.course_name)
         val course_code = item.findViewById<TextView>(R.id.course_code)
+        val course_grade = item.findViewById<TextView>(R.id.course_grade)
         val course_professor = item.findViewById<TextView>(R.id.course_professor)
 
         val delete = item.findViewById<Button>(R.id.delete_bt)
