@@ -46,7 +46,7 @@
             android:layout_marginTop="-8dp"
             android:fontFamily="@font/poppins_semi_bold"
             android:gravity="center"
-            android:text="@string/student"
+            android:text="@string/admin"
             android:textColor="@color/green"
             android:textSize="@dimen/text_size_10"
             android:textStyle="normal" />

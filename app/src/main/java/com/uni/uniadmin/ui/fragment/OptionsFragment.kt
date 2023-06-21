@@ -19,25 +19,25 @@ class OptionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_options, container, false)
-        val course=view.findViewById<Button>(R.id.add_course)
-        val permission=view.findViewById<Button>(R.id.add_permission)
-        val sch=view.findViewById<Button>(R.id.add_schedule)
-        val post=view.findViewById<Button>(R.id.add_post)
+        val view = inflater.inflate(R.layout.fragment_options, container, false)
+        val course = view.findViewById<Button>(R.id.add_course)
+        val permission = view.findViewById<Button>(R.id.add_permission)
+        val sch = view.findViewById<Button>(R.id.add_schedule)
+        val post = view.findViewById<Button>(R.id.add_post)
         course.setOnClickListener {
-            val addCourse=AddCourseFragment()
+            val addCourse = AddCourseFragment()
             (activity as HomeScreen).replaceFragment(addCourse)
         }
         permission.setOnClickListener {
-            val permissionsFragment=PermissionFragment()
+            val permissionsFragment = PermissionFragment()
             (activity as HomeScreen).replaceFragment(permissionsFragment)
         }
         post.setOnClickListener {
-            val addPost=AddPostFragment()
+            val addPost = AddPostFragment()
             (activity as HomeScreen).replaceFragment(addPost)
         }
         sch.setOnClickListener {
-            val addSch=AddScheduleFragment()
+            val addSch = AddScheduleFragment()
             (activity as HomeScreen).replaceFragment(addSch)
         }
         return view

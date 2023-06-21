@@ -6,94 +6,95 @@
     <data>
 
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.ScheduleListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.ScheduleListFragment">
 
-        <Spinner
-            android:id="@+id/departement_spinner_schedule"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_margin="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.021" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/department_text_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" departement"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
-            app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
-            app:layout_constraintStart_toStartOf="@+id/departement_spinner_schedule"
-            app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule"
-            app:layout_constraintVertical_bias="0.476" />
+            <Spinner
+                android:id="@+id/departement_spinner_schedule"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.021" />
 
-        <Spinner
-            android:id="@+id/section_spinner_schedule"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="20dp"
+            <TextView
+                android:id="@+id/department_text_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" departement"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
+                app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
+                app:layout_constraintStart_toStartOf="@+id/departement_spinner_schedule"
+                app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule"
+                app:layout_constraintVertical_bias="0.476" />
+
+            <Spinner
+                android:id="@+id/section_spinner_schedule"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.036"
+                app:layout_constraintStart_toEndOf="@+id/departement_spinner_schedule" />
+
+            <TextView
+                android:id="@+id/section_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" section"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
+                app:layout_constraintEnd_toEndOf="@+id/section_spinner_schedule"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/section_spinner_schedule"
+                app:layout_constraintTop_toTopOf="@+id/section_spinner_schedule" />
+
+            <Button
+                android:id="@+id/search_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="search"
+                app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/section_spinner_schedule"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.036"
-            app:layout_constraintStart_toEndOf="@+id/departement_spinner_schedule" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-        <TextView
-            android:id="@+id/section_text"
+        <ProgressBar
+            android:id="@+id/progress_schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" section"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
-            app:layout_constraintEnd_toEndOf="@+id/section_spinner_schedule"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/section_spinner_schedule"
-            app:layout_constraintTop_toTopOf="@+id/section_spinner_schedule" />
-
-        <Button
-            android:id="@+id/search_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="search"
-            app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/section_spinner_schedule"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/recycler_schedule"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:id="@+id/progress_schedule"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,8 +1,7 @@
-
 <resources xmlns:tools="http://schemas.android.com/tools">
-<!-- Base application theme. -->
-    <style name="Theme.UNIAdmin"  parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-    <!-- Primary brand color. -->
+    <!-- Base application theme. -->
+    <style name="Theme.UNIAdmin" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -14,8 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
 
-    <style name="Theme.UNIStudent.custom" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="Theme.UNIAdmin.custom" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -23,10 +22,14 @@
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:windowLightStatusBar">true</item>
 
-
-
-
+    </style>
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalStyle</item>
     </style>
 
+    <style name="ModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+        <item name="android:state_expanded">true</item>
+    </style>
 
 </resources>

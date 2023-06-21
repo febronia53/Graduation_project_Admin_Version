@@ -80,7 +80,7 @@
     <string name="choose_section">Choose section</string>
     <string name="next_slider">Next</string>
     <string name="back">Back</string>
-    <string name="student">Student</string>
+    <string name="admin">Admin</string>
     <string name="uni">UNI</string>
     <string name="profile">Profile</string>
 
@@ -132,4 +132,12 @@
     <string name="notPickImage">Make sure to choose picture</string>
     <string name="waitingPermission">Waiting.. \n for permission to log in from the college</string>
     <string name="checkUpdate">Close app and start again to check for update</string>
+    <string name="view_all_courses">View all courses</string>
+    <string name="enterCourseCode">Enter course code</string>
+    <string name="enterCourseName">Enter course name</string>
+    <string name="chooseGrade">Choose grade</string>
+    <string name="chooseProfessor">Choose professor</string>
+    <string name="chooseAssistant">Choose assistant</string>
+    <string name="addCourse">Add course</string>
+    <string name="add">Add</string>
 </resources>
