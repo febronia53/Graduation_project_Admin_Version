@@ -74,8 +74,18 @@ class AddScheduleFragment : Fragment() {
         var day = ""
         var key = ""
 
-        binding.fromSchedule.setOnClickListener { showTimePickerDialog(binding.fromSchedule,binding.amPmFromTime) }
-        binding.toSchedule.setOnClickListener { showTimePickerDialog(binding.toSchedule,binding.amPmToTime) }
+        binding.fromSchedule.setOnClickListener {
+            showTimePickerDialog(
+                binding.fromSchedule,
+                binding.amPmFromTime
+            )
+        }
+        binding.toSchedule.setOnClickListener {
+            showTimePickerDialog(
+                binding.toSchedule,
+                binding.amPmToTime
+            )
+        }
 
         binding.radioGroup.check(R.id.radioLecture)
         binding.radioGroup.setOnCheckedChangeListener { group, id ->
@@ -232,10 +242,16 @@ class AddScheduleFragment : Fragment() {
         viewModel.getCoursesByGrade(currentUser.grade)
         observeCourses()
 
+        binding.backFragmentBtn.setOnClickListener { finishFragment() }
+
         return binding.root
     }
 
-    private fun showTimePickerDialog(mTime: TextView,amPmTxt:TextView) {
+    private fun finishFragment() {
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun showTimePickerDialog(mTime: TextView, amPmTxt: TextView) {
         val currentTime = Calendar.getInstance()
         val startHour = currentTime.get(Calendar.HOUR_OF_DAY)
         val startMinute = currentTime.get(Calendar.MINUTE)
@@ -249,7 +265,7 @@ class AddScheduleFragment : Fragment() {
                 if (hour == 0) {
                     hour = 12
                 }
-                amPmTxt.text =amPm
+                amPmTxt.text = amPm
                 mTime.text = "$hour:$minute"
 
             }, startHour, startMinute, false

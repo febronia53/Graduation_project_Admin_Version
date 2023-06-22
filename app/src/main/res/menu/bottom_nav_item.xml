@@ -3,17 +3,20 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/education"
-        android:title="home" />
-
+        android:title="@string/home" />
+    <item
+        android:id="@+id/students_permissions"
+        android:icon="@drawable/ic_student_permission"
+        android:title="@string/permissions" />
     <item
         android:id="@+id/schedule_and_attendees"
         android:icon="@drawable/schedule_and_attendees"
-        android:title="lectures" />
+        android:title="@string/schedule" />
 
     <item
         android:id="@+id/notification"
         android:icon="@drawable/ic_notification"
-        android:title="attendance" />
+        android:title="@string/notification" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/profile"

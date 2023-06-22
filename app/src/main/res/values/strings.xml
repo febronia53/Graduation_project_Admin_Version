@@ -150,4 +150,8 @@
     <string name="section">Section</string>
     <string name="addLecture">Add lecture</string>
     <string name="addSection">Add section</string>
+    <string name="permissions">permissions</string>
+    <string name="schedule">schedule</string>
+    <string name="addSchedule">Add schedule</string>
+    <string name="createPost">Create post</string>
 </resources>

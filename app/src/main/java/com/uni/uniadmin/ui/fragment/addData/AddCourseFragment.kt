@@ -158,9 +158,14 @@ class AddCourseFragment : Fragment() {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
+
+        view.findViewById<ImageButton>(R.id.back_fragment_btn).setOnClickListener {  finishFragment()}
         return view
     }
+    private fun finishFragment() {
 
+        parentFragmentManager.popBackStack()
+    }
     private fun observeAddedCourse() {
         lifecycleScope.launchWhenCreated {
             viewModel.addCourse.collectLatest {
