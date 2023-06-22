@@ -96,7 +96,7 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
 
         val message = intent.getStringExtra(SignUpKey.FROM_HOME_SCREEN)
         if (message != null) {
-            if (message.isNotEmpty()){
+            if (message.isNotEmpty()) {
                 val rootView = findViewById<View>(android.R.id.content)
                 showTopSnackBar(rootView, message)
 
@@ -111,9 +111,6 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
         progressPar = binding.progressBarRegister
 
 
-
-
-
     }
 
 
@@ -126,6 +123,7 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
                         progressPar.visibility = View.VISIBLE
 
                     }
+
                     is Resource.Success -> {
 
                         Toast.makeText(this@SignUp, state.result, Toast.LENGTH_LONG).show()
@@ -136,6 +134,7 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
                         }
                         startActivity(Intent(this@SignUp, HomeScreen::class.java))
                     }
+
                     is Resource.Failure -> {
                         progressPar.visibility = View.GONE
                         Toast.makeText(
@@ -143,6 +142,7 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
                             Toast.LENGTH_LONG
                         ).show()
                     }
+
                     else -> {}
                 }
             }
@@ -159,16 +159,19 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
                     is Resource.Loading -> {
                         progressPar.visibility = View.VISIBLE
                     }
+
                     is Resource.Success -> {
                         progressPar.visibility = View.GONE
                         Log.e(TAG, "it.result ")
 
                     }
+
                     is Resource.Failure -> {
 
                         Toast.makeText(this@SignUp, it.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
+
                     else -> {}
                 }
 
@@ -193,16 +196,16 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
                 bundle.getString("grade").toString(),
                 bundle.getString("jobTitel").toString(),
 
-            )
+                )
         )
         observeSignUp()
     }
+
     private fun showTopSnackBar(view: View, message: String) {
         val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
 
         val slideInAnimation = AnimationUtils.loadAnimation(view.context, R.anim.slide_in_top)
         val slideOutAnimation = AnimationUtils.loadAnimation(view.context, R.anim.slide_out_bottom)
-
         snackBar.view.animation = slideInAnimation
         snackBar.addCallback(object : Snackbar.Callback() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -216,14 +219,15 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
         snackBar.view.layoutParams = params
         snackBar.show()
     }
+
     override fun onStart() {
         super.onStart()
-        viewModel.getSessionStudent {user->
-            if (user !=null){
-                startActivity(Intent(this,HomeScreen::class.java))
+        viewModel.getSessionStudent { user ->
+            if (user != null) {
+                startActivity(Intent(this, HomeScreen::class.java))
 
-            }else{
-                Toast.makeText(this,"no user found. have to register", Toast.LENGTH_SHORT).show()
+            } else {
+                showTopSnackBar(binding.root, getString(R.string.notFoundUser))
             }
         }
     }

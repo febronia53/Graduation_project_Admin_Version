@@ -30,53 +30,57 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class ViewCoursesFragment : Fragment() {
- lateinit var binding:FragmentViewCoursesBinding
+    lateinit var binding: FragmentViewCoursesBinding
     private val viewModel: FirebaseViewModel by viewModels()
-var  flage =false
+    var flage = false
     private val authViewModel: AuthViewModel by viewModels()
     lateinit var currentUser: UserAdmin
 
-    lateinit var adapter:CourseAdapter
-lateinit var coursesList:MutableList<Courses>
+    lateinit var adapter: CourseAdapter
+    lateinit var coursesList: MutableList<Courses>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        coursesList= arrayListOf()
-        currentUser= UserAdmin()
-        authViewModel.getSessionStudent {user->
-            if (user != null){
+        coursesList = arrayListOf()
+        currentUser = UserAdmin()
+        authViewModel.getSessionStudent { user ->
+            if (user != null) {
                 currentUser = user
-            }else
-            {
-                Toast.makeText(context,"there is an error on loading user data", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "there is an error on loading user data",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
         binding = FragmentViewCoursesBinding.inflate(layoutInflater)
-        binding.allCourses.setBackgroundColor(Color.GREEN)
-binding.allCourses.setOnClickListener {
-    flage = !flage
-    update()
-}
-        adapter= CourseAdapter(requireContext(),coursesList,
+        binding.allCoursesCheckBox.setOnCheckedChangeListener { _, _ ->
+                flage = !flage
+                update()
+
+        }
+        adapter = CourseAdapter(requireContext(), coursesList,
 
 
             deleteCourse = { pos, item ->
-             viewModel.deleteCourse(item.courseCode)
+                viewModel.deleteCourse(item.courseCode)
                 observeDeletedCourse()
                 viewModel.getCoursesByGrade(currentUser.grade)
 
             })
 
 //-------------- setting the recycler data---------------------------//
-        binding.recCourses.layoutManager= LinearLayoutManager(requireContext())
-        binding.recCourses.adapter=adapter
+        binding.recCourses.layoutManager = LinearLayoutManager(requireContext())
+        binding.recCourses.adapter = adapter
 //-------------- setting the recycler data---------------------------//
-   update()
+        update()
         observeCourse()
-   return binding.root }
+        return binding.root
+    }
 
     private fun observeDeletedCourse() {
 
@@ -86,17 +90,23 @@ binding.allCourses.setOnClickListener {
                     is Resource.Loading -> {
 
                     }
+
                     is Resource.Success -> {
-                        Toast.makeText(context,"Course deleted successfully", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Course deleted successfully", Toast.LENGTH_LONG)
+                            .show()
 
                     }
+
                     is Resource.Failure -> {
-                        Toast.makeText(context,state.exception.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
                     }
-                    else->{}
+
+                    else -> {}
                 }
             }
-        }}
+        }
+    }
 
     private fun observeCourse() {
 
@@ -106,6 +116,7 @@ binding.allCourses.setOnClickListener {
                     is Resource.Loading -> {
 
                     }
+
                     is Resource.Success -> {
                         coursesList.clear()
                         state.result.forEach {
@@ -113,22 +124,25 @@ binding.allCourses.setOnClickListener {
                         }
                         adapter.update(coursesList)
                     }
+
                     is Resource.Failure -> {
-                        Toast.makeText(context,state.exception.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
                     }
-                    else->{}
+
+                    else -> {}
                 }
             }
-        }}
-
-fun update(){
-    if (flage)
-    {
-        binding.allCourses.setBackgroundColor(Color.RED)
-        viewModel.getAllCourses()
-    }else {
-        binding.allCourses.setBackgroundColor(Color.GREEN)
-        viewModel.getCoursesByGrade(currentUser.grade)
+        }
     }
-}
+
+    fun update() {
+        if (flage) {
+         //   binding.allCourses.setBackgroundColor(Color.RED)
+            viewModel.getAllCourses()
+        } else {
+          //  binding.allCourses.setBackgroundColor(Color.GREEN)
+            viewModel.getCoursesByGrade(currentUser.grade)
+        }
+    }
 }

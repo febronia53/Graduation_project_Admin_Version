@@ -1,124 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="vertical"
     tools:context=".ui.fragment.addData.AddCourseFragment">
 
-    <Button
-        android:id="@+id/view_courses_bt"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="view courses "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/grade_spinner_add_course"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144" />
-
-    <TextView
-        android:id="@+id/grade_spinner_add_course_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose grade "
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/grade_spinner_add_course"
-        app:layout_constraintEnd_toEndOf="@+id/grade_spinner_add_course"
-        app:layout_constraintHorizontal_bias="0.196"
-        app:layout_constraintStart_toStartOf="@+id/grade_spinner_add_course"
-        app:layout_constraintTop_toTopOf="@+id/grade_spinner_add_course"
-        app:layout_constraintVertical_bias="0.476" />
-
-    <Spinner
-        android:id="@+id/professor_spinner"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.308" />
-
-    <TextView
-        android:id="@+id/professor_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose professor "
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/professor_spinner"
-        app:layout_constraintEnd_toEndOf="@+id/professor_spinner"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/professor_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/grade_spinner_add_course"
-        app:layout_constraintVertical_bias="0.818" />
-
-    <Spinner
-        android:id="@+id/assistant_spinner"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/professor_spinner"
-        app:layout_constraintVertical_bias="0.133" />
-
-    <TextView
-        android:id="@+id/assistant_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose assistant"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/assistant_spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/assistant_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/professor_spinner"
-        app:layout_constraintVertical_bias="0.818" />
-
-    <EditText
-        android:id="@+id/course_id"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="course code"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assistant_spinner"
-        app:layout_constraintVertical_bias="0.155"
-        tools:layout_editor_absoluteX="0dp" />
-    <EditText
-        android:id="@+id/course_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="course name"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_id"
-        app:layout_constraintVertical_bias="0.155"
-        tools:layout_editor_absoluteX="0dp" />
-    <Button
-        android:id="@+id/add_course"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add course"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_name"
-        app:layout_constraintVertical_bias="0.256" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/view_courses_bt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_10_btn"
+            android:drawableEnd="@drawable/ic_forward"
+            android:text="@string/view_all_courses"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="@dimen/cardView_radius_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_courses_bt">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/add_course_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/margin_4dp"
+                    android:text="@string/addCourse"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/grade_spinner_add_course_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/chooseGrade"
+                    android:textColor="@color/black_70"
+                    android:textSize="@dimen/text_size_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_course_txt" />
+
+                <Spinner
+                    android:id="@+id/grade_spinner_add_course"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/border"
+                    android:paddingTop="@dimen/margin_2dp"
+                    android:paddingBottom="@dimen/margin_2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/grade_spinner_add_course_text" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/arrow_drop_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/grade_spinner_add_course"
+                    app:layout_constraintEnd_toEndOf="@+id/grade_spinner_add_course"
+                    app:layout_constraintTop_toTopOf="@+id/grade_spinner_add_course" />
+
+                <TextView
+                    android:id="@+id/professor_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/chooseProfessor"
+                    android:textColor="@color/black_70"
+                    android:textSize="@dimen/text_size_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/grade_spinner_add_course" />
+
+                <Spinner
+                    android:id="@+id/professor_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/border"
+                    android:paddingTop="@dimen/margin_2dp"
+                    android:paddingBottom="@dimen/margin_2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/professor_text" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/arrow_drop_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/professor_spinner"
+                    app:layout_constraintEnd_toEndOf="@+id/professor_spinner"
+                    app:layout_constraintTop_toTopOf="@+id/professor_spinner" />
+
+                <TextView
+                    android:id="@+id/assistant_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/chooseAssistant"
+                    android:textColor="@color/black_70"
+                    android:textSize="@dimen/text_size_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/professor_spinner" />
+
+                <Spinner
+                    android:id="@+id/assistant_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/border"
+                    android:paddingTop="@dimen/margin_2dp"
+                    android:paddingBottom="@dimen/margin_2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/assistant_text" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/arrow_drop_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/assistant_spinner"
+                    app:layout_constraintEnd_toEndOf="@+id/assistant_spinner"
+                    app:layout_constraintTop_toTopOf="@+id/assistant_spinner" />
+
+                <EditText
+                    android:id="@+id/course_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/border"
+                    android:gravity="start"
+                    android:hint="@string/enterCourseCode"
+                    android:paddingStart="@dimen/margin_8dp"
+                    android:paddingTop="@dimen/margin_4dp"
+                    android:paddingEnd="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_4dp"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/assistant_spinner" />
+
+                <EditText
+                    android:id="@+id/course_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/border"
+                    android:gravity="start"
+                    android:hint="@string/enterCourseName"
+                    android:paddingStart="@dimen/margin_8dp"
+                    android:paddingTop="@dimen/margin_4dp"
+                    android:paddingEnd="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_4dp"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/course_id" />
+
+                <Button
+                    android:id="@+id/add_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/round_btn"
+                    android:text="@string/add"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/course_name" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
