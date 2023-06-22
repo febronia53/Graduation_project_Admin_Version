@@ -1,6 +1,7 @@
 package com.uni.uniadmin.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.Courses
+import com.uni.uniadmin.classes.PostData
 import com.uni.uniadmin.classes.Posts
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
@@ -41,11 +43,13 @@ class HomeFragment : Fragment() {
     lateinit var coursesList:MutableList<Courses>
 
     lateinit var  adapter : PostsAdapter
-    lateinit var postsList:MutableList<Posts>
+    lateinit var postsList:MutableList<PostData>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        section=""
+        department=""
 // update user data --------------------------------------------------------------------------------
         currentUser= UserAdmin()
         authViewModel.getSessionStudent {user->
@@ -72,7 +76,7 @@ class HomeFragment : Fragment() {
         searchStudent.setOnClickListener {
             val id = studentID.text.toString()
             if (id.isNotEmpty()){
-                viewModel.getPostsPersonal(id)
+                viewModel.getPostsPersonal(id,currentUser.grade)
                 observe()
             }else {
                 Toast.makeText(context, "make sure to type the student ID", Toast.LENGTH_SHORT)
@@ -171,7 +175,27 @@ class HomeFragment : Fragment() {
 
 
 
-            })
+            },
+        deletePost = {post->
+            when(post.audience){
+                PostType.course->{
+                    viewModel.deletePostCourse(post.postID,post.courseID)
+                }
+                PostType.section_posts->{
+                    val location = post.courseID.split("/")
+                    Log.e("post department",location[1])
+                    Log.e("post department",location[0])
+                    viewModel.deletePostSection(post.postID,location[1],location[0])
+                }
+                PostType.general->{
+                    viewModel.deletePostGeneral(post.postID)
+                }
+                PostType.personal_posts->{
+                    viewModel.deletePostPersonal(post.postID,post.courseID)
+                }
+            }
+            observeDeletePost()
+        })
 
 
 //-------------- setting the recycler data---------------------------//
@@ -188,7 +212,7 @@ class HomeFragment : Fragment() {
     }
     private fun observeCourses() {
         lifecycleScope.launchWhenCreated {
-            viewModel.getCourses.collectLatest { state ->
+            viewModel.getCoursesByGrade.collectLatest { state ->
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility=View.VISIBLE
@@ -223,6 +247,26 @@ class HomeFragment : Fragment() {
                 }
             }
         }}
+    private fun observeDeletePost() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.deletePost.collectLatest { state ->
+                when (state) {
+                    is Resource.Loading -> {
+                        progress.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                       Toast.makeText(context,state.result,Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Failure -> {
+                        progress.visibility = View.INVISIBLE
+                        Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
 
     private fun observeCoursesPost() {
         lifecycleScope.launchWhenCreated {
@@ -233,7 +277,20 @@ class HomeFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         state.result.forEach {
-                            postsList.add(it)
+                            var post =PostData(
+                                it.description,
+                                it.authorName,
+                                false,
+                                it.postID,
+                                it.courseID,
+                                it.time,
+                                it.audience,
+                                it.type
+                            )
+                            if (it.authorId == currentUser.userId){
+                                post.myPost=true
+                            }
+                            postsList.add(post)
                         }
                         adapter.update(postsList)
                     }
@@ -258,9 +315,23 @@ class HomeFragment : Fragment() {
                     is Resource.Success -> {
                         postsList.clear()
                         state.result.forEach {
-                            postsList.add(it)
+                            var post =PostData(
+                                it.description,
+                                it.authorName,
+                                false,
+                                it.postID,
+                                it.courseID,
+                                it.time,
+                                it.audience,
+                                it.type
+                            )
+                            if (it.authorId == currentUser.userId){
+                                post.myPost=true
+                            }
+                            postsList.add(post)
                         }
                         adapter.update(postsList)
+                        progress.visibility=View.INVISIBLE
                     }
                     is Resource.Failure -> {
                         progress.visibility=View.INVISIBLE

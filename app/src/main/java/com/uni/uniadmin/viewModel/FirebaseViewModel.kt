@@ -23,7 +23,32 @@ class FirebaseViewModel @Inject constructor(
 
 
     //-----------------------------------------------------------post-------------------------------------------------------------//
+    private val _deletePost= MutableStateFlow<Resource<String>?>(null)
+    val deletePost=_deletePost.asStateFlow()
+    fun deletePostPersonal(postId: String, userId:String)= viewModelScope.launch{
+        _deletePost.value= Resource.Loading
+        repository.deletePersonalPosts (postId ,userId){
+            _deletePost.value=it
 
+        }}
+        fun deletePostCourse(postId: String, courseId:String)= viewModelScope.launch{
+            _deletePost.value= Resource.Loading
+            repository.deleteCoursePosts (postId ,courseId){
+                _deletePost.value=it
+
+            }}
+    fun deletePostSection(postId: String, dep:String,section:String)= viewModelScope.launch{
+        _deletePost.value= Resource.Loading
+        repository.deleteSectionPosts (postId ,section,dep){
+            _deletePost.value=it
+
+        }}
+    fun deletePostGeneral(postId: String)= viewModelScope.launch{
+        _deletePost.value= Resource.Loading
+        repository.deleteGeneralPosts (postId ){
+            _deletePost.value=it
+
+        }}
     private val _addPost= MutableStateFlow<Resource<String>?>(null)
     val addPost=_addPost.asStateFlow()
 
@@ -358,8 +383,8 @@ class FirebaseViewModel @Inject constructor(
 
 
 
-    private val _getCourses= MutableStateFlow<Resource<List<Courses>>?>(null)
-    val getCourses=_getCourses.asStateFlow()
+  /*  private val _getCourses= MutableStateFlow<Resource<List<Courses>>?>(null)
+    val getCourses=_getCourses.asStateFlow()*/
     private val _getProfessor= MutableStateFlow<Resource<List<Professor>>?>(null)
     val getProfessor=_getProfessor.asStateFlow()
     private val _getAssistant= MutableStateFlow<Resource<List<Assistant>>?>(null)
@@ -388,9 +413,9 @@ fun getPostsGeneral()= viewModelScope.launch{
         }
     }
 
-    fun getPostsPersonal(studentId:String)= viewModelScope.launch{
+    fun getPostsPersonal(studentId:String,grade:String)= viewModelScope.launch{
         _getPosts.value= Resource.Loading
-        repository.getPersonalPosts(studentId) {
+        repository.getPersonalPosts(studentId,grade) {
             _getPosts.value=it
         }
     }

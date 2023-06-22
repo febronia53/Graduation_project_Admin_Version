@@ -1,6 +1,7 @@
 package com.uni.uniadmin.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uni.uniadmin.R
@@ -25,6 +27,7 @@ import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ScheduleListFragment : Fragment() {
@@ -131,7 +134,7 @@ class ScheduleListFragment : Fragment() {
 
                 binding.searchSchedule.setOnClickListener {
     if(section.isNotEmpty()&&department.isNotEmpty()){
-viewModel.getCoursesByGrade(currentUser.grade)
+        viewModel.getCoursesByGrade(currentUser.grade)
         observeCourses(section,department)
     }else{
         Toast.makeText(context, "make sure to type all data", Toast.LENGTH_SHORT).show()
@@ -187,27 +190,28 @@ viewModel.getCoursesByGrade(currentUser.grade)
     }
     private fun observeCourses(section:String,dep:String) {
         lifecycleScope.launchWhenCreated {
-            viewModel.getCourses.collectLatest { state ->
+            viewModel.getCoursesByGrade.collectLatest { state ->
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility=View.VISIBLE
 
                     }
                     is Resource.Success -> {
-
+                        coursesList.clear()
                         state.result.forEach {
+                            Log.e("couses schedule",it.courseCode)
                             coursesList.add(it)
                         }
                         viewModel.getSection(coursesList,dep,section)
                         viewModel.getLecture(coursesList,dep)
                         progress.visibility=View.VISIBLE
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
-                        delay(200)
+                        delay(500)
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
                         progress.visibility=View.INVISIBLE
-
-                        observeLectures()
-                        observeSections()
+                        updateSchedule()
+                       // observeLectures()
+                       // observeSections()
 
                     }
                     is Resource.Failure -> {
@@ -220,6 +224,100 @@ viewModel.getCoursesByGrade(currentUser.grade)
         }}
 
 
+
+
+    fun updateSchedule(){
+        scheduleDataType.clear()
+        lifecycleScope.launchWhenCreated {
+            observeLectures()
+            observeSections()
+           delay(200)
+}
+        adapter.update(scheduleDataType)
+    }
+    /*fun updateSchedule(){
+        scheduleDataType.clear()
+        /*lifecycleScope.launchWhenCreated {
+            observeLectures()
+            observeSections()
+            delay(200)
+
+
+}*/
+
+
+
+            lifecycleScope.launchWhenCreated {
+                viewModel.getSection.collectLatest { state ->
+                    when (state) {
+                        is Resource.Loading -> {
+                            progress.visibility=View.VISIBLE
+
+                        }
+                        is Resource.Success -> {
+                            progress.visibility=View.INVISIBLE
+
+                            state.result.forEach {
+                                scheduleDataType.add(ScheduleDataType(
+                                    it.sectionId,
+                                    it.courseName,
+                                    it.courseCode,
+                                    it.lapID,
+                                    it.assistantName,
+                                    it.day,
+                                    it.time,
+                                    it.endTime,
+                                    ScheduleAdapter.VIEW_TYPE_ONE,
+                                    it.isRunning
+                                ))
+                            }
+
+
+                        }
+                        is Resource.Failure -> {
+                            progress.visibility=View.INVISIBLE
+                            Toast.makeText(context,state.exception.toString(),Toast.LENGTH_LONG).show()
+                        }
+                        else->{}
+                    }}
+
+                viewModel.getLecture.collectLatest { state ->
+                    when (state) {
+                        is Resource.Loading -> {
+                            progress.visibility=View.VISIBLE
+
+                        }
+                        is Resource.Success -> {
+                            progress.visibility=View.INVISIBLE
+                            state.result.forEach {
+                                scheduleDataType.add(ScheduleDataType(
+                                    it.lectureId,
+                                    it.courseName,
+                                    it.courseCode,
+                                    it.hallID,
+                                    it.professorName,
+                                    it.day,
+                                    it.time,
+                                    it.endTime,
+                                    ScheduleAdapter.VIEW_TYPE_TWO,
+                                    it.isRunning
+
+                                ))
+                            }
+                            adapter.update(scheduleDataType)
+                        }
+                        is Resource.Failure -> {
+                            progress.visibility=View.INVISIBLE
+                            Toast.makeText(context,state.exception.toString(),Toast.LENGTH_LONG).show()
+                        }
+                        else->{}
+                    }
+                }
+
+                adapter.update(scheduleDataType)
+            }
+
+        }*/
     private fun observeSections() {
         lifecycleScope.launchWhenCreated {
             viewModel.getSection.collectLatest { state ->
@@ -245,7 +343,7 @@ viewModel.getCoursesByGrade(currentUser.grade)
                                 it.isRunning
                             ))
                         }
-                        adapter.update(scheduleDataType)
+
 
                     }
                     is Resource.Failure -> {
@@ -256,6 +354,13 @@ viewModel.getCoursesByGrade(currentUser.grade)
                 }}}
 
     }
+
+
+
+
+
+
+
 
 
 

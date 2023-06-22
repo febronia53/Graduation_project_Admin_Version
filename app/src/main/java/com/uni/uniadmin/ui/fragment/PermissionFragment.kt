@@ -70,7 +70,7 @@ class PermissionFragment : Fragment() {
     val sch=view.findViewById<Button>(R.id.add_l)
     val post=view.findViewById<Button>(R.id.add_p)
     course.setOnClickListener {
-        val addCourse= AddCourseFragment()
+        val addCourse= HomeFragment()
         (activity as HomeScreen).replaceFragment(addCourse)
     }
 
@@ -79,7 +79,7 @@ class PermissionFragment : Fragment() {
         (activity as HomeScreen).replaceFragment(addPost)
     }
     sch.setOnClickListener {
-        val addSch= AddScheduleFragment()
+        val addSch= ScheduleListFragment()
         (activity as HomeScreen).replaceFragment(addSch)
     }
 

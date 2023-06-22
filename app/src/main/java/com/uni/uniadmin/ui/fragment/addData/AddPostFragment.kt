@@ -96,9 +96,10 @@ class AddPostFragment : Fragment() {
                         viewModel.addPostPersonal(
                             Posts(
                                 description
-                                ,currentUser.name
+                                ,currentUser.name,
+                                currentUser.userId
                                 ,"",
-                                ""
+                                id
                                 , Date()
                                 ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
                                 ,PostsAdapter.WITHOUT_IMAGE),item.userId)
@@ -107,9 +108,10 @@ class AddPostFragment : Fragment() {
                         viewModel.addPostPersonal(
                             Posts(
                                 description
-                                ,currentUser.name
+                                ,currentUser.name,
+                                currentUser.userId
                                 ,"",
-                                ""
+                                id
                                 , Date()
                                 ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
                                 ,PostsAdapter.WITH_IMAGE),item.userId)
@@ -141,7 +143,8 @@ observeStudents()
                     viewModel.addPostGeneral(
                         Posts(
                             description
-                            ,currentUser.name
+                            ,currentUser.name,
+                            currentUser.userId
                             ,"",
                             ""
                             , Date()
@@ -152,7 +155,8 @@ observeStudents()
                     viewModel.addPostGeneral(
                         Posts(
                             description
-                            ,currentUser.name
+                            ,currentUser.name,
+                            currentUser.userId
                             ,"",
                             ""
                             , Date()
@@ -171,7 +175,8 @@ observeStudents()
                     viewModel.addPostCourse(
                         Posts(
                             description
-                            ,currentUser.name
+                            ,currentUser.name,
+                            currentUser.userId
                             ,"",
                             course
                             , Date()
@@ -182,7 +187,8 @@ observeStudents()
                     viewModel.addPostCourse(
                         Posts(
                             description
-                            ,currentUser.name
+                            ,currentUser.name,
+                            currentUser.userId
                             ,"",
                             course
                             , Date()
@@ -207,7 +213,8 @@ observeStudents()
                     viewModel.addPostSection(
                         Posts(
                             description
-                            ,currentUser.name
+                            ,currentUser.name,
+                            currentUser.userId
                             ,"",
                             "${section}/${department}"
                             , Date()
@@ -218,7 +225,8 @@ observeStudents()
                     viewModel.addPostSection(
                         Posts(
                             description
-                            ,currentUser.name
+                            ,currentUser.name,
+                            currentUser.userId
                             ,"",
                             ""
                             , Date()

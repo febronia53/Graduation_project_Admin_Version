@@ -12,15 +12,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.uni.uniadmin.R
+import com.uni.uniadmin.classes.PostData
 
 import com.uni.uniadmin.classes.Posts
 
 class PostsAdapter(
     val context: Context,
-    var postList:MutableList<Posts>,
-    val onItemClicked:(Int, Posts) ->Unit,
-    //val onViewComments:(Int,Posts) ->Unit,
-    val onComment:(Int, Posts) ->Unit
+    var postList:MutableList<PostData>,
+    val onItemClicked:(Int, PostData) ->Unit,
+    val onComment:(Int, PostData) ->Unit,
+    val deletePost:(PostData) ->Unit
+
 
 
 )
@@ -60,7 +62,9 @@ class PostsAdapter(
             holder.text.text = currentItem.description
 
 
-
+if (!currentItem.myPost){
+    holder.deletePost_bt.visibility=View.INVISIBLE
+}
 
         }else{
             (holder as ViewHolder1)
@@ -71,7 +75,9 @@ class PostsAdapter(
             holder.auth.text = currentItem.authorName
             holder.audience.text = currentItem.audience
             holder.text.text = currentItem.description
-
+            if (!currentItem.myPost){
+                holder.deletePost_bt.visibility=View.INVISIBLE
+            }
 
         }
 
@@ -82,7 +88,7 @@ class PostsAdapter(
     override fun getItemCount(): Int {
         return postList.size
     }
-    fun update(list: MutableList<Posts>){
+    fun update(list: MutableList<PostData>){
         this.postList=list
         notifyDataSetChanged()
     }
@@ -94,8 +100,12 @@ class PostsAdapter(
         val text = item.findViewById<TextView>(R.id.text_with)
         val addComment = item.findViewById<Button>(R.id.bt_comment)
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_with)
+        val deletePost_bt = item.findViewById<Button>(R.id.delete_post_bt)
 
         init {
+            deletePost_bt.setOnClickListener {
+                deletePost.invoke(postList[adapterPosition])
+            }
             recyItem.setOnClickListener {
                 onItemClicked.invoke(adapterPosition,postList[adapterPosition])
             }
@@ -114,8 +124,12 @@ class PostsAdapter(
         val text = item.findViewById<TextView>(R.id.text_without)
         val addComment = item.findViewById<Button>(R.id.bt_comment_without)
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_without)
+        val deletePost_bt = item.findViewById<Button>(R.id.delete_post_bt_without)
 
         init {
+            deletePost_bt.setOnClickListener {
+                deletePost.invoke(postList[adapterPosition])
+            }
             recyItem.setOnClickListener {
                 onItemClicked.invoke(adapterPosition,postList[adapterPosition])
             }
