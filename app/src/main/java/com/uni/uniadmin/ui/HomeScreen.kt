@@ -51,6 +51,7 @@ class HomeScreen : AppCompatActivity() {
                 R.id.students_permissions -> {
                     replaceFragment(PermissionFragment())
                 }
+
                 else -> {
                 }
             }
@@ -61,11 +62,9 @@ class HomeScreen : AppCompatActivity() {
 
 
     fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, fragment)
-        fragmentTransaction.commit()
-
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun updateUser(user: UserAdmin) {
@@ -149,13 +148,10 @@ class HomeScreen : AppCompatActivity() {
                 currentUser = user
                 if (checkForInternet(this)) {
                     storageViewModel.getUri(user.userId)
-
                 }
                 observeUser()
                 observeImage()
-
                 replaceFragment(HomeFragment())
-
             } else {
                 Toast.makeText(this, "no user found. have to register", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, SignUp::class.java))
@@ -176,9 +172,11 @@ class HomeScreen : AppCompatActivity() {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
                 }
+
                 R.id.students_permissions -> {
                     replaceFragment(PermissionFragment())
                 }
+
                 else -> {
                 }
             }

@@ -225,15 +225,13 @@ class ScheduleListFragment : Fragment() {
 
     private fun observeCourses(section: String, dep: String) {
         lifecycleScope.launchWhenCreated {
-            viewModel.getCourses.collectLatest { state ->
+            viewModel.getCoursesByGrade.collectLatest { state ->
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
-
                     }
 
                     is Resource.Success -> {
-
                         state.result.forEach {
                             coursesList.add(it)
                         }

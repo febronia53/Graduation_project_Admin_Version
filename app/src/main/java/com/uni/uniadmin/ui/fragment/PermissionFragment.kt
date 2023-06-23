@@ -67,27 +67,6 @@ class PermissionFragment : Fragment() {
         }
         val view = inflater.inflate(R.layout.fragment_permission, container, false)
 
-/*
-        /*--------------------------------------------------------------------------------------------------------*/
-        //@walid todo add course
-        val course = view.findViewById<Button>(R.id.add_c)
-        //walid todo add lecture
-        val sch = view.findViewById<Button>(R.id.add_l)
-        //walid todo add post
-        val post = view.findViewById<Button>(R.id.add_p)
-        course.setOnClickListener {
-            val addCourse = AddCourseFragment()
-            (activity as HomeScreen).replaceFragment(addCourse)
-        }
-
-        post.setOnClickListener {
-            val addPost = AddPostFragment()
-            (activity as HomeScreen).replaceFragment(addPost)
-        }
-        sch.setOnClickListener {
-            val addSch = AddScheduleFragment()
-            (activity as HomeScreen).replaceFragment(addSch)
-        }*/
 
         /*--------------------------------------------------------------------------------------------*/
         val recyclerView = view.findViewById<RecyclerView>(R.id.permission_search_recy)
@@ -145,7 +124,7 @@ class PermissionFragment : Fragment() {
         }
         search.setOnClickListener {
             val studentID = studentID.text.toString()
-// TODO code neeeeed to be changed
+            // TODO code neeeeed to be changed
             if (section != "any section" && department != "choose departement") {
                 viewModel.searchStudentBySection(currentUser.grade, department, section)
                 observeStudents()
@@ -163,10 +142,10 @@ class PermissionFragment : Fragment() {
         }
 
         recyAdapter = StudentAdapter(requireContext(), studentsList,
-            removePerm = { pos, item ->
+            removePerm = { _, _ ->
 
             },
-            itemClick = { pos, item ->
+            itemClick = { _, item ->
 
                 bundle.putString("userID", item.userId)
                 permissionFragment.arguments = bundle
@@ -174,7 +153,7 @@ class PermissionFragment : Fragment() {
 
             },
 
-            addPerm = { pos, item ->
+            addPerm = { _, item ->
                 val permission = permissionText.text.toString()
                 if (permission.isNotEmpty()) {
                     viewModel.addPermission(

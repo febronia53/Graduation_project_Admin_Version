@@ -165,15 +165,13 @@ class AddScheduleFragment : Fragment() {
             R.array.departement,
             R.layout.spinner_item
         )
+
         val autoCom = binding.departementSpinnerSchedule
         autoCom.adapter = adapter
-
         autoCom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 department = departmentList[p2]
-
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         val dayList = resources.getStringArray(R.array.Day)
@@ -203,7 +201,6 @@ class AddScheduleFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 section = sectionList[p2]
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
@@ -219,7 +216,6 @@ class AddScheduleFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 course = coursesList[p2]
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 

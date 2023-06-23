@@ -83,9 +83,10 @@ class AddCourseFragment : Fragment() {
         observeProfessor()
 
         viewCourse.setOnClickListener {
-            val viewCourse = ViewCoursesFragment()
+             val viewCourse = ViewCoursesFragment()
             (activity as HomeScreen).replaceFragment(viewCourse)
         }
+
         add.setOnClickListener {
             val cID = courseID.text.toString()
             val _courseName = courseName.text.toString()
@@ -109,7 +110,6 @@ class AddCourseFragment : Fragment() {
             }
         }
 
-
         adapter2 = SpinnerItemAdapter(
             requireContext(),
             assistantList
@@ -117,7 +117,6 @@ class AddCourseFragment : Fragment() {
 
         val autoCom2 = view.findViewById<Spinner>(R.id.assistant_spinner)
         autoCom2.adapter = adapter2
-
         autoCom2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 assistant = assistantList[p2].textUpperLeft
@@ -128,18 +127,16 @@ class AddCourseFragment : Fragment() {
         }
 
         val gradeList = resources.getStringArray(R.array.grades)
-        val adapterGrade: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(requireContext(), R.array.grades, R.layout.spinner_item)
+        val adapterGrade: ArrayAdapter<CharSequence> =
+            ArrayAdapter.createFromResource(requireContext(), R.array.grades, R.layout.spinner_item)
 
         val autoComGrade = view.findViewById<Spinner>(R.id.grade_spinner_add_course)
         autoComGrade.adapter = adapterGrade
 
         autoComGrade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
                 grade = gradeList[p2]
-
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         adapterLecturer = SpinnerItemAdapter(
@@ -159,13 +156,17 @@ class AddCourseFragment : Fragment() {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
-        view.findViewById<ImageButton>(R.id.back_fragment_btn).setOnClickListener {  finishFragment()}
+        view.findViewById<ImageButton>(R.id.back_fragment_btn)
+            .setOnClickListener { finishFragment() }
         return view
     }
-    private fun finishFragment() {
 
+
+
+    private fun finishFragment() {
         parentFragmentManager.popBackStack()
     }
+
     private fun observeAddedCourse() {
         lifecycleScope.launchWhenCreated {
             viewModel.addCourse.collectLatest {
@@ -190,10 +191,9 @@ class AddCourseFragment : Fragment() {
         }
     }
 
-
     private fun observeAssistant() {
         lifecycleScope.launchWhenCreated {
-            viewModel.getAllAssistant.collectLatest {
+            viewModel.getAllAssistant.collectLatest { it ->
                 when (it) {
                     is Resource.Loading -> {
                     }
@@ -218,7 +218,6 @@ class AddCourseFragment : Fragment() {
             }
         }
     }
-
 
     private fun observeProfessor() {
         lifecycleScope.launchWhenCreated {
