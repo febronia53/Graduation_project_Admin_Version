@@ -18,6 +18,7 @@ import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
 import com.uni.uniadmin.ui.fragment.*
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
+import com.uni.unistudent.ui.fragments.ProfileFragment
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -40,16 +41,30 @@ class HomeScreen : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification -> replaceFragment(OptionsFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.notification -> {
+                    replaceFragment(OptionsFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    binding.profileData.visibility = View.GONE
+                }
+
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 R.id.students_permissions -> {
                     replaceFragment(PermissionFragment())
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 else -> {
@@ -165,16 +180,30 @@ class HomeScreen : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification -> replaceFragment(OptionsFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.notification -> {
+                    replaceFragment(OptionsFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    binding.profileData.visibility = View.GONE
+                }
+
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 R.id.students_permissions -> {
                     replaceFragment(PermissionFragment())
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 else -> {
