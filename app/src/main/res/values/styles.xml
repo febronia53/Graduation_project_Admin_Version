@@ -62,5 +62,4 @@
         <item name="android:textSize">@dimen/text_size_18</item>
     </style>
 
-    <dimen name="button_height">64dp</dimen>
 </resources>

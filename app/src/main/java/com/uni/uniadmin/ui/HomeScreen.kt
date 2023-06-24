@@ -177,7 +177,7 @@ class HomeScreen : AppCompatActivity() {
     private fun settingsOnStartApp() {
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.selectedItemId = R.id.home
-
+        setupBadge()
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
@@ -188,6 +188,8 @@ class HomeScreen : AppCompatActivity() {
                 R.id.notification -> {
                     replaceFragment(OptionsFragment())
                     binding.profileData.visibility = View.VISIBLE
+                    val badge = binding.bottomNavigationView.getBadge(R.id.notification)
+                    badge?.isVisible = false
                 }
 
                 R.id.profile -> {
@@ -224,5 +226,11 @@ class HomeScreen : AppCompatActivity() {
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             else -> false
         }
+    }
+
+    private fun setupBadge() {
+        val badge = binding.bottomNavigationView.getOrCreateBadge(R.id.notification)
+        badge.isVisible = true
+        badge.number = 5
     }
 }
