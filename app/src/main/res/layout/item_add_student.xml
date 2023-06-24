@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16dp">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                style="@style/TextBodyStyle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/text_student_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{}"
+                tools:text="Febronia Sameh"
+                style="@style/TextItemStudentStyle"
+                app:layout_constraintStart_toStartOf="@+id/text_student_department"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+            <TextView
+                android:id="@+id/grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Grade"
+                style="@style/TextBodyStyle"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                app:layout_constraintEnd_toEndOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                android:layout_marginTop="@dimen/margin_8dp"
+                />
+
+            <TextView
+                android:id="@+id/text_student_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{}"
+                tools:text="Grade Four"
+                style="@style/TextItemStudentStyle"
+                app:layout_constraintStart_toStartOf="@+id/text_student_department"
+                app:layout_constraintTop_toTopOf="@+id/grade"
+                />
+            <TextView
+                android:id="@+id/department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Department"
+                style="@style/TextBodyStyle"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/grade"
+                android:layout_marginTop="@dimen/margin_8dp"
+                />
+
+            <TextView
+                android:id="@+id/text_student_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{}"
+                tools:text="CS"
+                style="@style/TextItemStudentStyle"
+                android:layout_marginStart="@dimen/margin_8dp"
+                app:layout_constraintStart_toEndOf="@+id/department"
+                app:layout_constraintTop_toTopOf="@+id/department"
+                />
+            <TextView
+                android:id="@+id/section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Section"
+                style="@style/TextBodyStyle"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/department"
+                android:layout_marginTop="@dimen/margin_8dp"
+                />
+
+            <TextView
+                android:id="@+id/text_student_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{}"
+                tools:text="S2"
+                style="@style/TextItemStudentStyle"
+                app:layout_constraintStart_toStartOf="@+id/text_student_department"
+                app:layout_constraintTop_toTopOf="@id/section"
+
+                />
+
+            <LinearLayout
+                android:id="@+id/button_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.178"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/section"
+                android:layout_marginTop="@dimen/margin_16dp">
+
+                <Button
+                    android:id="@+id/button_add"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:text="@string/add" />
+
+                <Button
+                    android:id="@+id/button_remove"
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/remove"
+                    app:layout_constraintBottom_toBottomOf="@+id/buttonPersonalTodo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/buttonPersonalTodo"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_add_Task_Title" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

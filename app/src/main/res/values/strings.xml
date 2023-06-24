@@ -159,5 +159,10 @@
     <string name="courses">Courses</string>
     <string name="error_message_in_profile_screen">"Error on loading user data please refresh the current screen "</string>
     <string name="log_out">Log out</string>
+    <string name="name">name:</string>
+    <string name="Grade">Grade:</string>
+    <string name="Department">Department:</string>
+    <string name="Section">Section:</string>
+    <string name="remove">Remove</string>
 
 </resources>
