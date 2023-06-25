@@ -35,6 +35,14 @@ class FireStorageViewModel @Inject constructor(
             _addPostUri.value=it
         }
     }
+    private val _deletePostImage= MutableStateFlow<Resource<String>?>(null)
+    val deletePostImage=_deletePostImage.asStateFlow()
+    fun deletePostImage(postID:String)= viewModelScope.launch{
+        _deletePostImage.value= Resource.Loading
+        repository.deletePostImage(postID) {
+            _deletePostImage.value=it
+        }
+    }
 
     fun addUri(userId:String,uri:Uri)= viewModelScope.launch{
         _addUri.value= Resource.Loading

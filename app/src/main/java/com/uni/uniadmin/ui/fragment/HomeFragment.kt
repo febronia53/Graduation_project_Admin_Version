@@ -20,6 +20,7 @@ import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.ui.HomeScreen
 import com.uni.uniadmin.viewModel.AuthViewModel
+import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.adapters.PostsAdapter
 import com.uni.uniteaching.classes.user.UserAdmin
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: FirebaseViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
+    private val storageViewModel: FireStorageViewModel by viewModels()
     lateinit var progress: ProgressBar
     lateinit var currentUser: UserAdmin
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -177,6 +179,10 @@ class HomeFragment : Fragment() {
 
             },
         deletePost = {post->
+            if (post.type==PostsAdapter.WITH_IMAGE){
+                storageViewModel.deletePostImage(post.postID)
+                observeDeletedImage()
+            }
             when(post.audience){
                 PostType.course->{
                     viewModel.deletePostCourse(post.postID,post.courseID)
@@ -210,6 +216,28 @@ class HomeFragment : Fragment() {
         observeCourses()
 
     }
+
+    private fun observeDeletedImage() {
+        lifecycleScope.launchWhenCreated {
+            storageViewModel.deletePostImage.collectLatest { state ->
+                when (state) {
+                    is Resource.Loading -> {
+                        progress.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        Toast.makeText(context,state.result,Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Failure -> {
+                        progress.visibility = View.INVISIBLE
+                        Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
     private fun observeCourses() {
         lifecycleScope.launchWhenCreated {
             viewModel.getCoursesByGrade.collectLatest { state ->

@@ -14,8 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uni.uniadmin.R
+import com.uni.uniadmin.adapters.SpinnerItemAdapter
 import com.uni.uniadmin.adapters.StudentAdapter
+import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.Posts
+import com.uni.uniadmin.classes.SpinnerItem
 import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
@@ -40,10 +43,11 @@ class AddPostFragment : Fragment() {
     private lateinit var department: String
     private lateinit var section: String
     private lateinit var course: String
-    private lateinit var coursesList: MutableList<String>
+    private lateinit var coursesList: MutableList<SpinnerItem>
     lateinit var  recyAdapter : StudentAdapter
     private lateinit var studentsList: MutableList<UserStudent>
 
+    private lateinit var courseAdapter: SpinnerItemAdapter
     private lateinit var userImageUri: Uri
     private lateinit var imageView: ImageView
 
@@ -84,7 +88,7 @@ class AddPostFragment : Fragment() {
         section=""
         course=""
         recyAdapter= StudentAdapter(requireContext(),studentsList,
- removePerm = {pos, item->},
+            removePerm = {pos, item->},
             itemClick = {pos, item->}
             ,
             addPerm = {pos, item->
@@ -261,17 +265,17 @@ observeStudents()
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
-        val adapter3: ArrayAdapter<String> = ArrayAdapter<String>(
+        courseAdapter = SpinnerItemAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, coursesList
+             coursesList
         )
 
         val autoCom3 = view.findViewById<Spinner>(R.id.course_post)
-        autoCom3.adapter = adapter3
+        autoCom3.adapter = courseAdapter
 
         autoCom3.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
-                course =coursesList[p2]
+                course =coursesList[p2].textDownLeft
                 coursesText.text=course
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -365,8 +369,14 @@ observeCourses()
                     is Resource.Success -> {
                         coursesList.clear()
                         it.result.forEach {
-                            coursesList.add(it.courseCode)
+                            val courses=SpinnerItem(
+                                it.courseName
+                            ,it.courseCode,
+                                it.grade
+                            )
+                            coursesList.add(courses)
                         }
+                        courseAdapter.update(coursesList)
                     }
                     is Resource.Failure -> {
                         Toast.makeText(context,it.exception,Toast.LENGTH_SHORT).show()
