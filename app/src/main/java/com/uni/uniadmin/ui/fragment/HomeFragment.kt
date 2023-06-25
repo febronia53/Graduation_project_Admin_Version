@@ -24,8 +24,10 @@ import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.databinding.FragmentHomeBinding
 import com.uni.uniadmin.ui.HomeScreen
 import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
+import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
 import com.uni.uniadmin.ui.fragment.addData.AddScheduleFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
+import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.adapters.PostsAdapter
 import com.uni.uniteaching.classes.user.UserAdmin
@@ -39,6 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: FirebaseViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
+    private val storageViewModel: FireStorageViewModel by viewModels()
     private lateinit var progress: ProgressBar
     private lateinit var currentUser: UserAdmin
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -184,7 +187,8 @@ class HomeFragment : Fragment() {
         binding.createPostBtn.setOnClickListener {
             isFloatingBtnClick = !isFloatingBtnClick
             closeFloatingButton()
-            Toast.makeText(context, "Add post", Toast.LENGTH_SHORT).show()
+            replaceFragment(AddPostFragment())
+
         }
 
         return binding.root
@@ -310,6 +314,11 @@ class HomeFragment : Fragment() {
                 (activity as HomeScreen).replaceFragment(commentFragment)
 
             }, deletePost = { post ->
+                if (post.type==PostsAdapter.WITH_IMAGE){
+                    storageViewModel.deletePostImage(post.postID)
+                    observeDeletedImage()
+                }
+
                 when (post.audience) {
                     PostType.course -> {
                         viewModel.deletePostCourse(post.postID, post.courseID)
@@ -344,6 +353,26 @@ class HomeFragment : Fragment() {
         }
         observeCourses()
 
+    }
+    private fun observeDeletedImage() {
+        lifecycleScope.launchWhenCreated {
+            storageViewModel.deletePostImage.collectLatest { state ->
+                when (state) {
+                    is Resource.Loading -> {
+                        progress.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        Toast.makeText(context,state.result,Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Failure -> {
+                        progress.visibility = View.INVISIBLE
+                        Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun observeCourses() {
