@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.PermissionFragment">
 
+
     <Button
         android:id="@+id/search_permission"
         android:layout_width="match_parent"
@@ -82,41 +83,19 @@
         android:id="@+id/l"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <Button
             android:id="@+id/view_permissions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="v p"
+            android:text="view permissions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/add_c"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="c"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/add_l"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="l"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/add_p"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="p"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
 

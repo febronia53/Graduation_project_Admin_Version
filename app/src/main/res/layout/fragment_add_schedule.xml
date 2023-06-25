@@ -14,6 +14,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageButton
+                android:id="@+id/back_fragment_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_back_fragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
@@ -26,7 +37,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/back_fragment_btn">
 
                 <RadioButton
                     android:id="@+id/radioLecture"
@@ -108,6 +119,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/department_text" />
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/arrow_drop_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
+                        app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
+                        app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule" />
+
                     <TextView
                         android:id="@+id/section_text"
                         android:layout_width="wrap_content"
@@ -159,6 +179,15 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/day_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/arrow_drop_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/day_spinner_schedule"
+                        app:layout_constraintEnd_toEndOf="@+id/day_spinner_schedule"
+                        app:layout_constraintTop_toTopOf="@+id/day_spinner_schedule" />
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
@@ -272,10 +301,18 @@
                         android:background="@drawable/border"
                         android:paddingTop="@dimen/margin_2dp"
                         android:paddingBottom="@dimen/margin_2dp"
-
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/teaching_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/arrow_drop_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/teaching_spinner_schedule"
+                        app:layout_constraintEnd_toEndOf="@+id/teaching_spinner_schedule"
+                        app:layout_constraintTop_toTopOf="@+id/teaching_spinner_schedule" />
 
                     <TextView
                         android:id="@+id/course_text"
@@ -301,6 +338,15 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/course_text" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/arrow_drop_down"
+                        app:layout_constraintBottom_toBottomOf="@+id/courses_spinner_schedule"
+                        app:layout_constraintEnd_toEndOf="@+id/courses_spinner_schedule"
+                        app:layout_constraintTop_toTopOf="@+id/courses_spinner_schedule" />
 
                     <Button
                         android:id="@+id/add_schedule"

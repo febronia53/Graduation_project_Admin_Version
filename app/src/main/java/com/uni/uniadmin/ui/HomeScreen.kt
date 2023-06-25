@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.uni.uniadmin.R
-import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
 import com.uni.uniadmin.ui.fragment.*
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
+import com.uni.unistudent.ui.fragments.ProfileFragment
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -26,10 +26,9 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class HomeScreen : AppCompatActivity() {
-    private val viewModel : AuthViewModel by viewModels()
-    // private val fireViewModel : FirebaseViewModel by viewModels()
+    private val viewModel: AuthViewModel by viewModels()
 
-    private val storageViewModel : FireStorageViewModel by viewModels()
+    private val storageViewModel: FireStorageViewModel by viewModels()
 
     // TODO save the image in a shared prefrance
     lateinit var currentUser: UserAdmin
@@ -41,18 +40,35 @@ class HomeScreen : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
 
-            when(it.itemId){
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification-> replaceFragment(OptionsFragment())
-                R.id.profile -> replaceFragment(OptionsFragment())
+                R.id.notification -> {
+                    replaceFragment(OptionsFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    binding.profileData.visibility = View.GONE
+                }
+
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
-                }
-                else -> {
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
+                R.id.students_permissions -> {
+                    replaceFragment(PermissionFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                else -> {
+                }
             }
             true
         }
@@ -60,21 +76,17 @@ class HomeScreen : AppCompatActivity() {
     }
 
 
-
-
-
-    fun replaceFragment(fragment: Fragment){
-        val fragmentManager=supportFragmentManager
-        val fragmentTransaction =fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container,fragment)
-        fragmentTransaction.commit()
-
+    fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
-    private fun updateUser(user: UserAdmin){
+    private fun updateUser(user: UserAdmin) {
         viewModel.getUserStudent(user.userId)
     }
-    private fun observeImage(){
+
+    private fun observeImage() {
 
         lifecycleScope.launchWhenCreated {
             storageViewModel.getUri.collectLatest { uri ->
@@ -82,6 +94,7 @@ class HomeScreen : AppCompatActivity() {
                 when (uri) {
                     is Resource.Loading -> {
                     }
+
                     is Resource.Success -> {
                         binding.progressBarImage.visibility = View.GONE
                         Glide.with(this@HomeScreen)
@@ -90,10 +103,13 @@ class HomeScreen : AppCompatActivity() {
                             .placeholder(R.drawable.user_image)
                             .into(binding.userImage)
                     }
+
                     is Resource.Failure -> {
-                        Toast.makeText(this@HomeScreen,uri.exception.toString(),Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@HomeScreen, uri.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
                     }
-                    else ->{
+
+                    else -> {
                     }
                 }
             }
@@ -105,25 +121,32 @@ class HomeScreen : AppCompatActivity() {
 
     private fun observeUser() {
         lifecycleScope.launchWhenCreated {
-            viewModel.userStudent.collectLatest {state ->
+            viewModel.userStudent.collectLatest { state ->
                 when (state) {
                     is Resource.Loading -> {
                     }
+
                     is Resource.Success -> {
-                        val user =state.result
-                        if (user!=null){
+                        val user = state.result
+                        if (user != null) {
 
                             viewModel.setSession(state.result)
-                            binding.userGrade.text=user.grade
-                            binding.userDepartment.text=user.jobTitle
-                            binding.userName.text=user.name
+                            binding.userGrade.text = user.grade
+                            binding.userDepartment.text = user.jobTitle
+                            binding.userName.text = user.name
 
                         }
                     }
+
                     is Resource.Failure -> {
-                        Toast.makeText(this@HomeScreen,state.exception.toString(),Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@HomeScreen,
+                            state.exception.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-                    else ->{
+
+                    else -> {
                     }
                 }
             }
@@ -133,47 +156,63 @@ class HomeScreen : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getSessionStudent {user->
-            if (user !=null){
+        viewModel.getSessionStudent { user ->
+            if (user != null) {
                 settingsOnStartApp()
                 updateUser(user)
-                currentUser=user
-                if (checkForInternet(this)){
+                currentUser = user
+                if (checkForInternet(this)) {
                     storageViewModel.getUri(user.userId)
-
                 }
                 observeUser()
                 observeImage()
-
-                    replaceFragment(PermissionFragment())
-                    binding.bottomNavigationView.visibility= View.INVISIBLE
-
-            }else{
-                Toast.makeText(this,"no user found. have to register", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this,SignUp::class.java))
+                replaceFragment(HomeFragment())
+            } else {
+                Toast.makeText(this, "no user found. have to register", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, SignUp::class.java))
             }
         }
     }
+
     private fun settingsOnStartApp() {
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.selectedItemId = R.id.home
 
         binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification-> replaceFragment(OptionsFragment())
-                R.id.profile -> replaceFragment(PermissionFragment())
+            when (it.itemId) {
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.notification -> {
+                    replaceFragment(OptionsFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    binding.profileData.visibility = View.GONE
+                }
+
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
-                }
-                else -> {
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
+                R.id.students_permissions -> {
+                    replaceFragment(PermissionFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                else -> {
+                }
             }
             true
         }
     }
+
     private fun checkForInternet(context: Context): Boolean {
 
         val connectivityManager =
@@ -185,4 +224,5 @@ class HomeScreen : AppCompatActivity() {
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             else -> false
         }
-    }}
+    }
+}

@@ -74,8 +74,18 @@ class AddScheduleFragment : Fragment() {
         var day = ""
         var key = ""
 
-        binding.fromSchedule.setOnClickListener { showTimePickerDialog(binding.fromSchedule,binding.amPmFromTime) }
-        binding.toSchedule.setOnClickListener { showTimePickerDialog(binding.toSchedule,binding.amPmToTime) }
+        binding.fromSchedule.setOnClickListener {
+            showTimePickerDialog(
+                binding.fromSchedule,
+                binding.amPmFromTime
+            )
+        }
+        binding.toSchedule.setOnClickListener {
+            showTimePickerDialog(
+                binding.toSchedule,
+                binding.amPmToTime
+            )
+        }
 
         binding.radioGroup.check(R.id.radioLecture)
         binding.radioGroup.setOnCheckedChangeListener { group, id ->
@@ -155,15 +165,13 @@ class AddScheduleFragment : Fragment() {
             R.array.departement,
             R.layout.spinner_item
         )
+
         val autoCom = binding.departementSpinnerSchedule
         autoCom.adapter = adapter
-
         autoCom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 department = departmentList[p2]
-
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         val dayList = resources.getStringArray(R.array.Day)
@@ -193,7 +201,6 @@ class AddScheduleFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 section = sectionList[p2]
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
@@ -209,7 +216,6 @@ class AddScheduleFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 course = coursesList[p2]
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
@@ -232,10 +238,16 @@ class AddScheduleFragment : Fragment() {
         viewModel.getCoursesByGrade(currentUser.grade)
         observeCourses()
 
+        binding.backFragmentBtn.setOnClickListener { finishFragment() }
+
         return binding.root
     }
 
-    private fun showTimePickerDialog(mTime: TextView,amPmTxt:TextView) {
+    private fun finishFragment() {
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun showTimePickerDialog(mTime: TextView, amPmTxt: TextView) {
         val currentTime = Calendar.getInstance()
         val startHour = currentTime.get(Calendar.HOUR_OF_DAY)
         val startMinute = currentTime.get(Calendar.MINUTE)
@@ -249,7 +261,7 @@ class AddScheduleFragment : Fragment() {
                 if (hour == 0) {
                     hour = 12
                 }
-                amPmTxt.text =amPm
+                amPmTxt.text = amPm
                 mTime.text = "$hour:$minute"
 
             }, startHour, startMinute, false
