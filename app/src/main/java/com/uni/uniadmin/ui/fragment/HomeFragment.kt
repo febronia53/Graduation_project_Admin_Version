@@ -509,7 +509,7 @@ class HomeFragment : Fragment() {
                             }
                             postsList.add(post)
                         }
-                        adapter.update(postsList)
+                        //adapter.update(postsList)
                         progress.visibility = View.INVISIBLE
                     }
 
