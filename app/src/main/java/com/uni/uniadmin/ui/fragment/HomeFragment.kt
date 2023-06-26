@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.PostData
-import com.uni.uniadmin.classes.Posts
+import com.uni.uniadmin.data.PassData
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.databinding.FragmentHomeBinding
@@ -35,19 +36,14 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), PassData {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: FirebaseViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var progress: ProgressBar
     private lateinit var currentUser: UserAdmin
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-
-    private lateinit var studentID: EditText
-    private lateinit var section: String
-    private lateinit var department: String
     private lateinit var coursesList: MutableList<Courses>
-
     private lateinit var adapter: PostsAdapter
     private var isFloatingBtnClick = false
     private val rotateOpen: Animation by lazy {
@@ -77,16 +73,22 @@ class HomeFragment : Fragment() {
     private lateinit var addScheduleBtnTxt: TextView
     private lateinit var addCourseBtnTxt: TextView
     private lateinit var postsList: MutableList<PostData>
-
+    private lateinit var section: String
+    private lateinit var department: String
+    private lateinit var id: String
+    private lateinit var bottomSheetFragment: BottomSheetFragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
 
+        currentUser = UserAdmin()
         section = ""
         department = ""
+        id = ""
 
 // update user data --------------------------------------------------------------------------------
-        currentUser = UserAdmin()
+
         authViewModel.getSessionStudent { user ->
             if (user != null) {
                 currentUser = user
@@ -98,8 +100,6 @@ class HomeFragment : Fragment() {
 
         }
         // update user data --------------------------------------------------------------------------------
-        binding = FragmentHomeBinding.inflate(layoutInflater)
-
         btnAddSchedule = binding.addScheduleBtn
         btnAddCourse = binding.addCourseBtn
         btnAddPost = binding.createPostBtn
@@ -107,64 +107,9 @@ class HomeFragment : Fragment() {
         addScheduleBtnTxt = binding.addScheduleBtnTxt
         addCourseBtnTxt = binding.addCourseBtnTxt
 
-        val sectionText = binding.sectionText
-        val departmentText = binding.departmentTextHome
-        val searchStudent = binding.searchStudentHome
-        val searchSection = binding.searchSectionHome
-        studentID = binding.studentIDHome
 
-        var section = ""
-        var department = ""
 
-        searchStudent.setOnClickListener {
-            val id = studentID.text.toString()
 
-            if (id.isNotEmpty()) {
-                viewModel.getPostsPersonal(id, currentUser.grade)
-
-                observe()
-            } else {
-                Toast.makeText(context, "make sure to type the student ID", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        searchSection.setOnClickListener {
-            if (section.isNotEmpty() && department.isNotEmpty()) {
-                viewModel.getPostsSection(section, department)
-                observe()
-            }
-        }
-        val departmentList = resources.getStringArray(R.array.departement)
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            requireContext(), R.array.departement, R.layout.spinner_item
-        )
-        val autoCom = binding.departementSpinnerHome
-        autoCom.adapter = adapter
-
-        autoCom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                department = departmentList[p2]
-                departmentText.text = department
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-        }
-
-        val sectionList = resources.getStringArray(R.array.Section)
-        val adapter2: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            requireContext(), R.array.Section, R.layout.spinner_item
-        )
-
-        val autoCom2 = binding.sectionSpinnerHome
-        autoCom2.adapter = adapter2
-        autoCom2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                section = sectionList[p2]
-                sectionText.text = section
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-        }
 
         binding.addFloatingBtn.setOnClickListener {
             onAddClicked()
@@ -186,12 +131,18 @@ class HomeFragment : Fragment() {
             closeFloatingButton()
             Toast.makeText(context, "Add post", Toast.LENGTH_SHORT).show()
         }
+        binding.homeFiltersBtn.setOnClickListener { showBottomSheetSettings() }
 
         return binding.root
     }
-
+    private fun showBottomSheetSettings() {
+        bottomSheetFragment = BottomSheetFragment()
+        bottomSheetFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
+        bottomSheetFragment.isCancelable = true
+        bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
+    }
     private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container_home, fragment)
             .addToBackStack(null).commit()
     }
 
@@ -255,9 +206,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.home_recycler)
-        progress = view.findViewById(R.id.progress_par_home)
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
+        val recyclerView = binding.homeRecycler
+        progress = binding.progressParHome
+        swipeRefreshLayout = binding.swipeRefreshLayout
 
 
         coursesList = arrayListOf()
@@ -292,7 +243,7 @@ class HomeFragment : Fragment() {
                         bundle.putString("course", "")
                         bundle.putString("section", "")
                         bundle.putString("department", "")
-                        bundle.putString("studentID", studentID.text.toString())
+                        bundle.putString("studentID", id)
 
                     }
 
@@ -368,7 +319,7 @@ class HomeFragment : Fragment() {
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
                         delay(200)
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
-                        progress.visibility = View.INVISIBLE
+                        progress.visibility = View.GONE
                         observe()
                         delay(200)
                         observeCoursesPost()
@@ -377,7 +328,7 @@ class HomeFragment : Fragment() {
                     }
 
                     is Resource.Failure -> {
-                        progress.visibility = View.INVISIBLE
+                        progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
@@ -402,7 +353,7 @@ class HomeFragment : Fragment() {
                     }
 
                     is Resource.Failure -> {
-                        progress.visibility = View.INVISIBLE
+                        progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
@@ -443,7 +394,7 @@ class HomeFragment : Fragment() {
                     }
 
                     is Resource.Failure -> {
-                        progress.visibility = View.INVISIBLE
+                        progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
@@ -481,11 +432,11 @@ class HomeFragment : Fragment() {
                             postsList.add(post)
                         }
                         adapter.update(postsList)
-                        progress.visibility = View.INVISIBLE
+                        progress.visibility = View.GONE
                     }
 
                     is Resource.Failure -> {
-                        progress.visibility = View.INVISIBLE
+                        progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
@@ -494,6 +445,21 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDataPassed(department: String, section: String, studentId: String) {
+        this.department = department
+        this.section = section
+        this.id = studentId
+
+        if (section.isNotEmpty() && department.isNotEmpty()) {
+            viewModel.getPostsSection(section, department)
+            observe()
+        }else if (studentId.isNotEmpty()) {
+            viewModel.getPostsPersonal(studentId, currentUser.grade)
+            observe()
+        }
+
     }
 }
 

@@ -159,10 +159,10 @@ class AddScheduleFragment : Fragment() {
                 }
             }
         }
-        val departmentList = resources.getStringArray(R.array.departement)
+        val departmentList = resources.getStringArray(R.array.department)
         val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.departement,
+            R.array.department,
             R.layout.spinner_item
         )
 

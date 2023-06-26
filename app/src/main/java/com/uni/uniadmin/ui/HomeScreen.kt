@@ -62,7 +62,7 @@ class HomeScreen : AppCompatActivity() {
 
 
     fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container_home, fragment)
             .addToBackStack(null)
             .commit()
     }

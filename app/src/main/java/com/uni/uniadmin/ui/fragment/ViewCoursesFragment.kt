@@ -33,7 +33,7 @@ class ViewCoursesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        binding = FragmentViewCoursesBinding.inflate(layoutInflater)
         coursesList = arrayListOf()
         currentUser = UserAdmin()
         authViewModel.getSessionStudent { user ->
@@ -49,7 +49,6 @@ class ViewCoursesFragment : Fragment() {
         }
 
         binding.backFragmentBtn.setOnClickListener { finishFragment() }
-        binding = FragmentViewCoursesBinding.inflate(layoutInflater)
         binding.allCoursesCheckBox.setOnCheckedChangeListener { _, _ ->
             flage = !flage
             update()
@@ -63,10 +62,10 @@ class ViewCoursesFragment : Fragment() {
 
             })
 
-//-------------- setting the recycler data---------------------------//
+        //-------------- setting the recycler data---------------------------//
         binding.recCourses.layoutManager = LinearLayoutManager(requireContext())
         binding.recCourses.adapter = adapter
-//-------------- setting the recycler data---------------------------//
+        //-------------- setting the recycler data---------------------------//
         update()
         observeCourse()
         return binding.root

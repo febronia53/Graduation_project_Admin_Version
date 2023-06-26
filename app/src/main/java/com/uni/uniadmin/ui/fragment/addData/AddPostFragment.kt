@@ -238,8 +238,8 @@ observeStudents()
                 Toast.makeText(context,"make sure to choose all data ",Toast.LENGTH_SHORT).show()
             }
         }
-        val departmentList = resources.getStringArray(R.array.departement)
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(requireContext(),R.array.departement,R.layout.spinner_item)
+        val departmentList = resources.getStringArray(R.array.department)
+        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(requireContext(),R.array.department,R.layout.spinner_item)
         val autoCom = view.findViewById<Spinner>(R.id.department_spinner_post)
         autoCom.adapter = adapter
 

@@ -1,124 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.PermissionFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <Button
-        android:id="@+id/search_permission"
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/l" />
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.PermissionFragment">
 
-
-
-    <TextView
-        android:id="@+id/department_permission_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose department --- default all department"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_permission" />
-
-    <Spinner
-        android:id="@+id/department_spinner_permission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/department_permission_text" />
-
-    <TextView
-        android:id="@+id/section_permission_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose section --- default all sections"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/department_spinner_permission" />
-
-    <Spinner
-        android:id="@+id/section_spinner_permission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@+id/section_permission_text"
-        tools:layout_editor_absoluteX="146dp" />
-
-
-    <EditText
-        android:id="@+id/permission_student_ID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="search by student ID "
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/section_spinner_permission" />
-
-    <EditText
-        android:id="@+id/permission_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="permission message "
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permission_student_ID"
-        app:layout_constraintVertical_bias="0.023"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <LinearLayout
-        android:id="@+id/l"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-        <Button
-            android:id="@+id/view_permissions"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="view permissions"
+            android:layout_marginStart="8dp"
+            android:text="@string/permissions"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/permission_filters_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/filter"
+            android:src="@drawable/filters"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/permission_message"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:hint="permission message "
+            app:layout_constraintTop_toBottomOf="@+id/l"
+            tools:layout_editor_absoluteX="0dp" />
 
+        <LinearLayout
+            android:id="@+id/l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/permission_search_recy"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permission_message"
-        app:layout_constraintVertical_bias="0.034" />
+            <Button
+                android:id="@+id/view_permissions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="view permissions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/message_indecation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#F40505"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permission_search_recy" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/permission_search_recy"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/permission_message"
+            app:layout_constraintVertical_bias="0.034" />
+
+        <TextView
+            android:id="@+id/message_indecation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="#F40505"
+            android:textSize="@dimen/text_size_12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/permission_message" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

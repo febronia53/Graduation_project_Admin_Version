@@ -25,7 +25,6 @@ import com.uni.uniadmin.R
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.SignUpKey
 import com.uni.uniadmin.databinding.ActivitySignUpBinding
-import com.uni.uniadmin.ui.fragment.PermissionFragment
 import com.uni.uniadmin.ui.fragment.signUp.FragmentSignUpMainData
 import com.uni.uniadmin.ui.fragment.signUp.FragmentSignUpSubData
 import com.uni.uniadmin.viewModel.AuthViewModel
@@ -63,7 +62,7 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
             )
 
             replace(
-                R.id.fragment_container,
+                R.id.fragment_container_home,
                 fragment
             ).commit()
         }
@@ -80,7 +79,7 @@ class SignUp : AppCompatActivity(), FragmentSignUpSubData.CollectDataListener {
             )
 
             replace(
-                R.id.fragment_container,
+                R.id.fragment_container_home,
                 fragment
             ).commit()
         }

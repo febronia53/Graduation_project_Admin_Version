@@ -83,8 +83,7 @@ class AddCourseFragment : Fragment() {
         observeProfessor()
 
         viewCourse.setOnClickListener {
-             val viewCourse = ViewCoursesFragment()
-            (activity as HomeScreen).replaceFragment(viewCourse)
+           replaceFragment(ViewCoursesFragment())
         }
 
         add.setOnClickListener {
@@ -161,7 +160,11 @@ class AddCourseFragment : Fragment() {
         return view
     }
 
-
+  private  fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container_home, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
     private fun finishFragment() {
         parentFragmentManager.popBackStack()

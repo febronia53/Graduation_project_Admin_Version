@@ -12,71 +12,26 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragment.ScheduleListFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:text="@string/schedule"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/departement_spinner_schedule"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.021" />
-
-            <TextView
-                android:id="@+id/department_text_schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" departement"
-                android:textColor="#000000"
-                app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
-                app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
-                app:layout_constraintStart_toStartOf="@+id/departement_spinner_schedule"
-                app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule"
-                app:layout_constraintVertical_bias="0.476" />
-
-            <Spinner
-                android:id="@+id/section_spinner_schedule"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_margin="20dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.036"
-                app:layout_constraintStart_toEndOf="@+id/departement_spinner_schedule" />
-
-            <TextView
-                android:id="@+id/section_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" section"
-                android:textColor="#000000"
-                app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
-                app:layout_constraintEnd_toEndOf="@+id/section_spinner_schedule"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/section_spinner_schedule"
-                app:layout_constraintTop_toTopOf="@+id/section_spinner_schedule" />
-
-            <Button
-                android:id="@+id/search_schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="search"
-                app:layout_constraintBottom_toBottomOf="@+id/section_spinner_schedule"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/section_spinner_schedule"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/schedule_filters_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/filter"
+            android:src="@drawable/filters"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_schedule"
@@ -85,16 +40,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/progress_schedule" />
 
         <ProgressBar
             android:id="@+id/progress_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

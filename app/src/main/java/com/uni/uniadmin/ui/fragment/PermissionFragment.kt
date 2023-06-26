@@ -1,28 +1,25 @@
 package com.uni.uniadmin.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uni.uniadmin.R
 import com.uni.uniadmin.adapters.StudentAdapter
-import com.uni.uniadmin.classes.Assistant
 import com.uni.uniadmin.classes.PermissionItem
 import com.uni.uniadmin.classes.user.UserStudent
+import com.uni.uniadmin.data.PassData
 import com.uni.uniadmin.data.Resource
-import com.uni.uniadmin.data.di.FireStoreTable
-import com.uni.uniadmin.data.di.UserTypes
+import com.uni.uniadmin.databinding.FragmentPermissionBinding
 import com.uni.uniadmin.ui.HomeScreen
-import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
-import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
-import com.uni.uniadmin.ui.fragment.addData.AddScheduleFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
@@ -30,29 +27,33 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class PermissionFragment : Fragment() {
+class PermissionFragment : Fragment(), PassData {
     private val viewModelAuth: AuthViewModel by viewModels()
     private lateinit var currentUser: UserAdmin
     private lateinit var studentsList: MutableList<UserStudent>
-    private lateinit var department: String
-    private lateinit var section: String
     private lateinit var redMessage: TextView
     private val viewModel: FirebaseViewModel by viewModels()
     private lateinit var recyAdapter: StudentAdapter
     lateinit var database: FirebaseFirestore
+    private lateinit var binding: FragmentPermissionBinding
+    private lateinit var bottomSheetFragment: BottomSheetFragment
 
-    // TODO() navigate to the view Permission screen
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentPermissionBinding.inflate(layoutInflater)
         database = FirebaseFirestore.getInstance()
+
         /* ------------------------------------------------------------*/
-        // getAllAssistants()
-        val bundle = Bundle()
-        val permissionFragment = ViewPermissionsFragment()
+        val recyclerView = binding.permissionSearchRecy
+        redMessage = binding.messageIndecation
+        val permissionText = binding.permissionMessage
         studentsList = arrayListOf()
         currentUser = UserAdmin()
+        val bundle = Bundle()
+        val permissionFragment = ViewPermissionsFragment()
+        /*--------------------------------------------------------------*/
         viewModelAuth.getSessionStudent { user ->
             if (user != null) {
                 currentUser = user
@@ -65,81 +66,9 @@ class PermissionFragment : Fragment() {
             }
 
         }
-        val view = inflater.inflate(R.layout.fragment_permission, container, false)
 
 
-        /*--------------------------------------------------------------------------------------------*/
-        val recyclerView = view.findViewById<RecyclerView>(R.id.permission_search_recy)
 
-        val departmentText = view.findViewById<TextView>(R.id.department_permission_text)
-        val sectionText = view.findViewById<TextView>(R.id.section_permission_text)
-        redMessage = view.findViewById(R.id.message_indecation)
-
-        val permissionText = view.findViewById<EditText>(R.id.permission_message)
-        val studentID = view.findViewById<EditText>(R.id.permission_student_ID)
-
-        val search = view.findViewById<Button>(R.id.search_permission)
-        //@walid todo view permissions
-        val viewPermission = view.findViewById<Button>(R.id.view_permissions)
-        viewPermission.setOnClickListener {
-            bundle.putString("userID", "All")
-            permissionFragment.arguments = bundle
-            (activity as HomeScreen).replaceFragment(permissionFragment)
-        }
-        department = ""
-        section = ""
-        val departmentList = resources.getStringArray(R.array.departement)
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.departement,
-            R.layout.spinner_item
-        )
-        val autoCom = view.findViewById<Spinner>(R.id.department_spinner_permission)
-        autoCom.adapter = adapter
-
-        autoCom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                department = departmentList[p2]
-                departmentText.text = department
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-        }
-        val sectionList = resources.getStringArray(R.array.Section)
-        val adapter2: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.Section,
-            R.layout.spinner_item
-        )
-        val autoCom2 = view.findViewById<Spinner>(R.id.section_spinner_permission)
-        autoCom2.adapter = adapter2
-
-        autoCom2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                section = sectionList[p2]
-                sectionText.text = section
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-        }
-        search.setOnClickListener {
-            val studentID = studentID.text.toString()
-            // TODO code neeeeed to be changed
-            if (section != "any section" && department != "choose departement") {
-                viewModel.searchStudentBySection(currentUser.grade, department, section)
-                observeStudents()
-            } else if (studentID.isNotEmpty()) {
-                viewModel.searchStudentByID(currentUser.grade, studentID)
-                observeStudent()
-            } else if (department != "any departement") {
-                viewModel.searchStudentByDepartment(currentUser.grade, department)
-                observeStudents()
-            } else {
-                viewModel.searchStudentAll(currentUser.grade)
-                observeStudents()
-
-            }
-        }
 
         recyAdapter = StudentAdapter(requireContext(), studentsList,
             removePerm = { _, _ ->
@@ -152,7 +81,6 @@ class PermissionFragment : Fragment() {
                 (activity as HomeScreen).replaceFragment(permissionFragment)
 
             },
-
             addPerm = { _, item ->
                 val permission = permissionText.text.toString()
                 if (permission.isNotEmpty()) {
@@ -178,7 +106,33 @@ class PermissionFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = recyAdapter
 
-        return view
+        binding.permissionFiltersBtn.setOnClickListener { showBottomSheetSettings() }
+        /******/
+        binding.viewPermissions.setOnClickListener {
+            bundle.putString("userID", "All")
+            permissionFragment.arguments = bundle
+            (activity as HomeScreen).replaceFragment(permissionFragment)
+        }
+        showAllPermission()
+        /*****/
+
+
+        return binding.root
+    }
+
+
+    private fun showBottomSheetSettings() {
+
+        bottomSheetFragment = BottomSheetFragment()
+        bottomSheetFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
+        bottomSheetFragment.isCancelable = true
+        bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
+
+    }
+
+    private fun showAllPermission() {
+        viewModel.searchStudentAll(currentUser.grade)
+        observeStudents()
     }
 
     private fun observePermission() {
@@ -264,12 +218,22 @@ class PermissionFragment : Fragment() {
 
     }
 
-    /*  fun getAllAssistants( ) {
-          val docRef = database.collection(FireStoreTable.userTeaching)
-          for (i in 0..5){
-              docRef.add(Assistant("name_"+i.toString(),(2000+i).toString(),"assistant" ))
-              docRef.add(Assistant("prof_name_"+i.toString(),(5000+i).toString(),"lecturer" ))
-          }
+    override fun onDataPassed(department: String, section: String, studentId: String) {
+        if (section != "any section" && department != "any department") {
 
-      }*/
+            viewModel.searchStudentBySection(currentUser.grade, department, section)
+            observeStudents()
+        } else if (studentId.isNotEmpty()) {
+            viewModel.searchStudentByID(currentUser.grade, studentId)
+            observeStudent()
+        } else if (department != "any department") {
+
+            viewModel.searchStudentByDepartment(currentUser.grade, department)
+            observeStudents()
+        } else {
+            showAllPermission()
+        }
+
+    }
+
 }

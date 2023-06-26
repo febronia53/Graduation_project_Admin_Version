@@ -3,369 +3,376 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageButton
+            android:id="@+id/back_fragment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back_fragment_btn">
 
-            <ImageButton
-                android:id="@+id/back_fragment_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_back_fragment"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:background="@drawable/round_10_btn"
-                android:gravity="center"
-                android:onClick="onRadioButtonClicked"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/back_fragment_btn">
-
-                <RadioButton
-                    android:id="@+id/radioLecture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginEnd="@dimen/margin_16dp"
-                    android:text="@string/lecture" />
-
-                <RadioButton
-                    android:id="@+id/radioSection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_16dp"
-                    android:layout_marginEnd="0dp"
-                    android:text="@string/section" />
+                android:layout_height="match_parent">
 
 
-            </RadioGroup>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="@dimen/cardView_radius_10"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup">
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".ui.fragment.addData.AddScheduleFragment">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/round_10_btn"
+                    android:gravity="center"
+                    android:onClick="onRadioButtonClicked"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/back_fragment_btn">
 
-                    <TextView
-                        android:id="@+id/add_lecture_txt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/black"
-                        android:gravity="center"
-                        android:paddingTop="@dimen/margin_4dp"
-                        android:text="@string/addLecture"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_14"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/department_text"
+                    <RadioButton
+                        android:id="@+id/radioLecture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/choose_department"
-                        android:textColor="@color/black_50"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/add_lecture_txt" />
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
+                        android:text="@string/lecture" />
 
-                    <Spinner
-                        android:id="@+id/departement_spinner_schedule"
+                    <RadioButton
+                        android:id="@+id/radioSection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="0dp"
+                        android:text="@string/section" />
+
+
+                </RadioGroup>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="@dimen/cardView_radius_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/border"
-                        android:paddingTop="@dimen/margin_2dp"
-                        android:paddingBottom="@dimen/margin_2dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/department_text" />
+                        android:layout_height="match_parent"
+                        tools:context=".ui.fragment.addData.AddScheduleFragment">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/arrow_drop_down"
-                        app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
-                        app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
-                        app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule" />
-
-                    <TextView
-                        android:id="@+id/section_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/choose_section"
-                        android:textColor="@color/black_50"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/departement_spinner_schedule" />
-
-                    <Spinner
-                        android:id="@+id/section_spinner_schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/border"
-                        android:paddingTop="@dimen/margin_4dp"
-                        android:paddingBottom="@dimen/margin_4dp"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/section_text" />
-
-                    <TextView
-                        android:id="@+id/day_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/choose_day"
-                        android:textColor="@color/black_50"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/section_spinner_schedule" />
-
-                    <Spinner
-                        android:id="@+id/day_spinner_schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/border"
-                        android:paddingTop="@dimen/margin_2dp"
-                        android:paddingBottom="@dimen/margin_2dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/day_text" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/arrow_drop_down"
-                        app:layout_constraintBottom_toBottomOf="@+id/day_spinner_schedule"
-                        app:layout_constraintEnd_toEndOf="@+id/day_spinner_schedule"
-                        app:layout_constraintTop_toTopOf="@+id/day_spinner_schedule" />
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@+id/day_spinner_schedule">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/add_lecture_txt"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/round_10_btn"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/margin_8dp"
-                            android:paddingEnd="@dimen/margin_8dp">
-
-                            <TextView
-                                android:id="@+id/from_schedule"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="08:00"
-                                android:textSize="@dimen/text_size_14" />
-
-                            <TextView
-                                android:id="@+id/amPm_from_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="AM"
-                                android:textSize="@dimen/text_size_14" />
-                        </LinearLayout>
+                            android:background="@color/black"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/margin_4dp"
+                            android:text="@string/addLecture"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_14"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/margin_8dp"
-                            android:layout_marginEnd="@dimen/margin_8dp"
-                            android:gravity="center"
-                            android:text="@string/to"
-                            android:textSize="@dimen/text_size_12"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
+                            android:id="@+id/department_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/round_10_btn"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/choose_department"
+                            android:textColor="@color/black_50"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/add_lecture_txt" />
+
+                        <Spinner
+                            android:id="@+id/departement_spinner_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/border"
+                            android:paddingTop="@dimen/margin_2dp"
+                            android:paddingBottom="@dimen/margin_2dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/department_text" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/arrow_drop_down"
+                            app:layout_constraintBottom_toBottomOf="@+id/departement_spinner_schedule"
+                            app:layout_constraintEnd_toEndOf="@+id/departement_spinner_schedule"
+                            app:layout_constraintTop_toTopOf="@+id/departement_spinner_schedule" />
+
+                        <TextView
+                            android:id="@+id/section_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/choose_section"
+                            android:textColor="@color/black_50"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/departement_spinner_schedule" />
+
+                        <Spinner
+                            android:id="@+id/section_spinner_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/border"
+                            android:paddingTop="@dimen/margin_4dp"
+                            android:paddingBottom="@dimen/margin_4dp"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/section_text" />
+
+                        <TextView
+                            android:id="@+id/day_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/choose_day"
+                            android:textColor="@color/black_50"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/section_spinner_schedule" />
+
+                        <Spinner
+                            android:id="@+id/day_spinner_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/border"
+                            android:paddingTop="@dimen/margin_2dp"
+                            android:paddingBottom="@dimen/margin_2dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/day_text" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/arrow_drop_down"
+                            app:layout_constraintBottom_toBottomOf="@+id/day_spinner_schedule"
+                            app:layout_constraintEnd_toEndOf="@+id/day_spinner_schedule"
+                            app:layout_constraintTop_toTopOf="@+id/day_spinner_schedule" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:gravity="center"
                             android:orientation="horizontal"
-                            android:paddingStart="@dimen/margin_8dp"
-                            android:paddingEnd="@dimen/margin_8dp">
+                            app:layout_constraintTop_toBottomOf="@+id/day_spinner_schedule">
 
-                            <TextView
-                                android:id="@+id/to_schedule"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="10:00"
-                                android:textSize="@dimen/text_size_14" />
+                                android:background="@drawable/round_10_btn"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/margin_8dp"
+                                android:paddingEnd="@dimen/margin_8dp">
+
+                                <TextView
+                                    android:id="@+id/from_schedule"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="08:00"
+                                    android:textSize="@dimen/text_size_14" />
+
+                                <TextView
+                                    android:id="@+id/amPm_from_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="AM"
+                                    android:textSize="@dimen/text_size_14" />
+                            </LinearLayout>
+
 
                             <TextView
-                                android:id="@+id/amPm_to_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/margin_8dp"
+                                android:layout_marginEnd="@dimen/margin_8dp"
+                                android:gravity="center"
+                                android:text="@string/to"
+                                android:textSize="@dimen/text_size_12"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="AM"
-                                android:textSize="@dimen/text_size_14" />
+                                android:background="@drawable/round_10_btn"
+                                android:orientation="horizontal"
+                                android:paddingStart="@dimen/margin_8dp"
+                                android:paddingEnd="@dimen/margin_8dp">
+
+                                <TextView
+                                    android:id="@+id/to_schedule"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="10:00"
+                                    android:textSize="@dimen/text_size_14" />
+
+                                <TextView
+                                    android:id="@+id/amPm_to_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="AM"
+                                    android:textSize="@dimen/text_size_14" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                    </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/place_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/border"
+                            android:gravity="start"
+                            android:hint="@string/enterPlace"
+                            android:paddingStart="@dimen/margin_8dp"
+                            android:paddingTop="@dimen/margin_4dp"
+                            android:paddingEnd="@dimen/margin_8dp"
+                            android:paddingBottom="@dimen/margin_4dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
-                    <EditText
-                        android:id="@+id/place_schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/border"
-                        android:gravity="start"
-                        android:hint="@string/enterPlace"
-                        android:paddingStart="@dimen/margin_8dp"
-                        android:paddingTop="@dimen/margin_4dp"
-                        android:paddingEnd="@dimen/margin_8dp"
-                        android:paddingBottom="@dimen/margin_4dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                        <TextView
+                            android:id="@+id/teaching_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="29dp"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/choose_how_teach"
+                            android:textColor="@color/black_50"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/place_schedule" />
 
+                        <Spinner
+                            android:id="@+id/teaching_spinner_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/border"
+                            android:paddingTop="@dimen/margin_2dp"
+                            android:paddingBottom="@dimen/margin_2dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/teaching_text" />
 
-                    <TextView
-                        android:id="@+id/teaching_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="29dp"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/choose_how_teach"
-                        android:textColor="@color/black_50"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/place_schedule" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/arrow_drop_down"
+                            app:layout_constraintBottom_toBottomOf="@+id/teaching_spinner_schedule"
+                            app:layout_constraintEnd_toEndOf="@+id/teaching_spinner_schedule"
+                            app:layout_constraintTop_toTopOf="@+id/teaching_spinner_schedule" />
 
-                    <Spinner
-                        android:id="@+id/teaching_spinner_schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/border"
-                        android:paddingTop="@dimen/margin_2dp"
-                        android:paddingBottom="@dimen/margin_2dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/teaching_text" />
+                        <TextView
+                            android:id="@+id/course_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/choose_course"
+                            android:textColor="@color/black_50"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/teaching_spinner_schedule" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/arrow_drop_down"
-                        app:layout_constraintBottom_toBottomOf="@+id/teaching_spinner_schedule"
-                        app:layout_constraintEnd_toEndOf="@+id/teaching_spinner_schedule"
-                        app:layout_constraintTop_toTopOf="@+id/teaching_spinner_schedule" />
+                        <Spinner
+                            android:id="@+id/courses_spinner_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@drawable/border"
+                            android:paddingTop="@dimen/margin_2dp"
+                            android:paddingBottom="@dimen/margin_2dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/course_text" />
 
-                    <TextView
-                        android:id="@+id/course_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/choose_course"
-                        android:textColor="@color/black_50"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/teaching_spinner_schedule" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/arrow_drop_down"
+                            app:layout_constraintBottom_toBottomOf="@+id/courses_spinner_schedule"
+                            app:layout_constraintEnd_toEndOf="@+id/courses_spinner_schedule"
+                            app:layout_constraintTop_toTopOf="@+id/courses_spinner_schedule" />
 
-                    <Spinner
-                        android:id="@+id/courses_spinner_schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/border"
-                        android:paddingTop="@dimen/margin_2dp"
-                        android:paddingBottom="@dimen/margin_2dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/course_text" />
+                        <Button
+                            android:id="@+id/add_schedule"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/round_btn"
+                            android:text="@string/add"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_size_14"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/courses_spinner_schedule" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/arrow_drop_down"
-                        app:layout_constraintBottom_toBottomOf="@+id/courses_spinner_schedule"
-                        app:layout_constraintEnd_toEndOf="@+id/courses_spinner_schedule"
-                        app:layout_constraintTop_toTopOf="@+id/courses_spinner_schedule" />
-
-                    <Button
-                        android:id="@+id/add_schedule"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/round_btn"
-                        android:text="@string/add"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/text_size_14"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/courses_spinner_schedule" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

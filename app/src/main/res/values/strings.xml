@@ -7,8 +7,8 @@
         <item>grade three</item>
         <item>grade four</item>
     </string-array>
-    <string-array name="departement">
-        <item>any departement</item>
+    <string-array name="department">
+        <item>any department</item>
         <item>CS</item>
         <item>IS</item>
         <item>IT</item>
@@ -150,8 +150,13 @@
     <string name="section">Section</string>
     <string name="addLecture">Add lecture</string>
     <string name="addSection">Add section</string>
-    <string name="permissions">permissions</string>
+    <string name="permissions">Permissions</string>
     <string name="schedule">schedule</string>
     <string name="addSchedule">Add schedule</string>
     <string name="createPost">Create post</string>
+    <string name="filter">Filter</string>
+    <string name="showResult">Show result</string>
+    <string name="filterById">filter by student Id</string>
+    <string name="studentId">student id</string>
+    <string name="makeSureStudentId">Make sure to type the student ID</string>
 </resources>
