@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_16dp"
+    android:background="@drawable/background_notification"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_16dp">
+
+    <ImageView
+        android:id="@+id/dialog_icon"
+        android:layout_width="@dimen/dialog_icon_size"
+        android:layout_height="@dimen/dialog_icon_size"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:src="@drawable/icon_remove" />
+
+    <TextView
+        android:id="@+id/text_warning"
+        style="@style/TextDialogStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:text="@string/remove_student" />
+
+    <LinearLayout
+        android:id="@+id/button_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/cancel_remove_btn"
+            style="@style/ButtonDialog.remove"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:maxLines="1"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/ok_remove_btn"
+            style="@style/ButtonDialog.remove"
+            android:text="@string/ok" />
+    </LinearLayout>
+
+</LinearLayout>
