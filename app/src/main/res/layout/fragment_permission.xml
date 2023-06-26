@@ -40,28 +40,12 @@
             android:id="@+id/permission_message"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:gravity="center"
             android:hint="permission message "
-            app:layout_constraintTop_toBottomOf="@+id/l"
+            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn"
             tools:layout_editor_absoluteX="0dp" />
 
-        <LinearLayout
-            android:id="@+id/l"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn">
-
-            <Button
-                android:id="@+id/view_permissions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="view permissions"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/permission_search_recy"
@@ -86,6 +70,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/permission_message" />
+
+        <Button
+            android:id="@+id/view_permissions"
+            style="@style/Button.ViewPermission"
+            android:text="@string/view_permissions"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
