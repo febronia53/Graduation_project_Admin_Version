@@ -36,25 +36,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/permission_message"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:gravity="center"
-            android:hint="permission message "
-            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn"
-            tools:layout_editor_absoluteX="0dp" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/permission_search_recy"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/permission_message"
+            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn"
             app:layout_constraintVertical_bias="0.034" />
 
         <TextView
@@ -69,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/permission_message" />
+            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn" />
 
         <Button
             android:id="@+id/view_permissions"
