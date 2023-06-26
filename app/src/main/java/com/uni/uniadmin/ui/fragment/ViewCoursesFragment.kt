@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.uni.uniadmin.adapters.CourseAdapter
 import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.data.Resource
+import com.uni.uniadmin.databinding.FragmentHomeBinding
 import com.uni.uniadmin.databinding.FragmentViewCoursesBinding
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
@@ -47,6 +48,8 @@ class ViewCoursesFragment : Fragment() {
                 ).show()
             }
         }
+        binding = FragmentViewCoursesBinding.inflate(layoutInflater)
+
 
         binding.backFragmentBtn.setOnClickListener { finishFragment() }
         binding.allCoursesCheckBox.setOnCheckedChangeListener { _, _ ->

@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -16,8 +17,11 @@ import com.uni.uniadmin.R
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
 import com.uni.uniadmin.ui.fragment.*
+import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
+import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
+import com.uni.unistudent.ui.fragments.ProfileFragment
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -31,25 +35,39 @@ class HomeScreen : AppCompatActivity() {
 
     // TODO save the image in a shared prefrance
     lateinit var currentUser: UserAdmin
-
+    public  var addPost=false
     private lateinit var binding: ActivityHomeScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
+     binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification -> replaceFragment(OptionsFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.notification -> {
+                    replaceFragment(OptionsFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    binding.profileData.visibility = View.GONE
+                }
+
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 R.id.students_permissions -> {
                     replaceFragment(PermissionFragment())
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 else -> {
@@ -57,6 +75,8 @@ class HomeScreen : AppCompatActivity() {
             }
             true
         }
+
+
 
     }
 
@@ -151,7 +171,7 @@ class HomeScreen : AppCompatActivity() {
                 }
                 observeUser()
                 observeImage()
-                replaceFragment(HomeFragment())
+                //replaceFragment(HomeFragment())
             } else {
                 Toast.makeText(this, "no user found. have to register", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, SignUp::class.java))
@@ -163,18 +183,37 @@ class HomeScreen : AppCompatActivity() {
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.selectedItemId = R.id.home
 
+        setupBadge()
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.notification -> replaceFragment(OptionsFragment())
-                R.id.profile -> replaceFragment(ProfileFragment())
+
+                R.id.home -> {
+                    replaceFragment(HomeFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                }
+
+                R.id.notification -> {
+                    replaceFragment(OptionsFragment())
+                    binding.profileData.visibility = View.VISIBLE
+                    val badge = binding.bottomNavigationView.getBadge(R.id.notification)
+                    badge?.isVisible = false
+                }
+
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    binding.profileData.visibility = View.GONE
+                }
+
                 R.id.schedule_and_attendees -> {
                     replaceFragment(ScheduleListFragment())
                     updateUser(currentUser)
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 R.id.students_permissions -> {
                     replaceFragment(PermissionFragment())
+                    binding.profileData.visibility = View.VISIBLE
                 }
 
                 else -> {
@@ -182,6 +221,7 @@ class HomeScreen : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun checkForInternet(context: Context): Boolean {
@@ -195,5 +235,11 @@ class HomeScreen : AppCompatActivity() {
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             else -> false
         }
+    }
+
+    private fun setupBadge() {
+        val badge = binding.bottomNavigationView.getOrCreateBadge(R.id.notification)
+        badge.isVisible = true
+        badge.number = 5
     }
 }

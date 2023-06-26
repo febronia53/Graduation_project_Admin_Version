@@ -70,6 +70,7 @@ class PermissionFragment : Fragment(), PassData {
 
 
 
+
         recyAdapter = StudentAdapter(requireContext(), studentsList,
             removePerm = { _, _ ->
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -19,11 +20,13 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var section: String
     private lateinit var passDataListener: PassData
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         binding = BottomSheetLayoutBinding.inflate(layoutInflater)
         passDataListener = requireParentFragment() as PassData
@@ -111,9 +114,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         }
 
+
         return binding.root
     }
-
 
     private fun passDataToParentFragment(department: String, section: String, studentId: String) {
         if (passDataListener != null) {
@@ -127,6 +130,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "MyBottomSheetTag"
         const val sheet_schedule_TAG = "sheetScheduleTag"
+
     }
 
 

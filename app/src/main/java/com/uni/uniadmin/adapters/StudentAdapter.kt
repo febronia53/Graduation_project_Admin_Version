@@ -24,7 +24,7 @@ class StudentAdapter(
     : RecyclerView.Adapter<StudentAdapter.myViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
-        val view : View = LayoutInflater.from(context).inflate(R.layout.student_item,parent,false)
+        val view : View = LayoutInflater.from(context).inflate(R.layout.item_add_student,parent,false)
         return myViewHolder(view)
     }
 
@@ -57,13 +57,13 @@ class StudentAdapter(
 
     inner    class myViewHolder(item: View) : RecyclerView.ViewHolder(item){
 
-        val name = item.findViewById<TextView>(R.id.student_name)
-        val grade = item.findViewById<TextView>(R.id.student_grade)
-        val departemt = item.findViewById<TextView>(R.id.student_department)
-        val section = item.findViewById<TextView>(R.id.student_section)
+        val name = item.findViewById<TextView>(R.id.text_student_name)
+        val grade = item.findViewById<TextView>(R.id.text_student_grade)
+        val departemt = item.findViewById<TextView>(R.id.text_student_department)
+        val section = item.findViewById<TextView>(R.id.text_student_section)
 
-        val add = item.findViewById<Button>(R.id.add_perm)
-        val remove = item.findViewById<Button>(R.id.remove_permission_all)
+        val add = item.findViewById<Button>(R.id.button_add)
+        val remove = item.findViewById<Button>(R.id.button_remove)
         val item = item.findViewById<ConstraintLayout>(R.id.student_item)
         init {
             remove.setOnClickListener {

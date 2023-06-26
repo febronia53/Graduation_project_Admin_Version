@@ -43,10 +43,10 @@ class PostsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == WITH_IMAGE) {
-            val view : View = LayoutInflater.from(context).inflate(R.layout.post_item_with_image,parent,false)
+            val view : View = LayoutInflater.from(context).inflate(R.layout.item_post_with_image,parent,false)
             ViewHolder1(view)
         }else{
-            val view : View = LayoutInflater.from(context).inflate(R.layout.post_item_without_image,parent,false)
+            val view : View = LayoutInflater.from(context).inflate(R.layout.item_post_without_image,parent,false)
             ViewHolder2(view)
         }
     }
@@ -98,9 +98,9 @@ if (!currentItem.myPost){
         val auth = item.findViewById<TextView>(R.id.auth_with)
         val audience = item.findViewById<TextView>(R.id.audience_with)
         val text = item.findViewById<TextView>(R.id.text_with)
-        val addComment = item.findViewById<Button>(R.id.bt_comment)
+        val addComment = item.findViewById<ImageView>(R.id.comments_Img)
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_with)
-        val deletePost_bt = item.findViewById<Button>(R.id.delete_post_bt)
+        val deletePost_bt = item.findViewById<ImageView>(R.id.delete_Img)
 
         init {
             deletePost_bt.setOnClickListener {
@@ -122,9 +122,9 @@ if (!currentItem.myPost){
         val auth = item.findViewById<TextView>(R.id.auth_without)
         val audience = item.findViewById<TextView>(R.id.audience_without)
         val text = item.findViewById<TextView>(R.id.text_without)
-        val addComment = item.findViewById<Button>(R.id.bt_comment_without)
+        val addComment = item.findViewById<ImageView>(R.id.comments_Img)
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_without)
-        val deletePost_bt = item.findViewById<Button>(R.id.delete_post_bt_without)
+        val deletePost_bt = item.findViewById<ImageView>(R.id.delete_Img)
 
         init {
             deletePost_bt.setOnClickListener {
