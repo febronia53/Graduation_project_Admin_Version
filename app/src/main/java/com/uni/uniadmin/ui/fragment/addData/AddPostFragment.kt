@@ -3,6 +3,7 @@ package com.uni.uniadmin.ui.fragment.addData
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uni.uniadmin.R
+import com.uni.uniadmin.adapters.SpinnerItemAdapter
 import com.uni.uniadmin.adapters.StudentAdapter
+import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.Posts
+import com.uni.uniadmin.classes.SpinnerItem
 import com.uni.uniadmin.classes.user.UserStudent
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
+import com.uni.uniadmin.ui.HomeScreen
 import com.uni.uniadmin.ui.SignUp
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
@@ -40,10 +45,11 @@ class AddPostFragment : Fragment() {
     private lateinit var department: String
     private lateinit var section: String
     private lateinit var course: String
-    private lateinit var coursesList: MutableList<String>
+    private lateinit var coursesList: MutableList<SpinnerItem>
     lateinit var  recyAdapter : StudentAdapter
     private lateinit var studentsList: MutableList<UserStudent>
 
+    private lateinit var courseAdapter: SpinnerItemAdapter
     private lateinit var userImageUri: Uri
     private lateinit var imageView: ImageView
 
@@ -67,10 +73,7 @@ class AddPostFragment : Fragment() {
 
         val stuID = view.findViewById<EditText>(R.id.post_student_ID)
 
-        val departmentText = view.findViewById<TextView>(R.id.department_post_text)
         val postText = view.findViewById<EditText>(R.id.post_description)
-        val sectionText = view.findViewById<TextView>(R.id.section_post_text)
-        val coursesText = view.findViewById<TextView>(R.id.course_post_text)
         val addSectionPostBt=view.findViewById<Button>(R.id.add_section_post)
         val addCoursePostBt=view.findViewById<Button>(R.id.add_post_course)
         val searchStudent=view.findViewById<Button>(R.id.search_student_post)
@@ -84,7 +87,7 @@ class AddPostFragment : Fragment() {
         section=""
         course=""
         recyAdapter= StudentAdapter(requireContext(),studentsList,
- removePerm = {pos, item->},
+            removePerm = {pos, item->},
             itemClick = {pos, item->}
             ,
             addPerm = {pos, item->
@@ -101,7 +104,7 @@ class AddPostFragment : Fragment() {
                                 ,"",
                                 id
                                 , Date()
-                                ,"grade: ${currentUser.grade} dep: ${department} sec: ${section}"
+                                ,"Personal for $id"
                                 ,PostsAdapter.WITHOUT_IMAGE),item.userId)
                         observePost(false, Uri.EMPTY)
                     }else{
@@ -246,7 +249,7 @@ observeStudents()
         autoCom.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
                 department =departmentList[p2]
-                departmentText.text=department}
+            }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         val sectionList = resources.getStringArray(R.array.Section)
@@ -257,22 +260,21 @@ observeStudents()
         autoCom2.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
                 section =sectionList[p2]
-                sectionText.text=section}
+            }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
-        val adapter3: ArrayAdapter<String> = ArrayAdapter<String>(
+        courseAdapter = SpinnerItemAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, coursesList
+             coursesList
         )
 
         val autoCom3 = view.findViewById<Spinner>(R.id.course_post)
-        autoCom3.adapter = adapter3
+        autoCom3.adapter = courseAdapter
 
         autoCom3.onItemSelectedListener= object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0 : AdapterView<*>?, p1: View?, p2:Int, p3: Long) {
-                course =coursesList[p2]
-                coursesText.text=course
+                course =coursesList[p2].textDownLeft
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
@@ -365,8 +367,14 @@ observeCourses()
                     is Resource.Success -> {
                         coursesList.clear()
                         it.result.forEach {
-                            coursesList.add(it.courseCode)
+                            val courses=SpinnerItem(
+                                it.courseName
+                            ,it.courseCode,
+                                it.grade
+                            )
+                            coursesList.add(courses)
                         }
+                        courseAdapter.update(coursesList)
                     }
                     is Resource.Failure -> {
                         Toast.makeText(context,it.exception,Toast.LENGTH_SHORT).show()
@@ -387,10 +395,12 @@ observeCourses()
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SignUp.IMAGE_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK)
         {
+            (activity as HomeScreen).addPost = true
             userImageUri = data?.data!!
             imageView.setImageURI(userImageUri)
         }
     }
+
 
 
 }

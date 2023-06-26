@@ -8,7 +8,6 @@
         <item>grade four</item>
     </string-array>
     <string-array name="departement">
-        <item>any departement</item>
         <item>CS</item>
         <item>IS</item>
         <item>IT</item>
@@ -21,6 +20,29 @@
         <item>GROUP5</item>
     </string-array>
     <string-array name="Section">
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+        <item>S4</item>
+        <item>S5</item>
+        <item>S6</item>
+        <item>S7</item>
+        <item>S8</item>
+    </string-array>
+    <string-array name="departement2">
+        <item>any departement</item>
+        <item>CS</item>
+        <item>IS</item>
+        <item>IT</item>
+        <item>BIO</item>
+        <item>SOFT</item>
+        <item>GROUP1</item>
+        <item>GROUP2</item>
+        <item>GROUP3</item>
+        <item>GROUP4</item>
+        <item>GROUP5</item>
+    </string-array>
+    <string-array name="Section2">
         <item>any section</item>
         <item>S1</item>
         <item>S2</item>

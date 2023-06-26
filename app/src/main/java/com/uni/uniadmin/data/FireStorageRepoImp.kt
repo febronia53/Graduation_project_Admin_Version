@@ -9,8 +9,6 @@ class FireStorageRepoImp@Inject constructor(
     private val mStorageRef: StorageReference
 ): FireStorageRepo {
     override suspend fun uploadImage( imageUri: Uri, userId:String, result: (Resource<String>) -> Unit){
-
-
         val uploadTask = mStorageRef.child("users/$userId.png").putFile(imageUri)
         uploadTask.addOnSuccessListener {
             result.invoke(
@@ -27,6 +25,18 @@ class FireStorageRepoImp@Inject constructor(
         uploadTask.addOnSuccessListener {
             result.invoke(
                 Resource.Success("image uploaded")
+            )
+        }.addOnFailureListener{
+            result.invoke(
+                Resource.Failure(it.toString())
+            )
+        }
+    }
+    override suspend fun deletePostImage(  postId: String, result: (Resource<String>) -> Unit){
+        val uploadTask = mStorageRef.child("posts/$postId.png").delete()
+        uploadTask.addOnSuccessListener {
+            result.invoke(
+                Resource.Success("image deleted")
             )
         }.addOnFailureListener{
             result.invoke(

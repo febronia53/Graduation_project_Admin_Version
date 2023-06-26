@@ -71,8 +71,7 @@ class PermissionFragment : Fragment() {
         /*--------------------------------------------------------------------------------------------*/
         val recyclerView = view.findViewById<RecyclerView>(R.id.permission_search_recy)
 
-        val departmentText = view.findViewById<TextView>(R.id.department_permission_text)
-        val sectionText = view.findViewById<TextView>(R.id.section_permission_text)
+
         redMessage = view.findViewById(R.id.message_indecation)
 
         val permissionText = view.findViewById<EditText>(R.id.permission_message)
@@ -88,10 +87,10 @@ class PermissionFragment : Fragment() {
         }
         department = ""
         section = ""
-        val departmentList = resources.getStringArray(R.array.departement)
+        val departmentList = resources.getStringArray(R.array.departement2)
         val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.departement,
+            R.array.departement2,
             R.layout.spinner_item
         )
         val autoCom = view.findViewById<Spinner>(R.id.department_spinner_permission)
@@ -100,15 +99,14 @@ class PermissionFragment : Fragment() {
         autoCom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 department = departmentList[p2]
-                departmentText.text = department
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
-        val sectionList = resources.getStringArray(R.array.Section)
+        val sectionList = resources.getStringArray(R.array.Section2)
         val adapter2: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.Section,
+            R.array.Section2,
             R.layout.spinner_item
         )
         val autoCom2 = view.findViewById<Spinner>(R.id.section_spinner_permission)
@@ -117,7 +115,6 @@ class PermissionFragment : Fragment() {
         autoCom2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 section = sectionList[p2]
-                sectionText.text = section
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -125,7 +122,7 @@ class PermissionFragment : Fragment() {
         search.setOnClickListener {
             val studentID = studentID.text.toString()
             // TODO code neeeeed to be changed
-            if (section != "any section" && department != "choose departement") {
+            if (section != "any section" && department != "any departement") {
                 viewModel.searchStudentBySection(currentUser.grade, department, section)
                 observeStudents()
             } else if (studentID.isNotEmpty()) {

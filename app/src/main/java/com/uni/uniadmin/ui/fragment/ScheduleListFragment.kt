@@ -232,6 +232,7 @@ class ScheduleListFragment : Fragment() {
                     }
 
                     is Resource.Success -> {
+                        coursesList.clear()
                         state.result.forEach {
                             coursesList.add(it)
                         }
@@ -239,12 +240,11 @@ class ScheduleListFragment : Fragment() {
                         viewModel.getLecture(coursesList, dep)
                         progress.visibility = View.VISIBLE
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
-                        delay(200)
+                        delay(300)
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
                         progress.visibility = View.INVISIBLE
+                        updateData()
 
-                        observeLectures()
-                        observeSections()
 
                     }
 
@@ -289,7 +289,7 @@ class ScheduleListFragment : Fragment() {
                                 )
                             )
                         }
-                        adapter.update(scheduleDataType)
+
 
                     }
 
@@ -306,7 +306,15 @@ class ScheduleListFragment : Fragment() {
 
     }
 
-
+fun updateData(){
+    scheduleDataType.clear()
+    lifecycleScope.launchWhenCreated {
+        observeLectures()
+        observeSections()
+        delay(200)
+    }
+    adapter.update(scheduleDataType)
+}
     private fun observeLectures() {
         lifecycleScope.launchWhenCreated {
             viewModel.getLecture.collectLatest { state ->
@@ -336,7 +344,7 @@ class ScheduleListFragment : Fragment() {
                                 )
                             )
                         }
-                        adapter.update(scheduleDataType)
+
                     }
 
                     is Resource.Failure -> {

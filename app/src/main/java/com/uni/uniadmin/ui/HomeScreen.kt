@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -16,6 +17,8 @@ import com.uni.uniadmin.R
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
 import com.uni.uniadmin.ui.fragment.*
+import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
+import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.unistudent.ui.fragments.ProfileFragment
@@ -32,14 +35,14 @@ class HomeScreen : AppCompatActivity() {
 
     // TODO save the image in a shared prefrance
     lateinit var currentUser: UserAdmin
-
+    public  var addPost=false
     private lateinit var binding: ActivityHomeScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
+     binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
                     replaceFragment(HomeFragment())
@@ -72,6 +75,8 @@ class HomeScreen : AppCompatActivity() {
             }
             true
         }
+
+
 
     }
 
@@ -166,7 +171,7 @@ class HomeScreen : AppCompatActivity() {
                 }
                 observeUser()
                 observeImage()
-                replaceFragment(HomeFragment())
+                //replaceFragment(HomeFragment())
             } else {
                 Toast.makeText(this, "no user found. have to register", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, SignUp::class.java))
@@ -177,9 +182,12 @@ class HomeScreen : AppCompatActivity() {
     private fun settingsOnStartApp() {
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.selectedItemId = R.id.home
+
         setupBadge()
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
+
                 R.id.home -> {
                     replaceFragment(HomeFragment())
                     binding.profileData.visibility = View.VISIBLE
@@ -213,6 +221,7 @@ class HomeScreen : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun checkForInternet(context: Context): Boolean {
