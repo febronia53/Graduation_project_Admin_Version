@@ -1,4 +1,4 @@
-package com.uni.unistudent.ui.fragments
+package com.uni.uniadmin.ui.fragment
 
 import android.content.Context
 import android.content.Intent
@@ -23,7 +23,6 @@ import com.google.firebase.ktx.Firebase
 import com.uni.uniadmin.R
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.FragmentProfileBinding
-import com.uni.uniadmin.ui.fragment.BottomSheetFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
 import com.uni.uniteaching.classes.user.UserAdmin
@@ -33,7 +32,7 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
-    private lateinit var bottomSheetFragment: BottomSheetFragment
+    private lateinit var bottomSheetSettingFragment: BottomSheetSettingFragment
     lateinit var currentUser: UserAdmin
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var userImageUri: Uri
@@ -151,10 +150,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showBottomSheetSettings() {
-        bottomSheetFragment = BottomSheetFragment()
-        bottomSheetFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
-        bottomSheetFragment.isCancelable = true
-        bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
+        bottomSheetSettingFragment = BottomSheetSettingFragment()
+        bottomSheetSettingFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
+        bottomSheetSettingFragment.isCancelable = true
+        bottomSheetSettingFragment.show(childFragmentManager, BottomSheetSettingFragment.TAG)
     }
 
     private fun observeImage() {

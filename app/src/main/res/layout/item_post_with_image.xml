@@ -152,7 +152,7 @@
             app:layout_constraintTop_toBottomOf="@+id/post_image">
 
             <ImageView
-                android:id="@+id/comments_Img"
+                android:id="@+id/comments_with_Img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_comment" />
@@ -175,7 +175,7 @@
             app:layout_constraintTop_toBottomOf="@+id/text_without">
 
             <ImageView
-                android:id="@+id/delete_Img"
+                android:id="@+id/delete_with_Img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete" />

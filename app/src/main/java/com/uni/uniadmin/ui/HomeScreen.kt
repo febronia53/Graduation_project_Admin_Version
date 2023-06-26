@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -17,11 +16,9 @@ import com.uni.uniadmin.R
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
 import com.uni.uniadmin.ui.fragment.*
-import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
-import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FireStorageViewModel
-import com.uni.unistudent.ui.fragments.ProfileFragment
+import com.uni.uniadmin.ui.fragment.ProfileFragment
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -50,7 +47,7 @@ class HomeScreen : AppCompatActivity() {
                 }
 
                 R.id.notification -> {
-                    replaceFragment(OptionsFragment())
+                    replaceFragment(NotificationsFragment())
                     binding.profileData.visibility = View.VISIBLE
                 }
 
@@ -194,7 +191,7 @@ class HomeScreen : AppCompatActivity() {
                 }
 
                 R.id.notification -> {
-                    replaceFragment(OptionsFragment())
+                    replaceFragment(NotificationsFragment())
                     binding.profileData.visibility = View.VISIBLE
                     val badge = binding.bottomNavigationView.getBadge(R.id.notification)
                     badge?.isVisible = false

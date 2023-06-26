@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,15 +19,13 @@ import com.uni.uniadmin.classes.Posts
 
 class PostsAdapter(
     val context: Context,
-    var postList:MutableList<PostData>,
-    val onItemClicked:(Int, PostData) ->Unit,
-    val onComment:(Int, PostData) ->Unit,
-    val deletePost:(PostData) ->Unit
+    var postList: MutableList<PostData>,
+    val onItemClicked: (Int, PostData) -> Unit,
+    val onComment: (Int, PostData) -> Unit,
+    val deletePost: (PostData) -> Unit
 
 
-
-)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     companion object {
@@ -39,14 +38,14 @@ class PostsAdapter(
     }
 
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == WITH_IMAGE) {
-            val view : View = LayoutInflater.from(context).inflate(R.layout.item_post_with_image,parent,false)
+            val view: View =
+                LayoutInflater.from(context).inflate(R.layout.item_post_with_image, parent, false)
             ViewHolder1(view)
-        }else{
-            val view : View = LayoutInflater.from(context).inflate(R.layout.item_post_without_image,parent,false)
+        } else {
+            val view: View = LayoutInflater.from(context)
+                .inflate(R.layout.item_post_without_image, parent, false)
             ViewHolder2(view)
         }
     }
@@ -55,86 +54,88 @@ class PostsAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentItem = postList[position]
 
-        if (currentItem.type == WITHOUT_IMAGE){
+        if (currentItem.type == WITHOUT_IMAGE) {
             (holder as ViewHolder2)
             holder.auth.text = currentItem.authorName
             holder.audience.text = currentItem.audience
             holder.text.text = currentItem.description
 
 
-if (!currentItem.myPost){
-    holder.deletePost_bt.visibility=View.INVISIBLE
-}
+            if (!currentItem.myPost) {
+                holder.deletePost_bt.visibility = View.INVISIBLE
+            }
 
-        }else{
+        } else {
             (holder as ViewHolder1)
-           /* Glide.with(context)
-                .load(currentItem.imageUrl)
-                .into(holder.image)
-*/
+            /* Glide.with(context)
+                 .load(currentItem.imageUrl)
+                 .into(holder.image)
+ */
             holder.auth.text = currentItem.authorName
             holder.audience.text = currentItem.audience
             holder.text.text = currentItem.description
-            if (!currentItem.myPost){
-                holder.deletePost_bt.visibility=View.INVISIBLE
+            if (!currentItem.myPost) {
+                holder.deletePost_bt.visibility = View.INVISIBLE
             }
 
         }
 
     }
-
 
 
     override fun getItemCount(): Int {
         return postList.size
     }
-    fun update(list: MutableList<PostData>){
-        this.postList=list
+
+    fun update(list: MutableList<PostData>) {
+        this.postList = list
         notifyDataSetChanged()
     }
-    inner class ViewHolder1(item: View) : RecyclerView.ViewHolder(item){
+
+    inner class ViewHolder1(item: View) : RecyclerView.ViewHolder(item) {
         val image = item.findViewById<ImageView>(R.id.post_image)
 
         val auth = item.findViewById<TextView>(R.id.auth_with)
         val audience = item.findViewById<TextView>(R.id.audience_with)
         val text = item.findViewById<TextView>(R.id.text_with)
-        val addComment = item.findViewById<ImageView>(R.id.comments_Img)
+        val addComment = item.findViewById<ImageView>(R.id.comments_with_Img)
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_with)
-        val deletePost_bt = item.findViewById<ImageView>(R.id.delete_Img)
+        val deletePost_bt = item.findViewById<ImageView>(R.id.delete_with_Img)
 
         init {
             deletePost_bt.setOnClickListener {
                 deletePost.invoke(postList[adapterPosition])
             }
             recyItem.setOnClickListener {
-                onItemClicked.invoke(adapterPosition,postList[adapterPosition])
+                onItemClicked.invoke(adapterPosition, postList[adapterPosition])
             }
             addComment.setOnClickListener {
-                onComment.invoke(adapterPosition,postList[adapterPosition])
+                onComment.invoke(adapterPosition, postList[adapterPosition])
             }
 
         }
 
 
     }
+
     private inner class ViewHolder2(item: View) :
         RecyclerView.ViewHolder(item) {
         val auth = item.findViewById<TextView>(R.id.auth_without)
         val audience = item.findViewById<TextView>(R.id.audience_without)
         val text = item.findViewById<TextView>(R.id.text_without)
-        val addComment = item.findViewById<ImageView>(R.id.comments_Img)
+        val addComment = item.findViewById<ImageButton>(R.id.comments_without_Img)
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_without)
-        val deletePost_bt = item.findViewById<ImageView>(R.id.delete_Img)
+        val deletePost_bt = item.findViewById<ImageButton>(R.id.delete_without_Img)
 
         init {
             deletePost_bt.setOnClickListener {
                 deletePost.invoke(postList[adapterPosition])
             }
             recyItem.setOnClickListener {
-                onItemClicked.invoke(adapterPosition,postList[adapterPosition])
+                onItemClicked.invoke(adapterPosition, postList[adapterPosition])
             }
             addComment.setOnClickListener {
-                onComment.invoke(adapterPosition,postList[adapterPosition])
+                onComment.invoke(adapterPosition, postList[adapterPosition])
             }
 
         }

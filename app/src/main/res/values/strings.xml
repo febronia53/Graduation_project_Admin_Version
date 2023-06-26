@@ -195,5 +195,6 @@
     <string name="Department">Department:</string>
     <string name="Section">Section:</string>
     <string name="remove">Remove</string>
+    <string name="logout">Log out</string>
 
 </resources>

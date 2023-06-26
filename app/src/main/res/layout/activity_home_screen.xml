@@ -125,7 +125,7 @@
         android:id="@+id/fragment_container_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="@dimen/margin_4dp"
+        android:paddingTop="@dimen/margin_8dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

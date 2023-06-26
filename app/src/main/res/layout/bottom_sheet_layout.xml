@@ -9,11 +9,8 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/line"
@@ -35,13 +32,14 @@
         </androidx.cardview.widget.CardView>
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/permission_filter_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/line"
             android:layout_alignParentBottom="true"
+            android:paddingStart="@dimen/margin_16dp"
+            android:paddingEnd="@dimen/margin_16dp"
             android:paddingBottom="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,16 +53,16 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="8dp"
                 android:text="@string/filter"
-                android:textSize="@dimen/text_size_16"
                 android:textColor="@color/black_70"
+                android:textSize="@dimen/text_size_16"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/department_permission_text"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="8dp"
@@ -120,10 +118,10 @@
                 android:layout_above="@+id/search_permission"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/border"
-                android:gravity="start"
                 android:alpha=".5"
+                android:background="@drawable/border"
                 android:enabled="false"
+                android:gravity="start"
                 android:hint="@string/studentId"
                 android:inputType="number"
                 android:paddingStart="@dimen/margin_8dp"
@@ -159,9 +157,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="@string/filterById"
+                android:textColor="@color/black_50"
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold"
-                android:textColor="@color/black_50"
                 app:layout_constraintBottom_toBottomOf="@+id/permission_student_ID"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/permission_student_ID" />
