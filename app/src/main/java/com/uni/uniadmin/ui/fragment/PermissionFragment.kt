@@ -1,9 +1,13 @@
 package com.uni.uniadmin.ui.fragment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -48,7 +52,6 @@ class PermissionFragment : Fragment(), PassData {
         /* ------------------------------------------------------------*/
         val recyclerView = binding.permissionSearchRecy
         redMessage = binding.messageIndecation
-        val permissionText = binding.permissionMessage
         studentsList = arrayListOf()
         currentUser = UserAdmin()
         val bundle = Bundle()
@@ -72,8 +75,8 @@ class PermissionFragment : Fragment(), PassData {
 
 
         recyAdapter = StudentAdapter(requireContext(), studentsList,
-            removePerm = { _, _ ->
-
+            removePerm = { _, item ->
+                showRemoveDialog("Remove Dialog")
             },
             itemClick = { _, item ->
 
@@ -83,25 +86,7 @@ class PermissionFragment : Fragment(), PassData {
 
             },
             addPerm = { _, item ->
-                val permission = permissionText.text.toString()
-                if (permission.isNotEmpty()) {
-                    viewModel.addPermission(
-                        currentUser.grade,
-                        PermissionItem(
-                            permission,
-                            item.userId,
-                            "",
-                            item.name,
-                            item.grade,
-                            item.section,
-                            item.department
-                        )
-                    )
-                    observePermission()
-                } else {
-                    Toast.makeText(context, "you have to write permission text", Toast.LENGTH_SHORT)
-                        .show()
-                }
+                showAddDialog("Add Dialog", item)
             })
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -237,4 +222,63 @@ class PermissionFragment : Fragment(), PassData {
 
     }
 
+    private fun showAddDialog(title: String, item: UserStudent) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.add_dialog)
+
+        val permissionText = dialog.findViewById(R.id.permission_message) as EditText
+
+        val okBtn = dialog.findViewById(R.id.ok_add_btn) as Button
+        val cancelBtn = dialog.findViewById(R.id.cancel_add_btn) as Button
+        okBtn.setOnClickListener {
+            val permission = permissionText.text.toString()
+            if (permission.isNotEmpty()) {
+                viewModel.addPermission(
+                    currentUser.grade,
+                    PermissionItem(
+                        permission,
+                        item.userId,
+                        "",
+                        item.name,
+                        item.grade,
+                        item.section,
+                        item.department
+                    )
+                )
+                observePermission()
+                dialog.dismiss()
+            } else {
+                Toast.makeText(context, "You have to write permission text", Toast.LENGTH_SHORT).show()
+            }
+        }
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+
+
+    private fun showRemoveDialog(title: String) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.remove_dialog)
+
+
+        val okBtn = dialog.findViewById(R.id.ok_remove_btn) as Button
+        val cancelBtn = dialog.findViewById(R.id.cancel_remove_btn) as Button
+        okBtn.setOnClickListener {
+           //TODO implement function for removing student
+            Toast.makeText(context, "Student Removed Successfully", Toast.LENGTH_SHORT)
+                .show()
+            dialog.dismiss()
+        }
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
 }

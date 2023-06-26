@@ -195,6 +195,14 @@
     <string name="Department">Department:</string>
     <string name="Section">Section:</string>
     <string name="remove">Remove</string>
+
     <string name="logout">Log out</string>
+
+    <string name="view_permissions">View Permissions</string>
+    <string name="add_student">Do You want to add this Student?</string>
+    <string name="remove_student">Are You sure to remove this Student?</string>
+    <string name="permission_hint">Permission Message</string>
+    <string name="cancel">Cancel</string>
+
 
 </resources>

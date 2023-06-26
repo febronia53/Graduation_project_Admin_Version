@@ -40,5 +40,7 @@
     <dimen name="radius_24">24dp</dimen>
     <dimen name="profile_course_card_height">64dp</dimen>
     <dimen name="button_height">64dp</dimen>
+    <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="dialog_icon_size">64dp</dimen>
 
 </resources>

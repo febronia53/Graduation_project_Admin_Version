@@ -113,34 +113,27 @@
                 android:id="@+id/button_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_16dp"
-                android:gravity="center"
-                android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.178"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/section">
+                app:layout_constraintTop_toBottomOf="@+id/section"
+                android:layout_marginTop="@dimen/margin_16dp">
 
                 <Button
                     android:id="@+id/button_add"
                     style="@style/Button"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
+                    android:layout_weight="1"
                     android:text="@string/add" />
 
                 <Button
                     android:id="@+id/button_remove"
                     style="@style/Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/remove"
-                    android:textSize="@dimen/text_size_14"
-                    app:layout_constraintBottom_toBottomOf="@+id/buttonPersonalTodo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/buttonPersonalTodo"
-                    app:layout_constraintTop_toBottomOf="@+id/editText_add_Task_Title" />
+                    android:layout_weight="1"
+                    android:text="@string/remove"/>
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
