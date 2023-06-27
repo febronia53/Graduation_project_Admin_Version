@@ -2,6 +2,7 @@ package com.uni.uniteaching.adapters
 
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.PostData
 
 import com.uni.uniadmin.classes.Posts
+import java.util.Date
 
 class PostsAdapter(
     val context: Context,
@@ -60,6 +62,7 @@ class PostsAdapter(
             holder.auth.text = currentItem.authorName
             holder.audience.text = currentItem.audience
             holder.text.text = currentItem.description
+            holder.post_time.text = formatDate(currentItem.time)
 
 
 if (!currentItem.myPost){
@@ -74,6 +77,7 @@ if (!currentItem.myPost){
 */
             holder.auth.text = currentItem.authorName
             holder.audience.text = currentItem.audience
+            holder.post_time.text = formatDate(currentItem.time)
             holder.text.text = currentItem.description
             if (!currentItem.myPost){
                 holder.deletePost_bt.visibility=View.INVISIBLE
@@ -94,7 +98,7 @@ if (!currentItem.myPost){
     }
     inner class ViewHolder1(item: View) : RecyclerView.ViewHolder(item){
         val image = item.findViewById<ImageView>(R.id.post_image)
-
+        val post_time: TextView = item.findViewById(R.id.post_time_text_with)
         val auth = item.findViewById<TextView>(R.id.auth_with)
         val audience = item.findViewById<TextView>(R.id.audience_with)
         val text = item.findViewById<TextView>(R.id.text_with)
@@ -126,6 +130,7 @@ if (!currentItem.myPost){
         val recyItem = item.findViewById<ConstraintLayout>(R.id.post_item_without)
         val deletePost_bt = item.findViewById<ImageView>(R.id.delete_Img)
 
+        val post_time: TextView = item.findViewById(R.id.post_time_text_without)
         init {
             deletePost_bt.setOnClickListener {
                 deletePost.invoke(postList[adapterPosition])
@@ -137,6 +142,31 @@ if (!currentItem.myPost){
                 onComment.invoke(adapterPosition,postList[adapterPosition])
             }
 
+        }
+    }
+    private fun formatDate(date: Date): String {
+        val currentTimeMillis = System.currentTimeMillis()
+        val inputTimeMillis = date.time
+        val timeDifference = currentTimeMillis - inputTimeMillis
+
+        return when {
+            timeDifference < DateUtils.MINUTE_IN_MILLIS -> "just now"
+            timeDifference < DateUtils.HOUR_IN_MILLIS -> {
+                val minutes = (timeDifference / DateUtils.MINUTE_IN_MILLIS).toInt()
+                "${minutes}m"
+            }
+            timeDifference < DateUtils.DAY_IN_MILLIS -> {
+                val hours = (timeDifference / DateUtils.HOUR_IN_MILLIS).toInt()
+                "${hours}h "
+            }
+            timeDifference < 31 * DateUtils.DAY_IN_MILLIS -> {
+                val days = (timeDifference / DateUtils.DAY_IN_MILLIS).toInt()
+                "${days} day "
+            }
+            else -> {
+                val months = (timeDifference / (31 * DateUtils.DAY_IN_MILLIS)).toInt()
+                "${months} month "
+            }
         }
     }
 
