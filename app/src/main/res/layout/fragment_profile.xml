@@ -147,7 +147,7 @@
                         android:textSize="@dimen/text_size_12" />
 
                     <TextView
-                        android:id="@+id/text_section"
+                        android:id="@+id/text_job"
                         style="@style/TextDataStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
