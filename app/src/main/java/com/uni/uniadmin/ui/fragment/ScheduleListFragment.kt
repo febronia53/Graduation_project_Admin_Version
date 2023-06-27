@@ -20,7 +20,7 @@ import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.FragmentScheduleListBinding
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
-import com.uni.uniteaching.adapters.ScheduleAdapter
+import com.uni.uniadmin.adapters.ScheduleAdapter
 import com.uni.uniteaching.classes.user.UserAdmin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -29,15 +29,13 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class ScheduleListFragment : Fragment(), PassData {
 
-    private  lateinit var binding: FragmentScheduleListBinding
+    private lateinit var binding: FragmentScheduleListBinding
     private val viewModel: FirebaseViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
-    private   lateinit var progress: ProgressBar
-    private   lateinit var currentUser: UserAdmin
-
-    private  lateinit var coursesList: MutableList<Courses>
-
-    private  lateinit var adapter: ScheduleAdapter
+    private lateinit var progress: ProgressBar
+    private lateinit var currentUser: UserAdmin
+    private lateinit var coursesList: MutableList<Courses>
+    private lateinit var adapter: ScheduleAdapter
     private lateinit var scheduleDataType: MutableList<ScheduleDataType>
     private lateinit var section: String
     private lateinit var department: String
@@ -66,16 +64,13 @@ class ScheduleListFragment : Fragment(), PassData {
 
         }
 
-
         progress = binding.progressSchedule
-
-
 
         coursesList = arrayListOf()
         scheduleDataType = arrayListOf()
 
-        adapter = ScheduleAdapter(requireContext(), scheduleDataType,
 
+        adapter = ScheduleAdapter(requireContext(), scheduleDataType,
             onItemClicked = { pos, item ->
                 Toast.makeText(requireContext(), item.professorName, Toast.LENGTH_SHORT).show()
             },
@@ -221,7 +216,6 @@ class ScheduleListFragment : Fragment(), PassData {
                         updateData()
 
 
-
                     }
 
                     is Resource.Failure -> {
@@ -282,15 +276,16 @@ class ScheduleListFragment : Fragment(), PassData {
 
     }
 
-fun updateData(){
-    scheduleDataType.clear()
-    lifecycleScope.launchWhenCreated {
-        observeLectures()
-        observeSections()
-        delay(200)
+    fun updateData() {
+        scheduleDataType.clear()
+        lifecycleScope.launchWhenCreated {
+            observeLectures()
+            observeSections()
+            delay(200)
+        }
+        adapter.update(scheduleDataType)
     }
-    adapter.update(scheduleDataType)
-}
+
     private fun observeLectures() {
         lifecycleScope.launchWhenCreated {
             viewModel.getLecture.collectLatest { state ->
@@ -340,6 +335,7 @@ fun updateData(){
         this.section = section
         if (section.isNotEmpty() && department.isNotEmpty()) {
             viewModel.getCoursesByGrade(currentUser.grade)
+
             observeCourses(section, department)
         }
     }
