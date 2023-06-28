@@ -10,13 +10,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="1dp"
-        app:cardCornerRadius="@dimen/cardView_radius_10"
-        app:cardElevation="1dp"
-        android:layout_marginTop="@dimen/margin_4dp"
-        android:layout_marginBottom="@dimen/margin_4dp"
-        android:layout_marginStart="@dimen/margin_8dp"
-        android:layout_marginEnd="@dimen/margin_8dp">
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        app:cardCornerRadius="@dimen/radius_16">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/student_item"
@@ -111,29 +108,30 @@
 
             <LinearLayout
                 android:id="@+id/button_group"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.178"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/section"
-                android:layout_marginTop="@dimen/margin_16dp">
+                app:layout_constraintHorizontal_bias="0.178">
 
-                <Button
-                    android:id="@+id/button_add"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add" />
-
-                <Button
+                <ImageButton
                     android:id="@+id/button_remove"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/remove"/>
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
+                    android:background="@drawable/round_btn"
+                    android:padding="@dimen/margin_4dp"
+                    android:src="@drawable/ic_delete" />
+
+                <ImageButton
+                    android:id="@+id/button_add"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/round_btn"
+                    android:padding="@dimen/margin_4dp"
+                    android:src="@drawable/ic_add_student" />
+
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

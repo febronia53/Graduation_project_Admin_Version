@@ -203,6 +203,7 @@
     <string name="remove_student">Are You sure to remove this Student?</string>
     <string name="permission_hint">Permission Message</string>
     <string name="cancel">Cancel</string>
+    <string name="permission_message">Permission Message:</string>
 
 
 </resources>

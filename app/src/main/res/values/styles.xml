@@ -41,6 +41,15 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="RecyclerStyleNotification">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="spanCount">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_8dp</item>
+    </style>
+
     <style name="TextItemStudentStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/black_70</item>
@@ -52,8 +61,6 @@
     <style name="Button" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/button_height</item>
-        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
-        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
         <item name="cornerRadius">@dimen/radius_16</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:backgroundTint">@color/black_100</item>
@@ -64,15 +71,15 @@
 
     <style name="Button.ViewPermission" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">64dp</item>
-        <item name="android:layout_marginBottom">@dimen/margin_16dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
-        <item name="cornerRadius">@dimen/radius_16</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:backgroundTint">@color/black_100</item>
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:backgroundTint">@color/black_70</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white_100</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
     <style name="TextDialogStyle" parent="Widget.AppCompat.TextView">
@@ -103,7 +110,7 @@
     <!-- input_text_field -->
     <style name="input_text_field">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColorHint">@color/black_50</item>
         <item name="android:fontFamily">@font/poppins_regular</item>

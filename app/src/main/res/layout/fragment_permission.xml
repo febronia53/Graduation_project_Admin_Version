@@ -16,10 +16,10 @@
 
 
         <TextView
-
+            android:id="@+id/fragment_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_16dp"
             android:text="@string/permissions"
             android:textSize="@dimen/text_size_14"
             android:textStyle="bold"
@@ -28,25 +28,26 @@
 
         <ImageView
             android:id="@+id/permission_filters_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="24dp"
             android:contentDescription="@string/filter"
             android:src="@drawable/filters"
+            app:layout_constraintBottom_toBottomOf="@id/view_permissions"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view_permissions" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/permission_search_recy"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_16dp"
+            android:paddingTop="@dimen/margin_4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/permission_filters_btn"
-            app:layout_constraintVertical_bias="0.034" />
+            app:layout_constraintTop_toBottomOf="@+id/view_permissions"
+            tools:listitem="@layout/item_add_student" />
 
         <TextView
             android:id="@+id/message_indecation"
@@ -66,8 +67,8 @@
             android:id="@+id/view_permissions"
             style="@style/Button.ViewPermission"
             android:text="@string/view_permissions"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
