@@ -13,12 +13,14 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:layout_marginBottom="@dimen/margin_8dp"
-        app:cardCornerRadius="@dimen/radius_16">
+        app:cardBackgroundColor="@color/white_55"
+        app:cardCornerRadius="@dimen/margin_16dp"
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/student_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/margin_16dp">
 
             <TextView
@@ -117,21 +119,28 @@
 
                 <ImageButton
                     android:id="@+id/button_remove"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="@dimen/margin_8dp"
-                    android:background="@drawable/round_btn"
-                    android:padding="@dimen/margin_4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_comment_btn"
+                    android:paddingStart="@dimen/margin_8dp"
+                    android:paddingTop="@dimen/margin_4dp"
+                    android:paddingEnd="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_4dp"
                     android:src="@drawable/ic_delete" />
 
                 <ImageButton
                     android:id="@+id/button_add"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/round_btn"
-                    android:padding="@dimen/margin_4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:background="@drawable/round_comment_btn"
+                    android:paddingStart="@dimen/margin_8dp"
+                    android:paddingTop="@dimen/margin_4dp"
+                    android:paddingEnd="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_4dp"
                     android:src="@drawable/ic_add_student" />
-
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

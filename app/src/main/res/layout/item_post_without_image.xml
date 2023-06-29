@@ -6,126 +6,94 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/margin_8dp"
-    android:paddingTop="@dimen/margin_2dp"
+    android:paddingTop="@dimen/margin_4dp"
     android:paddingEnd="@dimen/margin_8dp"
-    android:paddingBottom="@dimen/margin_2dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginBottom="@dimen/margin_8dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:elevation="0dp"
-        app:cardBackgroundColor="@color/white_70"
+        app:cardBackgroundColor="@color/white_55"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/margin_8dp"
-            android:paddingEnd="@dimen/margin_8dp">
+            android:layout_height="match_parent"
+            android:paddingEnd="@dimen/margin_8dp"
+            android:paddingBottom="@dimen/margin_8dp">
 
-            <LinearLayout
-                android:id="@+id/linear_auth_without"
+
+            <TextView
+                android:id="@+id/auth_without"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/margin_8dp"
-                android:paddingTop="@dimen/margin_8dp"
-                android:paddingEnd="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:textColor="@color/black_70"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-
-                <TextView
-                    android:id="@+id/auth_without"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black_70"
-                    android:textSize="@dimen/text_size_14"
-                    android:textStyle="normal"
-                    tools:text="Walid Atef Ahmed" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/margin_8dp"
-                    android:layout_marginTop="-4dp"
-                    android:layout_marginEnd="@dimen/margin_2dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/point"
-                    android:textColor="@color/black_50"
-                    android:textSize="@dimen/text_size_16"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/auth_without" />
-
-                <TextView
-                    android:id="@+id/post_time_text_without"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/black_50"
-                    android:textSize="@dimen/text_size_10"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="1h" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Walid Atef Ahmed" />
 
             <TextView
                 android:id="@+id/textView3"
+                style="@style/TextBodyStyle.Profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-6dp"
+                android:layout_marginTop="-2dp"
                 android:alpha=".5"
                 android:paddingStart="@dimen/margin_8dp"
                 android:text="@string/to"
-                android:textSize="@dimen/text_size_12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_auth_without" />
+                app:layout_constraintBottom_toBottomOf="@id/auth_without"
+                app:layout_constraintStart_toEndOf="@id/auth_without"
+                app:layout_constraintTop_toTopOf="@id/auth_without" />
 
             <TextView
                 android:id="@+id/audience_without"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="-6dp"
-                android:textSize="@dimen/text_size_12"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/linear_auth_without"
-                tools:text="CS" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/margin_8dp"
-                android:alpha=".8"
-                android:background="@color/green"
-                app:layout_constraintBottom_toBottomOf="@+id/text_without"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/text_without"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_8dp"
-                android:paddingEnd="@dimen/margin_8dp"
-                android:textAlignment="textStart"
+                android:paddingStart="8dp"
                 android:textColor="@color/black_70"
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@id/auth_without"
+                app:layout_constraintStart_toEndOf="@id/textView3"
+                app:layout_constraintTop_toTopOf="@id/auth_without"
+                tools:text="CS" />
+
+            <TextView
+                android:id="@+id/post_time_text_without"
+                style="@style/TextBodyStyle.Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/margin_2dp"
+                app:drawableStartCompat="@drawable/ic_time"
+                app:layout_constraintStart_toStartOf="@id/auth_without"
+                app:layout_constraintTop_toBottomOf="@+id/auth_without"
+                tools:text="1h" />
+
+            <TextView
+                android:id="@+id/text_without"
+                style="@style/TextItemPostWithoutImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:background="@drawable/background_item_post"
+                android:padding="@dimen/margin_16dp"
+                android:elevation="0dp"
+                android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="@id/auth_without"
+                app:layout_constraintTop_toBottomOf="@+id/post_time_text_without"
                 tools:text="Text is any written material.The machine can recognise hand-written characters and turn them into printed text. The manuscript consisted of 500 pages of typed text" />
 
             <ImageButton
@@ -134,16 +102,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
                 android:background="@drawable/round_comment_btn"
                 android:paddingStart="@dimen/margin_8dp"
                 android:paddingTop="@dimen/margin_4dp"
                 android:paddingEnd="@dimen/margin_8dp"
                 android:paddingBottom="@dimen/margin_4dp"
                 android:src="@drawable/ic_comment"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/auth_without"
                 app:layout_constraintTop_toBottomOf="@+id/text_without" />
 
             <ImageButton
@@ -151,18 +116,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/round_comment_btn"
                 android:paddingStart="@dimen/margin_8dp"
                 android:paddingTop="@dimen/margin_4dp"
                 android:paddingEnd="@dimen/margin_8dp"
                 android:paddingBottom="@dimen/margin_4dp"
                 android:src="@drawable/ic_delete"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_without" />
+                app:layout_constraintStart_toEndOf="@+id/comments_without_Img"
+                app:layout_constraintTop_toTopOf="@+id/comments_without_Img" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

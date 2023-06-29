@@ -136,7 +136,7 @@
     <string name="not_running">Not running</string>
     <string name="running">Running</string>
     <string name="lab">Lab</string>
-    <string name="to">To</string>
+    <string name="to">To ></string>
     <string name="comment">Comment here..</string>
     <string name="zero_comments">0</string>
     <string name="grade">Grade</string>

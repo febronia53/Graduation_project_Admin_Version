@@ -13,7 +13,9 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:layout_marginBottom="@dimen/margin_8dp"
-        app:cardCornerRadius="@dimen/radius_16">
+        app:cardBackgroundColor="@color/white_55"
+        app:cardCornerRadius="@dimen/radius_16"
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/permission_item"
@@ -119,19 +121,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginEnd="@dimen/margin_16dp"
                 android:text="@{}"
+                app:layout_constraintEnd_toStartOf="@+id/delete_perm"
                 app:layout_constraintStart_toEndOf="@id/message_perm"
                 app:layout_constraintTop_toTopOf="@id/message_perm"
-                tools:text="ok"
-
-                />
+                tools:text="ok" />
 
             <ImageButton
                 android:id="@+id/delete_perm"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/round_btn"
-                android:padding="@dimen/margin_4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:background="@drawable/round_comment_btn"
+                android:paddingStart="@dimen/margin_8dp"
+                android:paddingTop="@dimen/margin_4dp"
+                android:paddingEnd="@dimen/margin_8dp"
+                android:paddingBottom="@dimen/margin_4dp"
                 android:src="@drawable/ic_done"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
