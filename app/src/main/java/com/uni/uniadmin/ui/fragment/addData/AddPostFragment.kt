@@ -77,7 +77,7 @@ class AddPostFragment : Fragment() {
         val addSectionPostBt=view.findViewById<Button>(R.id.add_section_post)
         val addCoursePostBt=view.findViewById<Button>(R.id.add_post_course)
         val searchStudent=view.findViewById<Button>(R.id.search_student_post)
-        val addImage=view.findViewById<Button>(R.id.add_image_post_bt)
+        val addImage=view.findViewById<ImageButton>(R.id.add_image_post_bt)
         val addGeneralPost=view.findViewById<Button>(R.id.add_general_post)
         val recyclerView = view.findViewById<RecyclerView>(R.id.post_search_recy)
 

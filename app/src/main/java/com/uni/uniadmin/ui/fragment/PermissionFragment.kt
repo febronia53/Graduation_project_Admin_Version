@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uni.uniadmin.R
 import com.uni.uniadmin.adapters.StudentAdapter
@@ -223,17 +224,20 @@ class PermissionFragment : Fragment(), PassData {
     }
 
     private fun showAddDialog(title: String, item: UserStudent) {
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.add_dialog)
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        //builder.setTitle(title)
+        builder.setView(R.layout.add_dialog)
 
-        val permissionText = dialog.findViewById(R.id.permission_message) as EditText
+        val dialog = builder.create()
+        dialog.show()
 
-        val okBtn = dialog.findViewById(R.id.ok_add_btn) as Button
-        val cancelBtn = dialog.findViewById(R.id.cancel_add_btn) as Button
+        val dialogView = dialog.findViewById<View>(android.R.id.content)
+        val permissionText = dialogView!!.findViewById<EditText>(R.id.permission_message)
+        val okBtn = dialogView!!.findViewById<Button>(R.id.ok_add_btn)
+        val cancelBtn = dialogView.findViewById<Button>(R.id.cancel_add_btn)
+
         okBtn.setOnClickListener {
-            val permission = permissionText.text.toString()
+            val permission = permissionText!!.text.toString()
             if (permission.isNotEmpty()) {
                 viewModel.addPermission(
                     currentUser.grade,
@@ -253,6 +257,7 @@ class PermissionFragment : Fragment(), PassData {
                 Toast.makeText(context, "You have to write permission text", Toast.LENGTH_SHORT).show()
             }
         }
+
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
@@ -261,15 +266,20 @@ class PermissionFragment : Fragment(), PassData {
 
 
 
+
     private fun showRemoveDialog(title: String) {
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.remove_dialog)
+
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        //builder.setTitle(title)
+        builder.setView(R.layout.remove_dialog)
+
+        val dialog = builder.create()
+        dialog.show()
+        val dialogView = dialog.findViewById<View>(android.R.id.content)
 
 
-        val okBtn = dialog.findViewById(R.id.ok_remove_btn) as Button
-        val cancelBtn = dialog.findViewById(R.id.cancel_remove_btn) as Button
+        val okBtn = dialogView!!.findViewById<Button>(R.id.ok_remove_btn)
+        val cancelBtn = dialogView.findViewById(R.id.cancel_remove_btn) as Button
         okBtn.setOnClickListener {
            //TODO implement function for removing student
             Toast.makeText(context, "Student Removed Successfully", Toast.LENGTH_SHORT)

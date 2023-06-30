@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -62,8 +63,8 @@ class StudentAdapter(
         val departemt = item.findViewById<TextView>(R.id.text_student_department)
         val section = item.findViewById<TextView>(R.id.text_student_section)
 
-        val add = item.findViewById<Button>(R.id.button_add)
-        val remove = item.findViewById<Button>(R.id.button_remove)
+        val add = item.findViewById<ImageButton>(R.id.button_add)
+        val remove = item.findViewById<ImageButton>(R.id.button_remove)
         val item = item.findViewById<ConstraintLayout>(R.id.student_item)
         init {
             remove.setOnClickListener {

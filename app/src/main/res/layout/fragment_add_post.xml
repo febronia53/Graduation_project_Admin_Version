@@ -1,177 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.addData.AddPostFragment">
 
-    <Button
-        android:id="@+id/add_section_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="post"
-        app:layout_constraintBottom_toBottomOf="@+id/section_spinner_post"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/department_spinner_post"
-        app:layout_constraintTop_toTopOf="@+id/department_spinner_post" />
-
-    <Button
-        android:id="@+id/add_general_post"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="add general post"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_image" />
+        android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/department_spinner_post"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_general_post"
-        app:layout_constraintVertical_bias="0.067" />
+        <TextView
+            style="@style/TextItemPostWithoutImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
+            android:text="@string/create_post"
+            app:layout_constraintBottom_toTopOf="@id/view"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/department_post_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose department "
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/department_spinner_post"
-        app:layout_constraintEnd_toEndOf="@+id/department_spinner_post"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="@+id/department_spinner_post" />
+        <Button
+            android:id="@+id/add_general_post"
+            style="@style/Button.ViewPermission"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/general_post"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/section_spinner_post"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/department_spinner_post"
-        app:layout_constraintVertical_bias="0.084" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black_10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_general_post" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/post_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8dp"
+            android:elevation="0dp"
+            android:padding="@dimen/margin_8dp"
+            app:cardBackgroundColor="@color/colorBackground"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:elevation="0dp">
 
+                <EditText
+                    android:id="@+id/post_description"
+                    style="@style/input_text_field"
+                    android:layout_height="64dp"
+                    android:background="@drawable/create_post_background"
+                    android:hint="@string/post_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0" />
 
+                <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:id="@+id/add_image_post_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_add_image"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_description"
+                    app:layout_constraintEnd_toEndOf="@id/post_description"
+                    app:layout_constraintTop_toTopOf="@+id/post_description" />
 
-    <TextView
-        android:id="@+id/section_post_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose section"
-        android:textColor="#000000"
+                <ImageView
+                    android:id="@+id/post_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginBottom="@dimen/margin_8dp"
+                    android:src="@drawable/post_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/post_description"
+                    app:layout_constraintVertical_bias="0.045"
+                    tools:layout_editor_absoluteX="0dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        app:layout_constraintBottom_toTopOf="@+id/section_spinner_post"
-        app:layout_constraintEnd_toEndOf="@+id/section_spinner_post"
-        app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toStartOf="@+id/section_spinner_post" />
+        </androidx.cardview.widget.CardView>
 
-    <Spinner
-        android:id="@+id/course_post"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        <TextView
+            android:id="@+id/department_post_text"
+            style="@style/TextBodyStyle.Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:text="@string/choose_department"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_card" />
 
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/section_spinner_post" />
-
-    <TextView
-        android:id="@+id/course_post_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="choose course"
-        android:textColor="#000000"
-
-        app:layout_constraintBottom_toTopOf="@+id/course_post"
-        app:layout_constraintEnd_toEndOf="@+id/course_post"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/add_post_course"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post"
-        app:layout_constraintBottom_toBottomOf="@+id/course_post"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/course_post"
-        app:layout_constraintTop_toTopOf="@+id/course_post" />
-
-    <Button
-        android:id="@+id/search_student_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="search"
-        app:layout_constraintBottom_toBottomOf="@+id/post_student_ID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.608"
-        app:layout_constraintStart_toEndOf="@+id/post_student_ID"
-        app:layout_constraintTop_toTopOf="@+id/post_student_ID"
-        app:layout_constraintVertical_bias="0.666" />
-
-    <EditText
-        android:id="@+id/post_student_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="search by student ID "
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_post"
-        app:layout_constraintVertical_bias="0.025" />
-
-    <EditText
-        android:id="@+id/post_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="post description.................."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
-
-    <Button
-        android:id="@+id/add_image_post_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add image"
-        app:layout_constraintBottom_toBottomOf="@+id/post_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/post_description"
-        app:layout_constraintTop_toTopOf="@+id/post_description" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/post_search_recy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_student_ID"
-        app:layout_constraintVertical_bias="0.095"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <ImageView
-        android:id="@+id/post_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/post_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_description"
-        app:layout_constraintVertical_bias="0.045"
-        tools:layout_editor_absoluteX="0dp" />
+        <Spinner
+            android:id="@+id/department_spinner_post"
+            style="@style/TextItemStudentStyle"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-5dp"
+            android:background="@drawable/background_spinner"
+            android:spinnerMode="dialog"
+            app:layout_constraintEnd_toEndOf="@id/department_post_text"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/department_post_text"
+            app:layout_constraintTop_toBottomOf="@+id/department_post_text"
+            app:layout_constraintVertical_bias="0.067" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/section_post_text"
+            style="@style/TextBodyStyle.Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4dp"
+            android:text="@string/choose_section"
+            app:layout_constraintStart_toStartOf="@+id/department_post_text"
+            app:layout_constraintTop_toBottomOf="@id/department_spinner_post" />
+
+        <Spinner
+            android:id="@+id/section_spinner_post"
+            style="@style/TextItemStudentStyle"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-5dp"
+            android:background="@drawable/background_spinner"
+            android:spinnerMode="dialog"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/section_post_text"
+            app:layout_constraintTop_toBottomOf="@+id/section_post_text"
+            app:layout_constraintVertical_bias="0.067" />
+
+        <Button
+            android:id="@+id/add_section_post"
+            style="@style/Button.ViewPermission"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/post_section"
+            app:layout_constraintBottom_toBottomOf="@id/section_spinner_post"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/section_spinner_post" />
+
+
+        <TextView
+            android:id="@+id/course_post_text"
+            style="@style/TextBodyStyle.Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:text="@string/choose_course"
+            app:layout_constraintStart_toStartOf="@+id/department_post_text"
+            app:layout_constraintTop_toBottomOf="@id/section_spinner_post" />
+
+        <Spinner
+            android:id="@+id/course_post"
+            style="@style/TextItemStudentStyle"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-5dp"
+            android:background="@drawable/background_spinner"
+            android:spinnerMode="dialog"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/course_post_text"
+            app:layout_constraintTop_toBottomOf="@+id/course_post_text"
+            app:layout_constraintVertical_bias="0.067" />
+
+        <Button
+            android:id="@+id/add_post_course"
+            style="@style/Button.ViewPermission"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/post_course"
+            app:layout_constraintBottom_toBottomOf="@id/course_post"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/course_post" />
+
+        <EditText
+            android:id="@+id/post_student_ID"
+            style="@style/input_text_field"
+            android:layout_width="230dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@drawable/edit_text_background_style"
+            android:hint="@string/search_by_student_id"
+            app:layout_constraintStart_toStartOf="@id/course_post"
+            app:layout_constraintTop_toBottomOf="@id/course_post"
+            app:layout_constraintVertical_bias="0" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:backgroundTint="@color/white_70"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_search"
+            android:tint="@color/black_70"
+            app:layout_constraintBottom_toBottomOf="@id/post_student_ID"
+            app:layout_constraintEnd_toEndOf="@id/post_student_ID"
+            app:layout_constraintTop_toTopOf="@+id/post_student_ID" />
+
+        <Button
+            android:id="@+id/search_student_post"
+            style="@style/Button.ViewPermission"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/search"
+            app:layout_constraintBottom_toBottomOf="@id/post_student_ID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/post_student_ID" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/post_search_recy"
+            style="@style/RecyclerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/post_student_ID"
+            app:layout_constraintVertical_bias="0.095"
+            tools:layout_editor_absoluteX="0dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
