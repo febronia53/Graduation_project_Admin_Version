@@ -21,14 +21,14 @@
     </style>
 
     <style name="TextDataStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/black_100</item>
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="TextCardStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/black_100</item>
         <item name="fontFamily">@font/poppins_regular</item>
     </style>

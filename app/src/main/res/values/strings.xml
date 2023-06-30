@@ -204,6 +204,13 @@
     <string name="permission_hint">Permission Message</string>
     <string name="cancel">Cancel</string>
     <string name="permission_message">Permission Message:</string>
+    <string name="general_post">Post to General</string>
+    <string name="create_post">Create Post</string>
+    <string name="post_description">post description</string>
+    <string name="post_course">Post Course</string>
+    <string name="post_section">Post Section</string>
+    <string name="search_by_student_id">Search by Student ID</string>
+    <string name="search">Search</string>
 
 
 </resources>
