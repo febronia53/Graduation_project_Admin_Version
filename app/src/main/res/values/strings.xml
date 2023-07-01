@@ -9,8 +9,6 @@
     </string-array>
 
     <string-array name="department">
-        <item>any department</item>
-
         <item>CS</item>
         <item>IS</item>
         <item>IT</item>

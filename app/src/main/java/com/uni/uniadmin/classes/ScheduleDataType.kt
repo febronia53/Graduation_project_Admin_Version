@@ -6,6 +6,8 @@ data class ScheduleDataType(
     val courseName:String="",
     val courseID:String="",
     val hallID:String="",
+    val section:String="",
+    val dep:String="",
     val professorName:String="",
     val day:String="",
     val time:String="",

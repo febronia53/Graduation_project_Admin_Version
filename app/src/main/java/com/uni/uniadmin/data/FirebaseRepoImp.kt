@@ -432,93 +432,93 @@ class FirebaseRepoImp @Inject constructor(
 
 
     // -------------------------------------------------------- add post -------------------------------------------------------//
-    override suspend fun addGeneralPosts(posts: Posts, result: (Resource<String>) -> Unit) {
-        val document = database.collection(FireStoreTable.post).document()
-        posts.postID = document.id
-        document.set(posts)
-            .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success(document.id)
-                )
-            }
-            .addOnFailureListener {
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
+        override suspend fun addGeneralPosts(posts: Posts, result: (Resource<String>) -> Unit) {
+            val document = database.collection(FireStoreTable.post).document()
+            posts.postID = document.id
+            document.set(posts)
+                .addOnSuccessListener {
+                    result.invoke(
+                        Resource.Success(document.id)
                     )
-                )
-            }
-    }
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        Resource.Failure(
+                            it.localizedMessage
+                        )
+                    )
+                }
+        }
 
-    override suspend fun addPersonalPosts(
-        posts: Posts,
-        userID: String,
-        result: (Resource<String>) -> Unit
-    ) {
-        val document = database.collection(PostType.personal_posts).document(userID)
-            .collection(FireStoreTable.post).document()
-        posts.postID = document.id
-        document.set(posts)
-            .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success(document.id)
-                )
-            }
-            .addOnFailureListener {
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
+        override suspend fun addPersonalPosts(
+            posts: Posts,
+            userID: String,
+            result: (Resource<String>) -> Unit
+        ) {
+            val document = database.collection(PostType.personal_posts).document(userID)
+                .collection(FireStoreTable.post).document()
+            posts.postID = document.id
+            document.set(posts)
+                .addOnSuccessListener {
+                    result.invoke(
+                        Resource.Success(document.id)
                     )
-                )
-            }
-    }
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        Resource.Failure(
+                            it.localizedMessage
+                        )
+                    )
+                }
+        }
 
-    override suspend fun addCoursePosts(
-        posts: Posts,
-        courseID: String,
-        result: (Resource<String>) -> Unit
-    ) {
-        val document = database.collection(FireStoreTable.courses).document(courseID)
-            .collection(FireStoreTable.post).document()
-        posts.postID = document.id
-        document.set(posts)
-            .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success(document.id)
-                )
-            }
-            .addOnFailureListener {
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
+        override suspend fun addCoursePosts(
+            posts: Posts,
+            courseID: String,
+            result: (Resource<String>) -> Unit
+        ) {
+            val document = database.collection(FireStoreTable.courses).document(courseID)
+                .collection(FireStoreTable.post).document()
+            posts.postID = document.id
+            document.set(posts)
+                .addOnSuccessListener {
+                    result.invoke(
+                        Resource.Success(document.id)
                     )
-                )
-            }
-    }
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        Resource.Failure(
+                            it.localizedMessage
+                        )
+                    )
+                }
+        }
 
-    override suspend fun addSectionPosts(
-        posts: Posts,
-        section: String,
-        dep: String,
-        result: (Resource<String>) -> Unit
-    ) {
-        val document =
-            database.collection(PostType.section_posts).document(dep).collection(section).document()
-        posts.postID = document.id
-        document.set(posts)
-            .addOnSuccessListener {
-                result.invoke(
-                    Resource.Success(document.id)
-                )
-            }
-            .addOnFailureListener {
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
+        override suspend fun addSectionPosts(
+            posts: Posts,
+            section: String,
+            dep: String,
+            result: (Resource<String>) -> Unit
+        ) {
+            val document =
+                database.collection(PostType.section_posts).document(dep).collection(section).document()
+            posts.postID = document.id
+            document.set(posts)
+                .addOnSuccessListener {
+                    result.invoke(
+                        Resource.Success(document.id)
                     )
-                )
-            }
-    }
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        Resource.Failure(
+                            it.localizedMessage
+                        )
+                    )
+                }
+        }
 // -------------------------------------------------------- add post -------------------------------------------------------//
 
 
@@ -581,7 +581,6 @@ class FirebaseRepoImp @Inject constructor(
                 }
                 for (rec in snapshot!!) {
                     val post = rec.toObject(Posts::class.java)
-                    Log.e("MMNNBB", post.postID)
                     listOfPosts.add(post)
                 }
 
@@ -793,19 +792,20 @@ class FirebaseRepoImp @Inject constructor(
     // -------------------------------------------------------- schedule -------------------------------------------------------//
     override suspend fun updateSection(
         section: Section,
-        dep: String,
+
         result: (Resource<String>) -> Unit
     ) {
-        val document = database.collection(FireStoreTable.courses).document(section.courseCode)
+        val document = database.collection(FireStoreTable.courses)
+            .document(section.courseCode)
             .collection(FireStoreTable.sections)
-            .document(dep)
-            .collection(section.section)
+            .document(section.dep)
+            .collection(section.section).document()
         section.sectionId = document.id
-        document.add(section)
+        document.set(section)
             .addOnSuccessListener {
                 val query = database.collection(FireStoreTable.courses).document(section.courseCode)
                     .collection(FireStoreTable.sections)
-                    .document(dep)
+                    .document(section.dep)
                     .collection(section.section)
                 val countQuery = query.count()
                 countQuery.get(AggregateSource.SERVER).addOnCompleteListener { task ->
@@ -815,7 +815,7 @@ class FirebaseRepoImp @Inject constructor(
                             val document2 = database.collection(FireStoreTable.assistant_sections)
                                 .document(section.assistantID)
                                 .collection(FireStoreTable.sections)
-                            document2.add(SectionData(section.courseCode, dep, section.section))
+                            document2.add(SectionData(section.courseCode, section.dep, section.section))
                                 .addOnSuccessListener {
                                     result.invoke(
                                         Resource.Success("sections added successfully")
@@ -848,13 +848,12 @@ class FirebaseRepoImp @Inject constructor(
 
     override suspend fun updateLecture(
         lecture: Lecture,
-        dep: String,
         result: (Resource<String>) -> Unit
     ) {
         val document = database.collection(FireStoreTable.courses).document(lecture.courseCode)
-            .collection(FireStoreTable.lectures).document(dep).collection(dep)
+            .collection(FireStoreTable.lectures).document(lecture.dep).collection(lecture.dep).document()
         lecture.lectureId = document.id
-        document.add(lecture)
+        document.set(lecture)
             .addOnSuccessListener {
                 result.invoke(
                     Resource.Success("lectures added successfully")
@@ -873,12 +872,13 @@ class FirebaseRepoImp @Inject constructor(
 
     override suspend fun deleteSection(
         section: Section,
-        dep: String,
+
         result: (Resource<String>) -> Unit
     ) {
-        val document = database.collection(FireStoreTable.courses).document(section.courseCode)
+        val document = database.collection(FireStoreTable.courses)
+            .document(section.courseCode)
             .collection(FireStoreTable.sections)
-            .document(dep)
+            .document(section.dep)
             .collection(section.section)
             .document(section.sectionId)
 
@@ -899,11 +899,11 @@ class FirebaseRepoImp @Inject constructor(
 
     override suspend fun deleteLecture(
         lecture: Lecture,
-        dep: String,
+
         result: (Resource<String>) -> Unit
     ) {
         val document = database.collection(FireStoreTable.courses).document(lecture.courseCode)
-            .collection(FireStoreTable.lectures).document(dep).collection(dep)
+            .collection(FireStoreTable.lectures).document(lecture.dep).collection(lecture.dep)
             .document(lecture.lectureId)
         document.delete()
             .addOnSuccessListener {
@@ -1341,23 +1341,23 @@ class FirebaseRepoImp @Inject constructor(
         val docRef = database.collection(FireStoreTable.userTeaching)
             .whereEqualTo("userType", UserTypes.professorUser)
         docRef.get()
-            .addOnSuccessListener {
-                val listOfStudents = arrayListOf<Professor>()
-                for (rec in it) {
-                    val student = rec.toObject(Professor::class.java)
-                    listOfStudents.add(student)
-                }
-                result.invoke(
-                    Resource.Success(listOfStudents)
-                )
-            }
-            .addOnFailureListener {
-                result.invoke(
-                    Resource.Failure(
-                        it.localizedMessage
+                .addOnSuccessListener {
+                    val listOfStudents = arrayListOf<Professor>()
+                    for (rec in it) {
+                        val student = rec.toObject(Professor::class.java)
+                        listOfStudents.add(student)
+                    }
+                    result.invoke(
+                        Resource.Success(listOfStudents)
                     )
-                )
-            }
+                }
+                .addOnFailureListener {
+                    result.invoke(
+                        Resource.Failure(
+                            it.localizedMessage
+                        )
+                    )
+                }
     }
 
     override suspend fun getAllAssistants(result: (Resource<List<Assistant>>) -> Unit) {

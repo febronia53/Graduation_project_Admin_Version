@@ -8,6 +8,7 @@ data class Lecture (
     val courseCode:String="",
     val courseName:String="",
     val hallID:String="",
+    val dep:String="",
     val professorName:String="",
     val day:String="",
     val time:String="",

@@ -14,8 +14,8 @@ interface FirebaseRepo {
     suspend fun getPermission(grade:String, result: (Resource<List<PermissionItem>>) -> Unit)
 
 
-     suspend fun deleteSection(section: Section,dep:String, result: (Resource<String>) -> Unit)
-     suspend fun deleteLecture(lecture: Lecture,dep:String, result: (Resource<String>) -> Unit)
+     suspend fun deleteSection(section: Section, result: (Resource<String>) -> Unit)
+     suspend fun deleteLecture(lecture: Lecture, result: (Resource<String>) -> Unit)
 
     suspend fun searchStudentBySection( grade:String,section:String,department:String,result: (Resource<List<UserStudent>>) -> Unit)
     suspend fun searchStudentByID( grade:String,code:String,result: (Resource<UserStudent>) -> Unit)
@@ -33,10 +33,14 @@ interface FirebaseRepo {
     suspend fun getAllAssistants( result: (Resource<List<Assistant>>) -> Unit)
     suspend fun addGeneralPosts(posts: Posts, result: (Resource<String>) -> Unit)
     suspend fun addPersonalPosts(posts: Posts, userID: String, result: (Resource<String>) -> Unit)
-    suspend fun updateSection(section: Section,dep:String, result: (Resource<String>) -> Unit)
+    suspend fun updateSection(
+        section: Section,
+
+        result: (Resource<String>) -> Unit
+    )
     suspend fun addCoursePosts(posts: Posts, courseID: String, result: (Resource<String>) -> Unit)
     suspend fun addSectionPosts(posts: Posts, section: String, dep: String, result: (Resource<String>) -> Unit)
-    suspend fun updateLecture(lecture: Lecture,dep:String, result: (Resource<String>) -> Unit)
+    suspend fun updateLecture(lecture: Lecture, result: (Resource<String>) -> Unit)
     suspend fun deleteCommentGeneralPosts(
         comment: Comment,
         postID: String,

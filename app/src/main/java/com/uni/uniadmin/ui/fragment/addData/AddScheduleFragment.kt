@@ -41,7 +41,7 @@ class AddScheduleFragment : Fragment() {
     private lateinit var coursesList: MutableList<String>
     private lateinit var teachingList: MutableList<String>
     private var isTimeAdd = false
-
+// TODO change the adaptor of the course to get more information needed in the lecture and section
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -127,12 +127,13 @@ class AddScheduleFragment : Fragment() {
                             course,
                             course,
                             place,
+                            department,
                             teaching,
                             day,
                             from,
                             to,
                             false
-                        ), department
+                        )
                     )
                     observeAddedLecture()
                 }
@@ -149,11 +150,12 @@ class AddScheduleFragment : Fragment() {
                             assistantList[index].name,
                             assistantList[index].code,
                             section,
+                            department,
                             day,
                             from,
                             to,
                             false
-                        ), department
+                        )
                     )
                     observeAddedSection()
                 }
@@ -297,13 +299,10 @@ class AddScheduleFragment : Fragment() {
                 when (it) {
                     is Resource.Loading -> {
                     }
-
                     is Resource.Success -> {
                         Toast.makeText(context, "section added successfully", Toast.LENGTH_SHORT)
                             .show()
-
                     }
-
                     is Resource.Failure -> {
                         Toast.makeText(context, it.exception, Toast.LENGTH_SHORT).show()
                     }
@@ -350,7 +349,6 @@ class AddScheduleFragment : Fragment() {
                         teachingList.clear()
                         assistantList.clear()
                         it.result.forEach {
-                            Log.e("teachine", it.name)
                             teachingList.add(it.name)
                             assistantList.add(it)
                         }
@@ -379,10 +377,6 @@ class AddScheduleFragment : Fragment() {
                         it.result.forEach {
                             coursesList.add(it.courseCode)
                         }
-                        /*  viewModel.getAllAssistant()
-                          viewModel.getAllProfessor()
-                          delay(200)
-                          observeAssistant()*/
                         adapterCourses.notifyDataSetChanged()
                     }
 

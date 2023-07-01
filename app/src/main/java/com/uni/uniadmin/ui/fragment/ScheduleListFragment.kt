@@ -1,6 +1,7 @@
 package com.uni.uniadmin.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,6 @@ class ScheduleListFragment : Fragment(), PassData {
         department = ""
         coursesList = arrayListOf()
         scheduleDataType = arrayListOf()
-
         currentUser = UserAdmin()
         authViewModel.getSessionStudent { user ->
             if (user != null) {
@@ -61,11 +61,8 @@ class ScheduleListFragment : Fragment(), PassData {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
-
         progress = binding.progressSchedule
-
         coursesList = arrayListOf()
         scheduleDataType = arrayListOf()
 
@@ -75,6 +72,7 @@ class ScheduleListFragment : Fragment(), PassData {
                 Toast.makeText(requireContext(), item.professorName, Toast.LENGTH_SHORT).show()
             },
             onAttendClicked = { pos, item ->
+
                 if (item.type == ScheduleAdapter.VIEW_TYPE_ONE) {
                     if (section.isNotEmpty() && department.isNotEmpty()) {
                         viewModel.deleteSection(
@@ -84,12 +82,13 @@ class ScheduleListFragment : Fragment(), PassData {
                                 item.courseName,
                                 item.hallID,
                                 "",
-                                section,
                                 "",
+                                item.section,
+                                item.dep,
                                 "",
                                 "",
                                 "", false
-                            ), department
+                            )
                         )
                         observeDeletedSection()
                     } else {
@@ -100,8 +99,18 @@ class ScheduleListFragment : Fragment(), PassData {
                 } else {
                     if (department.isNotEmpty()) {
                         viewModel.deleteLecture(
-                            Lecture(item.eventId, item.courseID, "", "", "", "", "", "", false),
-                            department
+                            Lecture(
+                                item.eventId,
+                                item.courseID,
+                                "",
+                                "",
+                                item.dep,
+                                "",
+                                "",
+                                "",
+                                "",
+                                false
+                            )
                         )
                         observeDeletedLecture()
                     } else {
@@ -211,38 +220,28 @@ class ScheduleListFragment : Fragment(), PassData {
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
                         delay(300)
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
-
                         progress.visibility = View.GONE
                         updateData()
-
-
                     }
-
                     is Resource.Failure -> {
                         progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
-
                     else -> {}
                 }
             }
         }
     }
-
-
     private fun observeSections() {
         lifecycleScope.launchWhenCreated {
             viewModel.getSection.collectLatest { state ->
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
-
                     }
-
                     is Resource.Success -> {
                         progress.visibility = View.GONE
-
                         state.result.forEach {
                             scheduleDataType.add(
                                 ScheduleDataType(
@@ -250,6 +249,8 @@ class ScheduleListFragment : Fragment(), PassData {
                                     it.courseName,
                                     it.courseCode,
                                     it.lapID,
+                                    it.section,
+                                    it.dep,
                                     it.assistantName,
                                     it.day,
                                     it.time,
@@ -259,16 +260,12 @@ class ScheduleListFragment : Fragment(), PassData {
                                 )
                             )
                         }
-
-
                     }
-
                     is Resource.Failure -> {
                         progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
-
                     else -> {}
                 }
             }
@@ -293,9 +290,7 @@ class ScheduleListFragment : Fragment(), PassData {
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
-
                     }
-
                     is Resource.Success -> {
                         progress.visibility = View.GONE
                         state.result.forEach {
@@ -305,25 +300,23 @@ class ScheduleListFragment : Fragment(), PassData {
                                     it.courseName,
                                     it.courseCode,
                                     it.hallID,
+                                    "",
+                                    it.dep,
                                     it.professorName,
                                     it.day,
                                     it.time,
                                     it.endTime,
                                     ScheduleAdapter.VIEW_TYPE_TWO,
                                     it.isRunning
-
                                 )
                             )
                         }
-
                     }
-
                     is Resource.Failure -> {
                         progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
-
                     else -> {}
                 }
             }
@@ -335,7 +328,6 @@ class ScheduleListFragment : Fragment(), PassData {
         this.section = section
         if (section.isNotEmpty() && department.isNotEmpty()) {
             viewModel.getCoursesByGrade(currentUser.grade)
-
             observeCourses(section, department)
         }
     }

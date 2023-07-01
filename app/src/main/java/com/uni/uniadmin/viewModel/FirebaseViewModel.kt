@@ -283,9 +283,9 @@ class FirebaseViewModel @Inject constructor(
     //-----------------------------------------------------------schedule-------------------------------------------------------------//
     private val _addSection = MutableStateFlow<Resource<String>?>(Resource.Loading)
     val addSection = _addSection.asStateFlow()
-    fun addSection(section: Section, dep: String) = viewModelScope.launch {
+    fun addSection(section: Section) = viewModelScope.launch {
         _addSection.value = Resource.Loading
-        repository.updateSection(section, dep) {
+        repository.updateSection(section) {
             _addSection.value = it
         }
     }
@@ -293,9 +293,9 @@ class FirebaseViewModel @Inject constructor(
 
     private val _addLecture = MutableStateFlow<Resource<String>?>(Resource.Loading)
     val addLecture = _addLecture.asStateFlow()
-    fun addLecture(lecture: Lecture, dep: String) = viewModelScope.launch {
+    fun addLecture(lecture: Lecture) = viewModelScope.launch {
         _addLecture.value = Resource.Loading
-        repository.updateLecture(lecture, dep) {
+        repository.updateLecture(lecture) {
             _addLecture.value = it
         }
     }
@@ -324,16 +324,16 @@ class FirebaseViewModel @Inject constructor(
     private val _deleteLecture = MutableStateFlow<Resource<String>?>(null)
     val deleteLecture = _deleteLecture.asStateFlow()
 
-    fun deleteSection(section: Section, dep: String) = viewModelScope.launch {
+    fun deleteSection(section: Section) = viewModelScope.launch {
         _deleteSection.value = Resource.Loading
-        repository.deleteSection(section, dep) {
+        repository.deleteSection(section) {
             _deleteSection.value = it
         }
     }
 
-    fun deleteLecture(lecture: Lecture, dep: String) = viewModelScope.launch {
+    fun deleteLecture(lecture: Lecture) = viewModelScope.launch {
         _deleteSection.value = Resource.Loading
-        repository.deleteLecture(lecture, dep) {
+        repository.deleteLecture(lecture) {
             _deleteSection.value = it
         }
     }

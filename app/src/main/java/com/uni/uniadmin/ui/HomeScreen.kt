@@ -89,10 +89,8 @@ class HomeScreen : AppCompatActivity() {
     }
 
     private fun observeImage() {
-
         lifecycleScope.launchWhenCreated {
             storageViewModel.getUri.collectLatest { uri ->
-
                 when (uri) {
                     is Resource.Loading -> {
                     }
@@ -119,8 +117,6 @@ class HomeScreen : AppCompatActivity() {
 
         }
     }
-
-
     private fun observeUser() {
         lifecycleScope.launchWhenCreated {
             viewModel.userStudent.collectLatest { state ->

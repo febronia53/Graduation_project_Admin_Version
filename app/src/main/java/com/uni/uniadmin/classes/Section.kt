@@ -10,6 +10,7 @@ data class Section (
     val assistantName:String="",
     val assistantID:String="",
     val section : String="",
+    val dep : String="",
     val day:String="",
     val time:String="",
     val endTime:String="",
