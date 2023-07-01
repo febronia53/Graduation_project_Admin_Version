@@ -13,12 +13,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.Comment
 import com.uni.uniadmin.classes.MyComments
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.databinding.FragmentCommentBinding
+import com.uni.uniadmin.ui.HomeScreen
 import com.uni.uniadmin.viewModel.AuthViewModel
 import com.uni.uniadmin.viewModel.FirebaseViewModel
 import com.uni.uniteaching.adapters.CommentAdapter
@@ -54,6 +56,15 @@ class CommentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentCommentBinding.inflate(layoutInflater)
+        //++++++++++++++++++++++++++//
+        val bottomNavigationView =  (activity as HomeScreen).findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.visibility = View.GONE
+        binding.backFragmentBtn.setOnClickListener {
+            parentFragmentManager.popBackStack()
+            bottomNavigationView.visibility = View.VISIBLE
+        }
+        //+++++++++++++++++++++++++//
 
         // update user data --------------------------------------------------------------------------------
         authViewModel.getSessionStudent { user ->
@@ -69,7 +80,7 @@ class CommentFragment : Fragment() {
         }
         // update user data --------------------------------------------------------------------------------
 
-        binding = FragmentCommentBinding.inflate(layoutInflater)
+
 
         val recyclerView = binding.commentRecycler
         progress = binding.progressBarComment
@@ -151,7 +162,11 @@ class CommentFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-
+        if (commentList.size == 0) {
+            binding.NoCommentsYet.visibility = View.VISIBLE
+        } else {
+            binding.NoCommentsYet.visibility = View.GONE
+        }
         observeCommentGeneral()
 
         return binding.root
@@ -277,6 +292,7 @@ class CommentFragment : Fragment() {
                             if (it.userID == currentUser.userId){
                                 comment.myComment=true
                             }
+                            binding.NoCommentsYet.visibility = View.GONE
                             commentList.add(comment)
                         }
                         adapter.update(commentList)

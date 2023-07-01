@@ -209,6 +209,7 @@
     <string name="post_section">Post Section</string>
     <string name="search_by_student_id">Search by Student ID</string>
     <string name="search">Search</string>
+    <string name="NoCommentsYet">No comments yet</string>
 
 
 </resources>
