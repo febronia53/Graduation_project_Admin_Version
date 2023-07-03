@@ -1,5 +1,6 @@
 package com.uni.uniadmin.classes
 
+import android.net.Uri
 import java.util.*
 
 
@@ -11,5 +12,6 @@ data class PostData (
     var courseID:String="",
     val time: Date = Date(),
     val audience:String="",
+    var postUri: Uri = Uri.EMPTY,
     var type:Int=0
 )

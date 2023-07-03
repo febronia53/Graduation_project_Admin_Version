@@ -1,5 +1,7 @@
 package com.uni.uniadmin.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ import com.uni.uniadmin.data.PassData
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.databinding.FragmentHomeBinding
+import com.uni.uniadmin.ui.AddPostActivity
 import com.uni.uniadmin.ui.HomeScreen
 import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
 import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
@@ -132,8 +135,7 @@ class HomeFragment : Fragment(), PassData {
         binding.createPostBtn.setOnClickListener {
             isFloatingBtnClick = !isFloatingBtnClick
             closeFloatingButton()
-            replaceFragment(AddPostFragment())
-
+startActivity(Intent(context,AddPostActivity::class.java))
         }
         binding.homeFiltersBtn.setOnClickListener { showBottomSheetSettings() }
 
@@ -332,18 +334,14 @@ class HomeFragment : Fragment(), PassData {
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
-
                     }
-
                     is Resource.Success -> {
                         coursesList.clear()
                         state.result.forEach {
                             coursesList.add(it)
                         }
-
                         viewModel.getPostsGeneral()
                         viewModel.getPostsCourse(coursesList)
-
                         progress.visibility = View.VISIBLE
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
                         delay(200)
@@ -352,16 +350,12 @@ class HomeFragment : Fragment(), PassData {
                         observe()
                         delay(200)
                         observeCoursesPost()
-
-
                     }
-
                     is Resource.Failure -> {
                         progress.visibility = View.GONE
-                        Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
+                        Toast.makeText(context,state.exception.toString(),Toast.LENGTH_LONG)
                             .show()
                     }
-
                     else -> {}
                 }
             }
@@ -412,12 +406,21 @@ class HomeFragment : Fragment(), PassData {
                                 it.courseID,
                                 it.time,
                                 it.audience,
+                                Uri.EMPTY,
                                 it.type
                             )
+
                             if (it.authorId == currentUser.userId) {
                                 post.myPost = true
                             }
-                            postsList.add(post)
+
+                            if(it.type == PostsAdapter.WITH_IMAGE){
+                                storageViewModel.getPostUri(it.postID)
+                                observeImage(post)
+
+                            }else{
+                                postsList.add(post)
+                            }
                         }
                         adapter.update(postsList)
                     }
@@ -433,7 +436,35 @@ class HomeFragment : Fragment(), PassData {
             }
         }
     }
+    private fun observeImage(post: PostData) {
+        lifecycleScope.launchWhenCreated {
+            storageViewModel.getPostUri.collectLatest { uri ->
+                when (uri) {
+                    is Resource.Loading -> {
+                    }
 
+                    is Resource.Success -> {
+
+                        post.postUri=uri.result
+                        if (postsList.indexOf(post) == -1){
+                            postsList.add(post)
+                            adapter.update(postsList)
+                        }
+
+                    }
+
+
+                    is Resource.Failure -> {
+                        Toast.makeText(context, uri.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
+                    }
+
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
     private fun observe() {
         lifecycleScope.launchWhenCreated {
             viewModel.getPosts.collectLatest { state ->
@@ -441,7 +472,6 @@ class HomeFragment : Fragment(), PassData {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
                     }
-
                     is Resource.Success -> {
                         postsList.clear()
                         state.result.forEach {
@@ -453,24 +483,28 @@ class HomeFragment : Fragment(), PassData {
                                 it.courseID,
                                 it.time,
                                 it.audience,
+                                Uri.EMPTY,
                                 it.type
                             )
+
                             if (it.authorId == currentUser.userId) {
                                 post.myPost = true
                             }
-                            postsList.add(post)
+                            if(it.type == PostsAdapter.WITH_IMAGE){
+                                storageViewModel.getPostUri(it.postID)
+                                observeImage(post)
+
+                            }else{
+                                postsList.add(post)
+                            }
                         }
-                        //adapter.update(postsList)
                         progress.visibility = View.GONE
-
                     }
-
                     is Resource.Failure -> {
                         progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
-
                     else -> {}
                 }
             }
