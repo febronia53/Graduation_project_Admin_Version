@@ -13,5 +13,5 @@ data class ScheduleDataType(
     val time:String="",
     val endTime:String="",
     val type:Int=0,
-    val isRunning:Boolean=false
+    val hasRunning:Boolean=false
 )

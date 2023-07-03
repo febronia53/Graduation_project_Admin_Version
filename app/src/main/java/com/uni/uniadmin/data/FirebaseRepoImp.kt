@@ -205,14 +205,13 @@ class FirebaseRepoImp @Inject constructor(
                         .addOnSuccessListener {
                             docRef.update("hasPermission", true)
                                 .addOnSuccessListener {
-                                    Log.e("delete updat", count.toString())
                                     result.invoke(
                                         Resource.Success("all done object deleted")
                                     )
                                 }
                                 .addOnFailureListener {
                                     result.invoke(
-                                        Resource.Success("there is a problim with updating")
+                                        Resource.Success("there is a problem with updating")
                                     )
                                 }
                         }
@@ -792,7 +791,6 @@ class FirebaseRepoImp @Inject constructor(
     // -------------------------------------------------------- schedule -------------------------------------------------------//
     override suspend fun updateSection(
         section: Section,
-
         result: (Resource<String>) -> Unit
     ) {
         val document = database.collection(FireStoreTable.courses)
@@ -1564,7 +1562,6 @@ class FirebaseRepoImp @Inject constructor(
     ) {
         val listOfPosts = arrayListOf<Section>()
         for (course in courses) {
-            Log.e("repo", course.courseCode)
             val docRef =
                 database.collection(FireStoreTable.courses)
                     .document(course.courseCode)
@@ -1578,14 +1575,12 @@ class FirebaseRepoImp @Inject constructor(
                 }
                 for (rec in snapshot!!) {
                     val post = rec.toObject(Section::class.java)
-                    Log.e("i am here section", post.assistantName)
                     listOfPosts.add(post)
                 }
 
             }
         }
         result.invoke(Resource.Success(listOfPosts))
-
     }
 
     override fun getLectures(

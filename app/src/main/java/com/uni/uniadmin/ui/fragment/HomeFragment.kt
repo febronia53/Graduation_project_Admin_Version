@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.PostData
@@ -47,6 +49,7 @@ class HomeFragment : Fragment(), PassData {
     private val authViewModel: AuthViewModel by viewModels()
     private val storageViewModel: FireStorageViewModel by viewModels()
     private lateinit var progress: ProgressBar
+    lateinit var mStorageRef: StorageReference
     private lateinit var currentUser: UserAdmin
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var coursesList: MutableList<Courses>
@@ -86,6 +89,7 @@ class HomeFragment : Fragment(), PassData {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        mStorageRef = FirebaseStorage.getInstance().reference
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
         currentUser = UserAdmin()
@@ -415,8 +419,10 @@ startActivity(Intent(context,AddPostActivity::class.java))
                             }
 
                             if(it.type == PostsAdapter.WITH_IMAGE){
-                                storageViewModel.getPostUri(it.postID)
-                                observeImage(post)
+                               // storageViewModel.getPostUri(it.postID)
+                                downloadImage(it.postID,post)
+
+                                //observeImage(post)
 
                             }else{
                                 postsList.add(post)
@@ -491,8 +497,9 @@ startActivity(Intent(context,AddPostActivity::class.java))
                                 post.myPost = true
                             }
                             if(it.type == PostsAdapter.WITH_IMAGE){
-                                storageViewModel.getPostUri(it.postID)
-                                observeImage(post)
+                             //   storageViewModel.getPostUri(it.postID)
+                                downloadImage(it.postID,post)
+                               // observeImage(post)
 
                             }else{
                                 postsList.add(post)
@@ -524,6 +531,20 @@ startActivity(Intent(context,AddPostActivity::class.java))
             observe()
         }
 
+    }
+    fun downloadImage(id:String,post: PostData){
+        val downloadUriTask=mStorageRef.child("posts/$id.png").downloadUrl
+        downloadUriTask.addOnSuccessListener {
+            post.postUri=it
+            if(postsList.indexOf(post)==-1){
+                postsList.add(post)
+            }
+
+            adapter.update(postsList)
+        }.addOnFailureListener {
+            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG)
+                .show()
+        }
     }
 }
 
