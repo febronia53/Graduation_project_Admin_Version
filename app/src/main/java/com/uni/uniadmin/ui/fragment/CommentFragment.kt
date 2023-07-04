@@ -296,9 +296,7 @@ class CommentFragment : Fragment() {
                             commentList.add(comment)
                         }
                         adapter.update(commentList)
-
                     }
-
                     is Resource.Failure -> {
                         progress.visibility = View.GONE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)

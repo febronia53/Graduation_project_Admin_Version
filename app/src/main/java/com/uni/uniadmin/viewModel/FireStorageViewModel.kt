@@ -20,7 +20,14 @@ class FireStorageViewModel @Inject constructor(
 
     private val _addUri= MutableStateFlow<Resource<String>?>(null)
     val addUri=_addUri.asStateFlow()
-
+    private val _getPostUri= MutableStateFlow<Resource<Uri>?>(null)
+    val getPostUri=_getPostUri.asStateFlow()
+    fun getPostUri(postId:String)= viewModelScope.launch{
+        _getPostUri.value= Resource.Loading
+        repository.downloadPostUri(postId) {
+            _getPostUri.value=it
+        }
+    }
     fun getUri(userId:String)= viewModelScope.launch{
         _getUri.value= Resource.Loading
         repository.downloadUri(userId) {

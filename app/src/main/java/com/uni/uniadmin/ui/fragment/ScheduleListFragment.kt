@@ -243,6 +243,7 @@ class ScheduleListFragment : Fragment(), PassData {
                     is Resource.Success -> {
                         progress.visibility = View.GONE
                         state.result.forEach {
+                            Log.e("is running",it.hasRunning.toString())
                             scheduleDataType.add(
                                 ScheduleDataType(
                                     it.sectionId,
@@ -256,7 +257,7 @@ class ScheduleListFragment : Fragment(), PassData {
                                     it.time,
                                     it.endTime,
                                     ScheduleAdapter.VIEW_TYPE_ONE,
-                                    it.isRunning
+                                    it.hasRunning
                                 )
                             )
                         }
@@ -272,7 +273,6 @@ class ScheduleListFragment : Fragment(), PassData {
         }
 
     }
-
     fun updateData() {
         scheduleDataType.clear()
         lifecycleScope.launchWhenCreated {
@@ -282,11 +282,9 @@ class ScheduleListFragment : Fragment(), PassData {
         }
         adapter.update(scheduleDataType)
     }
-
     private fun observeLectures() {
         lifecycleScope.launchWhenCreated {
             viewModel.getLecture.collectLatest { state ->
-
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
@@ -307,7 +305,7 @@ class ScheduleListFragment : Fragment(), PassData {
                                     it.time,
                                     it.endTime,
                                     ScheduleAdapter.VIEW_TYPE_TWO,
-                                    it.isRunning
+                                    it.hasRunning
                                 )
                             )
                         }
@@ -322,7 +320,6 @@ class ScheduleListFragment : Fragment(), PassData {
             }
         }
     }
-
     override fun onDataPassed(department: String, section: String, studentId: String) {
         this.department = department
         this.section = section

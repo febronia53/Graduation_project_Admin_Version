@@ -57,7 +57,7 @@ class ScheduleAdapter(
 
             holder.from_l.text = currentItem.time
             holder.to_l.text = currentItem.endTime
-            if (currentItem.isRunning) {
+            if (currentItem.hasRunning) {
                 holder.isRunning.text = "is running"
             } else {
                 holder.isRunning.text = "not running"
@@ -72,7 +72,7 @@ class ScheduleAdapter(
             holder.day.text = currentItem.day
             holder.from.text = currentItem.time
             holder.to.text = currentItem.endTime
-            if (currentItem.isRunning) {
+            if (currentItem.hasRunning) {
                 holder.isRunning.text = "is running"
             } else {
                 holder.isRunning.text = "not running"

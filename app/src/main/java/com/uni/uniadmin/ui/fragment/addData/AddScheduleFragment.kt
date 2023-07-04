@@ -300,6 +300,7 @@ class AddScheduleFragment : Fragment() {
                     is Resource.Loading -> {
                     }
                     is Resource.Success -> {
+
                         Toast.makeText(context, "section added successfully", Toast.LENGTH_SHORT)
                             .show()
                     }

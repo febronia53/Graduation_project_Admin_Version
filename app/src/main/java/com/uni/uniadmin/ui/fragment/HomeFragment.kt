@@ -1,5 +1,7 @@
 package com.uni.uniadmin.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.Courses
 import com.uni.uniadmin.classes.PostData
@@ -24,6 +28,7 @@ import com.uni.uniadmin.data.PassData
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.data.di.PostType
 import com.uni.uniadmin.databinding.FragmentHomeBinding
+import com.uni.uniadmin.ui.AddPostActivity
 import com.uni.uniadmin.ui.HomeScreen
 import com.uni.uniadmin.ui.fragment.addData.AddCourseFragment
 import com.uni.uniadmin.ui.fragment.addData.AddPostFragment
@@ -45,6 +50,7 @@ class HomeFragment : Fragment(), PassData {
     private val authViewModel: AuthViewModel by viewModels()
     private val storageViewModel: FireStorageViewModel by viewModels()
     private lateinit var progress: ProgressBar
+    lateinit var mStorageRef: StorageReference
     private lateinit var currentUser: UserAdmin
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var coursesList: MutableList<Courses>
@@ -84,6 +90,7 @@ class HomeFragment : Fragment(), PassData {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        mStorageRef = FirebaseStorage.getInstance().reference
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
         currentUser = UserAdmin()
@@ -133,19 +140,20 @@ class HomeFragment : Fragment(), PassData {
         binding.createPostBtn.setOnClickListener {
             isFloatingBtnClick = !isFloatingBtnClick
             closeFloatingButton()
-            replaceFragment(AddPostFragment())
-
+            startActivity(Intent(context, AddPostActivity::class.java))
         }
         binding.homeFiltersBtn.setOnClickListener { showBottomSheetSettings() }
 
         return binding.root
     }
+
     private fun showBottomSheetSettings() {
         bottomSheetFragment = BottomSheetFragment()
         bottomSheetFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
         bottomSheetFragment.isCancelable = true
         bottomSheetFragment.show(childFragmentManager, BottomSheetFragment.TAG)
     }
+
     private fun replaceFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction().replace(R.id.fragment_container_home, fragment)
             .addToBackStack(null).commit()
@@ -266,7 +274,7 @@ class HomeFragment : Fragment(), PassData {
                 (activity as HomeScreen).replaceFragment(commentFragment)
 
             }, deletePost = { post ->
-                if (post.type==PostsAdapter.WITH_IMAGE){
+                if (post.type == PostsAdapter.WITH_IMAGE) {
                     storageViewModel.deletePostImage(post.postID)
                     observeDeletedImage()
                 }
@@ -306,6 +314,7 @@ class HomeFragment : Fragment(), PassData {
         observeCourses()
 
     }
+
     private fun observeDeletedImage() {
         lifecycleScope.launchWhenCreated {
             storageViewModel.deletePostImage.collectLatest { state ->
@@ -313,14 +322,17 @@ class HomeFragment : Fragment(), PassData {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
                     }
+
                     is Resource.Success -> {
-                        Toast.makeText(context,state.result,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, state.result, Toast.LENGTH_SHORT).show()
                     }
+
                     is Resource.Failure -> {
                         progress.visibility = View.INVISIBLE
                         Toast.makeText(context, state.exception.toString(), Toast.LENGTH_LONG)
                             .show()
                     }
+
                     else -> {}
                 }
             }
@@ -333,7 +345,6 @@ class HomeFragment : Fragment(), PassData {
                 when (state) {
                     is Resource.Loading -> {
                         progress.visibility = View.VISIBLE
-
                     }
 
                     is Resource.Success -> {
@@ -341,10 +352,8 @@ class HomeFragment : Fragment(), PassData {
                         state.result.forEach {
                             coursesList.add(it)
                         }
-
                         viewModel.getPostsGeneral()
                         viewModel.getPostsCourse(coursesList)
-
                         progress.visibility = View.VISIBLE
                         // ---------------------------- wait until the data is updated because of the delay done because of the loops---------------------//
                         delay(200)
@@ -353,8 +362,6 @@ class HomeFragment : Fragment(), PassData {
                         observe()
                         delay(200)
                         observeCoursesPost()
-
-
                     }
 
                     is Resource.Failure -> {
@@ -413,12 +420,23 @@ class HomeFragment : Fragment(), PassData {
                                 it.courseID,
                                 it.time,
                                 it.audience,
+                                Uri.EMPTY,
                                 it.type
                             )
+
                             if (it.authorId == currentUser.userId) {
                                 post.myPost = true
                             }
-                            postsList.add(post)
+
+                            if (it.type == PostsAdapter.WITH_IMAGE) {
+                                // storageViewModel.getPostUri(it.postID)
+                                downloadImage(it.postID, post)
+
+                                //observeImage(post)
+
+                            } else {
+                                postsList.add(post)
+                            }
                         }
                         adapter.update(postsList)
                     }
@@ -430,6 +448,36 @@ class HomeFragment : Fragment(), PassData {
                     }
 
                     else -> {}
+                }
+            }
+        }
+    }
+
+    private fun observeImage(post: PostData) {
+        lifecycleScope.launchWhenCreated {
+            storageViewModel.getPostUri.collectLatest { uri ->
+                when (uri) {
+                    is Resource.Loading -> {
+                    }
+
+                    is Resource.Success -> {
+
+                        post.postUri = uri.result
+                        if (postsList.indexOf(post) == -1) {
+                            postsList.add(post)
+                            adapter.update(postsList)
+                        }
+
+                    }
+
+
+                    is Resource.Failure -> {
+                        Toast.makeText(context, uri.exception.toString(), Toast.LENGTH_LONG)
+                            .show()
+                    }
+
+                    else -> {
+                    }
                 }
             }
         }
@@ -454,17 +502,27 @@ class HomeFragment : Fragment(), PassData {
                                 it.courseID,
                                 it.time,
                                 it.audience,
+                                Uri.EMPTY,
                                 it.type
                             )
+
                             if (it.authorId == currentUser.userId) {
                                 post.myPost = true
                             }
-                            postsList.add(post)
+                            if (it.type == PostsAdapter.WITH_IMAGE) {
+                                //   storageViewModel.getPostUri(it.postID)
+                                downloadImage(it.postID, post)
+                                // observeImage(post)
+
+                            } else {
+                                postsList.add(post)
+                            }
                         }
-                        //adapter.update(postsList)
                         progress.visibility = View.GONE
+
                         (activity as HomeScreen).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
                             View.VISIBLE
+
                     }
 
                     is Resource.Failure -> {
@@ -487,11 +545,26 @@ class HomeFragment : Fragment(), PassData {
         if (section.isNotEmpty() && department.isNotEmpty()) {
             viewModel.getPostsSection(section, department)
             observe()
-        }else if (studentId.isNotEmpty()) {
+        } else if (studentId.isNotEmpty()) {
             viewModel.getPostsPersonal(studentId, currentUser.grade)
             observe()
         }
 
+    }
+
+    fun downloadImage(id: String, post: PostData) {
+        val downloadUriTask = mStorageRef.child("posts/$id.png").downloadUrl
+        downloadUriTask.addOnSuccessListener {
+            post.postUri = it
+            if (postsList.indexOf(post) == -1) {
+                postsList.add(post)
+            }
+
+            adapter.update(postsList)
+        }.addOnFailureListener {
+            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG)
+                .show()
+        }
     }
 }
 
