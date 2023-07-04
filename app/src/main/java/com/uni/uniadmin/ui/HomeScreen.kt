@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.uni.uniadmin.R
 import com.uni.uniadmin.data.Resource
 import com.uni.uniadmin.databinding.ActivityHomeScreenBinding
@@ -156,6 +157,7 @@ class HomeScreen : AppCompatActivity() {
         super.onStart()
         viewModel.getSessionStudent { user ->
             if (user != null) {
+
                 settingsOnStartApp()
                 updateUser(user)
                 currentUser = user
@@ -173,6 +175,8 @@ class HomeScreen : AppCompatActivity() {
     }
 
     private fun settingsOnStartApp() {
+
+
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.selectedItemId = R.id.home
 

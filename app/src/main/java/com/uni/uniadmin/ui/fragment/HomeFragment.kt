@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.uni.uniadmin.R
 import com.uni.uniadmin.classes.Courses
@@ -462,7 +463,8 @@ class HomeFragment : Fragment(), PassData {
                         }
                         //adapter.update(postsList)
                         progress.visibility = View.GONE
-
+                        (activity as HomeScreen).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
+                            View.VISIBLE
                     }
 
                     is Resource.Failure -> {

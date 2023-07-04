@@ -15,10 +15,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8dp"
-            android:layout_marginBottom="@dimen/margin_8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/create_post"
-            app:layout_constraintBottom_toTopOf="@id/view"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/add_general_post"
@@ -84,6 +84,7 @@
                     android:layout_marginTop="@dimen/margin_8dp"
                     android:layout_marginBottom="@dimen/margin_8dp"
                     android:src="@drawable/post_image"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/post_description"
                     app:layout_constraintVertical_bias="0.045"
@@ -102,7 +103,6 @@
             android:text="@string/choose_department"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/post_card" />
-
         <Spinner
             android:id="@+id/department_spinner_post"
             style="@style/TextItemStudentStyle"
@@ -127,7 +127,6 @@
             android:text="@string/choose_section"
             app:layout_constraintStart_toStartOf="@+id/department_post_text"
             app:layout_constraintTop_toBottomOf="@id/department_spinner_post" />
-
         <Spinner
             android:id="@+id/section_spinner_post"
             style="@style/TextItemStudentStyle"
@@ -140,7 +139,6 @@
             app:layout_constraintStart_toStartOf="@id/section_post_text"
             app:layout_constraintTop_toBottomOf="@+id/section_post_text"
             app:layout_constraintVertical_bias="0.067" />
-
         <Button
             android:id="@+id/add_section_post"
             style="@style/Button.ViewPermission"
@@ -160,7 +158,6 @@
             android:text="@string/choose_course"
             app:layout_constraintStart_toStartOf="@+id/department_post_text"
             app:layout_constraintTop_toBottomOf="@id/section_spinner_post" />
-
         <Spinner
             android:id="@+id/course_post"
             style="@style/TextItemStudentStyle"
@@ -173,7 +170,6 @@
             app:layout_constraintStart_toStartOf="@id/course_post_text"
             app:layout_constraintTop_toBottomOf="@+id/course_post_text"
             app:layout_constraintVertical_bias="0.067" />
-
         <Button
             android:id="@+id/add_post_course"
             style="@style/Button.ViewPermission"
@@ -182,6 +178,7 @@
             app:layout_constraintBottom_toBottomOf="@id/course_post"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/course_post" />
+
 
         <EditText
             android:id="@+id/post_student_ID"
@@ -194,7 +191,6 @@
             app:layout_constraintStart_toStartOf="@id/course_post"
             app:layout_constraintTop_toBottomOf="@id/course_post"
             app:layout_constraintVertical_bias="0" />
-
         <androidx.constraintlayout.utils.widget.ImageFilterButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -207,7 +203,6 @@
             app:layout_constraintBottom_toBottomOf="@id/post_student_ID"
             app:layout_constraintEnd_toEndOf="@id/post_student_ID"
             app:layout_constraintTop_toTopOf="@+id/post_student_ID" />
-
         <Button
             android:id="@+id/search_student_post"
             style="@style/Button.ViewPermission"
@@ -216,7 +211,6 @@
             app:layout_constraintBottom_toBottomOf="@id/post_student_ID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/post_student_ID" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/post_search_recy"
             style="@style/RecyclerStyle"
